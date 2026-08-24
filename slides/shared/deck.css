@@ -1,0 +1,742 @@
+/*
+ * 공용 슬라이드 덱 셸 — /cv, /coverletter, /portfolio 가 함께 쓴다.
+ * 참고 구현: nnn-games-website/slides/shared/deck.css
+ *
+ * 이 파일이 책임지는 것
+ *  - 16:9 고정 캔버스(64rem x 36rem)와 뷰포트 역산 스케일
+ *  - 상/하단 컨트롤 바, 진행 바, 도트, 전체화면 표시 상태
+ *  - PDF 추출용 인쇄 레이아웃(1280x720px, 슬라이드 1장 = 1페이지)
+ *  - 내용 확정 전까지 쓰는 임시 슬라이드(temp-*) 레이아웃
+ *
+ * 각 덱에만 필요한 스타일이 생기면 이 파일이 아니라 해당 덱 폴더에 별도 CSS 를 둔다.
+ * 여기 있는 규칙은 세 덱에 동시에 적용된다.
+ */
+
+:root {
+    --deck-accent: #e2542f;
+    --deck-accent-soft: #fbe7de;
+    --deck-accent-ink: #7d2a12;
+    --deck-ink: #15181d;
+    --deck-paper: #f7f6f3;
+    --deck-muted: #6b7280;
+    --deck-line: #d9d5cd;
+    --deck-shell: #14171b;
+
+    /* 캔버스 스케일 역산에 쓰는 값 — 전체화면에서 0 으로 덮어쓴다. */
+    --chrome: 123px;
+    --gutter: 40px;
+    --scale-max: 26px;
+}
+
+*,
+*::before,
+*::after {
+    box-sizing: border-box;
+}
+
+/* 1rem 을 캔버스 기준으로 잡아, 슬라이드 내부는 rem 만으로 배치한다.
+ * 64rem x 36rem 이 화면에 들어가는 최대 배율을 가로/세로 중 작은 쪽으로 고른다. */
+html {
+    font-size: clamp(8px, min(calc((100vw - var(--gutter)) / 64), calc((100vh - var(--chrome)) / 36)), var(--scale-max));
+}
+
+@supports (height: 100svh) {
+    html {
+        font-size: clamp(8px, min(calc((100vw - var(--gutter)) / 64), calc((100svh - var(--chrome)) / 36)), var(--scale-max));
+    }
+}
+
+body {
+    margin: 0;
+    height: 100vh;
+    height: 100svh;
+    overflow: hidden;
+    background: var(--deck-shell);
+    color: var(--deck-ink);
+    font-family: Inter, "Noto Sans KR", system-ui, -apple-system, sans-serif;
+    -webkit-font-smoothing: antialiased;
+}
+
+h1,
+h2,
+h3,
+p {
+    margin: 0;
+}
+
+/* --------------------------------------------------------------- 셸 */
+
+.deck {
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+}
+
+.deck-rail {
+    flex: 0 0 3px;
+    background: #23272c;
+}
+
+.deck-rail-fill {
+    display: block;
+    width: 0;
+    height: 100%;
+    background: var(--deck-accent);
+    transition: width .22s ease;
+}
+
+.deck-bar {
+    display: flex;
+    flex: 0 0 auto;
+    align-items: center;
+    justify-content: space-between;
+    gap: 12px;
+    padding: 0 14px;
+}
+
+.deck-bar-top {
+    height: 44px;
+}
+
+.deck-bar-bottom {
+    height: 60px;
+}
+
+.deck-wordmark {
+    color: #a8b0ba;
+    font: 700 12px/1 Inter, sans-serif;
+    letter-spacing: .18em;
+    text-decoration: none;
+    transition: color .16s ease;
+}
+
+a.deck-wordmark:hover {
+    color: #fff;
+}
+
+.deck-tools,
+.deck-langs,
+.deck-center,
+.deck-dots {
+    display: flex;
+    align-items: center;
+}
+
+.deck-tools {
+    gap: 6px;
+}
+
+.deck-langs {
+    gap: 2px;
+}
+
+.deck-lang,
+.deck-tool,
+.deck-nav,
+.deck-dot {
+    font: inherit;
+}
+
+.deck-lang {
+    padding: 5px 9px;
+    border: 0;
+    border-radius: 7px;
+    background: none;
+    color: #98a2ad;
+    cursor: pointer;
+    font: 600 12px/1 Inter, sans-serif;
+}
+
+.deck-lang:hover {
+    color: #fff;
+}
+
+.deck-lang.is-active {
+    background: var(--deck-accent);
+    color: #fff;
+}
+
+.deck-lang-sep {
+    color: #3a4149;
+    font-size: 11px;
+}
+
+.deck-tool {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 28px;
+    height: 28px;
+    padding: 0;
+    border: 0;
+    border-radius: 7px;
+    background: none;
+    color: #98a2ad;
+    cursor: pointer;
+}
+
+.deck-tool:hover {
+    background: #23272c;
+    color: #fff;
+}
+
+.deck-tool[hidden] {
+    display: none;
+}
+
+.deck-tool-icon {
+    width: 16px;
+    height: 16px;
+    fill: none;
+    stroke: currentColor;
+    stroke-width: 2;
+    stroke-linecap: round;
+    stroke-linejoin: round;
+}
+
+.deck-tool-icon[data-icon="exit"] {
+    display: none;
+}
+
+.deck-viewport {
+    display: grid;
+    flex: 1;
+    min-height: 0;
+    place-items: center;
+    padding: 8px 0;
+    overflow: hidden;
+}
+
+.deck-stage {
+    position: relative;
+    width: 64rem;
+    height: 36rem;
+    box-shadow: 0 1.2rem 3rem rgba(0, 0, 0, .45);
+}
+
+.deck-center {
+    gap: 14px;
+}
+
+.deck-dots {
+    gap: 7px;
+}
+
+.deck-dot {
+    width: 8px;
+    height: 8px;
+    padding: 0;
+    border: 0;
+    border-radius: 50%;
+    background: #59616a;
+    cursor: pointer;
+    transition: transform .16s ease, background .16s ease;
+}
+
+.deck-dot:hover {
+    background: #9ba4ae;
+}
+
+.deck-dot.is-active {
+    background: var(--deck-accent);
+    transform: scale(1.2);
+}
+
+/* 부록 도트는 앞에 간격을 두고 모양을 바꿔 본편과의 경계를 보이게 한다. */
+.deck-dot-appendix {
+    margin-left: 7px;
+    border-radius: 2px;
+}
+
+.deck-counter {
+    min-width: 48px;
+    color: #98a2ad;
+    font: 600 12px/1 Inter, sans-serif;
+    text-align: right;
+}
+
+.deck-counter b {
+    color: #e4e7eb;
+}
+
+.deck-nav {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    height: 36px;
+    padding: 0 17px;
+    border: 1px solid #333a42;
+    border-radius: 999px;
+    background: #1d2126;
+    color: #d6dae0;
+    cursor: pointer;
+    font: 600 13px/1 Inter, "Noto Sans KR", sans-serif;
+    transition: background .16s ease, border-color .16s ease, opacity .16s ease;
+}
+
+.deck-nav:hover:not(:disabled) {
+    border-color: #454d56;
+    background: #262b31;
+}
+
+.deck-nav-primary {
+    border-color: var(--deck-accent);
+    background: var(--deck-accent);
+    color: #fff;
+}
+
+.deck-nav-primary:hover:not(:disabled) {
+    border-color: #f0714c;
+    background: #f0714c;
+}
+
+.deck-nav:disabled {
+    opacity: .32;
+    cursor: default;
+}
+
+.deck-nav:focus-visible,
+.deck-dot:focus-visible,
+.deck-lang:focus-visible,
+.deck-tool:focus-visible,
+.deck-wordmark:focus-visible {
+    outline: 2px solid var(--deck-accent);
+    outline-offset: 3px;
+}
+
+.deck-sr {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    overflow: hidden;
+    clip: rect(0 0 0 0);
+    clip-path: inset(50%);
+    white-space: nowrap;
+}
+
+/* --------------------------------------------------------- 전체화면 */
+
+html.is-fullscreen {
+    --chrome: 0px;
+    --gutter: 0px;
+    --scale-max: 240px;
+}
+
+html.is-fullscreen .deck-viewport {
+    padding: 0;
+}
+
+html.is-fullscreen .deck-rail,
+html.is-fullscreen .deck-bar {
+    position: fixed;
+    right: 0;
+    left: 0;
+    z-index: 20;
+    transition: opacity .2s ease;
+}
+
+html.is-fullscreen .deck-rail {
+    top: 0;
+    height: 3px;
+}
+
+html.is-fullscreen .deck-bar-top {
+    top: 3px;
+    background: linear-gradient(180deg, rgba(20, 23, 27, .82), rgba(20, 23, 27, 0));
+}
+
+html.is-fullscreen .deck-bar-bottom {
+    bottom: 0;
+    background: linear-gradient(0deg, rgba(20, 23, 27, .85), rgba(20, 23, 27, 0));
+}
+
+html.is-fullscreen .deck-tool-icon[data-icon="enter"] {
+    display: none;
+}
+
+html.is-fullscreen .deck-tool-icon[data-icon="exit"] {
+    display: block;
+}
+
+/* 발표 중 무입력이 이어지면 컨트롤과 커서를 감춘다. */
+html.is-fullscreen.is-idle .deck-rail,
+html.is-fullscreen.is-idle .deck-bar {
+    opacity: 0;
+    pointer-events: none;
+}
+
+html.is-fullscreen.is-idle {
+    cursor: none;
+}
+
+/* PDF 추출 직전 이미지 강제 로드를 기다리는 동안의 커서 */
+html.is-exporting {
+    cursor: progress;
+}
+
+/* --------------------------------------------------------- 슬라이드 */
+
+.slide {
+    position: absolute;
+    inset: 0;
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+    opacity: 0;
+    visibility: hidden;
+    transform: translateY(.4rem);
+    transition: opacity .2s ease, transform .2s ease, visibility .2s;
+}
+
+.slide.is-active {
+    opacity: 1;
+    visibility: visible;
+    transform: none;
+}
+
+.slide[data-theme="paper"] {
+    padding: 3rem 3.4rem;
+    background: radial-gradient(circle at 14% 6%, #fff 0, transparent 28%), var(--deck-paper);
+}
+
+.slide[data-theme="accent"] {
+    padding: 3rem 3.8rem;
+    background: linear-gradient(135deg, #fff 0, var(--deck-accent-soft) 44%, #f3b79f 100%);
+}
+
+.slide[data-theme="dark"] {
+    padding: 3rem 3.8rem;
+    background: linear-gradient(135deg, #232b35, #101318);
+    color: #fff;
+}
+
+.slide-kicker {
+    color: var(--deck-accent-ink);
+    font: 700 .78rem/1.2 Inter, "Noto Sans KR", sans-serif;
+    letter-spacing: .13em;
+}
+
+.slide-title {
+    max-width: 22em;
+    margin-top: .8rem;
+    font: 700 2.3rem/1.1 Inter, "Noto Sans KR", sans-serif;
+    letter-spacing: -.04em;
+}
+
+.slide-lead {
+    max-width: 43rem;
+    margin-top: 1rem;
+    color: var(--deck-muted);
+    font-size: .95rem;
+    line-height: 1.6;
+}
+
+.slide[data-theme="dark"] .slide-kicker,
+.slide[data-theme="dark"] .slide-lead {
+    color: #d7dde4;
+}
+
+/* --------------------------------- 임시 슬라이드 (내용 확정 전까지) */
+
+.temp-cover {
+    justify-content: space-between;
+}
+
+.temp-cover .slide-title {
+    max-width: 11em;
+    font-size: 3.65rem;
+}
+
+.temp-cover .slide-lead {
+    max-width: 35rem;
+    color: var(--deck-ink);
+    font-size: 1.05rem;
+}
+
+.temp-cover-meta {
+    margin-top: 1.3rem;
+    color: var(--deck-accent-ink);
+    font: 600 .85rem/1.6 Inter, "Noto Sans KR", sans-serif;
+}
+
+.temp-footnote {
+    padding-top: 1.4rem;
+    border-top: 1px solid rgba(21, 24, 29, .28);
+    color: rgba(21, 24, 29, .75);
+    font: 600 .72rem/1.4 Inter, "Noto Sans KR", sans-serif;
+    letter-spacing: .06em;
+}
+
+.temp-placeholder {
+    display: grid;
+    flex: 1;
+    min-height: 0;
+    grid-template-columns: minmax(0, 1.25fr) minmax(15rem, .75fr);
+    gap: 1.8rem;
+    margin-top: 1.8rem;
+}
+
+.temp-placeholder-main,
+.temp-placeholder-side {
+    border: 1px dashed var(--deck-line);
+    border-radius: .7rem;
+}
+
+.temp-placeholder-main {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    padding: 2.2rem;
+    background: rgba(255, 255, 255, .56);
+}
+
+.temp-placeholder-label {
+    color: var(--deck-accent-ink);
+    font: 700 .72rem/1 Inter, sans-serif;
+    letter-spacing: .12em;
+}
+
+.temp-placeholder-title {
+    max-width: 19em;
+    margin-top: .8rem;
+    font: 700 1.55rem/1.25 Inter, "Noto Sans KR", sans-serif;
+    letter-spacing: -.03em;
+}
+
+.temp-placeholder-copy {
+    max-width: 33rem;
+    margin-top: .8rem;
+    color: var(--deck-muted);
+    font-size: .83rem;
+    line-height: 1.65;
+}
+
+/* 작성 안내를 줄 목록으로 둘 때. 작성자용 메모라 번역하지 않는다. */
+.temp-placeholder-list {
+    margin: .7rem 0 0;
+    padding: 0;
+    list-style: none;
+    max-width: 36rem;
+    color: var(--deck-muted);
+    font-size: .74rem;
+    line-height: 1.55;
+}
+
+.temp-placeholder-list li {
+    padding-left: .7rem;
+    text-indent: -.7rem;
+}
+
+.temp-placeholder-list li::before {
+    color: var(--deck-accent);
+    content: "· ";
+}
+
+.temp-placeholder-list li + li {
+    margin-top: .3rem;
+}
+
+.temp-placeholder-side {
+    position: relative;
+    overflow: hidden;
+    background: repeating-linear-gradient(-45deg, rgba(226, 84, 47, .07), rgba(226, 84, 47, .07) 10px, transparent 10px, transparent 20px);
+}
+
+.temp-placeholder-side::before,
+.temp-placeholder-side::after {
+    position: absolute;
+    color: rgba(21, 24, 29, .25);
+    font: 700 .75rem/1 Inter, sans-serif;
+    letter-spacing: .1em;
+    content: "CONTENT PENDING";
+}
+
+.temp-placeholder-side::before {
+    top: 1rem;
+    left: 1rem;
+}
+
+.temp-placeholder-side::after {
+    right: 1rem;
+    bottom: 1rem;
+}
+
+.temp-closing {
+    justify-content: space-between;
+}
+
+.temp-closing .slide-title {
+    max-width: 17em;
+}
+
+.temp-closing .slide-lead {
+    color: #d7dde4;
+}
+
+.temp-status {
+    display: inline-flex;
+    width: fit-content;
+    margin-top: 1.4rem;
+    padding: .45rem .7rem;
+    border: 1px solid rgba(255, 255, 255, .35);
+    border-radius: 999px;
+    color: #fff;
+    font: 600 .68rem/1 Inter, sans-serif;
+    letter-spacing: .08em;
+}
+
+.temp-closing-brand {
+    color: #fff;
+    font: 700 1.05rem/1 Inter, sans-serif;
+    letter-spacing: .14em;
+}
+
+/* ------------------------------------------------------------- 모바일 */
+
+@media screen and (max-width: 767px) {
+    html {
+        font-size: clamp(13px, 3.9vw, 17px);
+    }
+
+    .deck-viewport {
+        place-items: stretch;
+        padding: 0;
+    }
+
+    .deck-stage {
+        width: 100%;
+        height: 100%;
+        box-shadow: none;
+    }
+
+    /* 좁은 화면에서는 캔버스를 고정하지 않고 세로 스크롤을 허용한다. */
+    .slide {
+        overflow: auto;
+        transform: translateX(.4rem);
+    }
+
+    .slide[data-theme="paper"],
+    .slide[data-theme="accent"],
+    .slide[data-theme="dark"] {
+        padding: 2.2rem 1.5rem;
+    }
+
+    .deck-bar {
+        padding: 0 10px;
+    }
+
+    .deck-nav {
+        height: 34px;
+        padding: 0 12px;
+    }
+
+    .deck-center {
+        gap: 8px;
+    }
+
+    .deck-dots {
+        max-width: 86px;
+        gap: 5px;
+        overflow: hidden;
+    }
+
+    .deck-dot {
+        flex: 0 0 7px;
+        width: 7px;
+        height: 7px;
+    }
+
+    .slide-title {
+        font-size: 2rem;
+    }
+
+    .temp-cover .slide-title {
+        font-size: 2.55rem;
+    }
+
+    .temp-placeholder {
+        grid-template-columns: 1fr;
+        min-height: 25rem;
+    }
+
+    .temp-placeholder-side {
+        min-height: 8rem;
+    }
+}
+
+@media (prefers-reduced-motion: reduce) {
+
+    .slide,
+    .deck-rail-fill,
+    .deck-dot,
+    .deck-nav,
+    .deck-tool,
+    .deck-bar {
+        transition: none !important;
+    }
+
+    .slide {
+        transform: none !important;
+    }
+}
+
+/* ---------------------------------------------------- 인쇄 (PDF 추출) */
+
+/* 디자인 캔버스를 그대로 한 페이지로 잡아 슬라이드가 잘리지 않게 한다.
+ * 1rem = 20px 로 고정하면 64rem = 1280px, 36rem = 720px 로 정확히 맞는다. */
+@page {
+    size: 1280px 720px;
+    margin: 0;
+}
+
+@media print {
+    html {
+        font-size: 20px;
+    }
+
+    body {
+        height: auto;
+        overflow: visible;
+        background: #fff;
+    }
+
+    .deck-bar,
+    .deck-rail,
+    .deck-sr {
+        display: none !important;
+    }
+
+    .deck-viewport {
+        display: block;
+        overflow: visible;
+        padding: 0;
+    }
+
+    .deck-stage {
+        width: 1280px;
+        height: auto;
+        box-shadow: none;
+    }
+
+    /* 화면에서는 현재 장만 보이지만, 인쇄에서는 모든 장을 순서대로 펼친다. */
+    .slide {
+        position: relative;
+        inset: auto;
+        width: 1280px;
+        height: 720px;
+        overflow: hidden;
+        opacity: 1 !important;
+        visibility: visible !important;
+        transform: none !important;
+        break-after: page;
+        page-break-after: always;
+        -webkit-print-color-adjust: exact;
+        print-color-adjust: exact;
+    }
+
+    /* 마지막 장 뒤에 빈 페이지가 생기지 않게 한다. */
+    .slide:last-child {
+        break-after: auto;
+        page-break-after: auto;
+    }
+}

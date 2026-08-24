@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="ko">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>이력서 버전 | 오현석</title>
+    <meta name="description" content="지원 분야에 맞춰 작성한 이력서 버전 목록입니다.">
+    <meta name="referrer" content="strict-origin-when-cross-origin">
+    <meta name="theme-color" content="#F7F6F3" media="(prefers-color-scheme: light)">
+    <meta name="theme-color" content="#101317" media="(prefers-color-scheme: dark)">
+    <link rel="icon" href="../assets/favicon.svg" type="image/svg+xml">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&family=Noto+Sans+KR:wght@400;600;700&display=swap"
+        rel="stylesheet">
+    <link rel="stylesheet" href="../css/site.css">
+</head>
+
+<body data-title-key="cv_list_page_title">
+    <a class="skip-link" href="#main" data-key="skip_link">본문으로 건너뛰기</a>
+
+    <header class="site-header">
+        <div class="container">
+            <a class="brand" href="../">
+                <img class="brand-mark" src="../assets/favicon.svg" alt="" width="30" height="30">
+                <span class="brand-name">HYUNSEOK OH</span>
+                <span class="brand-role" data-key="brand_role">PORTFOLIO</span>
+            </a>
+
+            <nav class="site-nav" id="siteNav">
+                <ul class="nav-list">
+                    <li><a href="../#about" data-key="nav_about">소개</a></li>
+                    <li><a href="../cv/" data-key="nav_cv">이력서</a></li>
+                    <li><a href="../coverletter/" data-key="nav_coverletter">자기소개서</a></li>
+                    <li><a href="../portfolio/" data-key="nav_portfolio">포트폴리오</a></li>
+                    <li><a href="../#contact" data-key="nav_contact">연락처</a></li>
+                </ul>
+                <div class="lang-switch" role="group" aria-label="언어 선택">
+                    <button type="button" class="lang-btn" data-lang="ko">KO</button>
+                    <button type="button" class="lang-btn" data-lang="en">EN</button>
+                </div>
+            </nav>
+
+            <button type="button" class="menu-toggle" aria-expanded="false" aria-controls="siteNav"
+                aria-label="메뉴 열기" data-key-aria-label="nav_menu">☰</button>
+        </div>
+    </header>
+
+    <main id="main">
+        <!-- 카드는 js/version-list.js 가 applications.js 의 목록에서 이 문서 몫만 추려 그린다. -->
+        <section class="section section-lead-in">
+            <div class="container">
+                <div class="section-head">
+                    <p class="section-kicker" data-key="versions_kicker">VERSIONS</p>
+                    <h1 class="section-title" data-key="cv_list_title">이력서 버전</h1>
+                    <p class="section-lead" data-key="cv_list_lead">버전을 고르면 해당 문서로 이동합니다.</p>
+                </div>
+
+                <div class="app-grid" id="versionList" data-doc="cv"></div>
+
+                <noscript>
+                    <p class="section-lead">버전 목록은 자바스크립트로 그립니다.
+                        <a href="default/">기본판</a>은 바로 열 수 있습니다.</p>
+                </noscript>
+            </div>
+        </section>
+    </main>
+
+    <footer class="site-footer">
+        <div class="container">
+            <p>&copy; <span id="footerYear">2026</span> Hyunseok Oh · <span data-key="footer_note">이 사이트는 GitHub Pages 로
+                    배포됩니다.</span></p>
+            <div class="footer-links">
+                <a href="https://github.com/codepump-net/cv-portfolio" target="_blank" rel="noopener"
+                    data-key="footer_source">소스 저장소</a>
+            </div>
+        </div>
+    </footer>
+
+    <!-- 로드 순서: 목록 데이터 → 렌더러 → i18n(언어를 정하고 렌더러를 부른다) -->
+    <script src="../applications.js"></script>
+    <script src="../js/version-list.js"></script>
+    <script src="../js/i18n.js"></script>
+    <script src="../js/main.js"></script>
+</body>
+
+</html>

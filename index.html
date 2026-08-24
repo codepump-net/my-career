@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<html lang="ko">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Hyunseok Oh | 포트폴리오</title>
+    <meta name="description" content="이력서 · 자기소개서 · 포트폴리오를 슬라이드로 열람하고 PDF 로 내보낼 수 있는 개인 포트폴리오 사이트입니다.">
+    <meta name="referrer" content="strict-origin-when-cross-origin">
+    <meta name="theme-color" content="#F7F6F3" media="(prefers-color-scheme: light)">
+    <meta name="theme-color" content="#101317" media="(prefers-color-scheme: dark)">
+    <meta property="og:type" content="website">
+    <meta property="og:title" content="Hyunseok Oh | 포트폴리오">
+    <meta property="og:description" content="이력서 · 자기소개서 · 포트폴리오를 슬라이드로 열람하고 PDF 로 내보낼 수 있는 개인 포트폴리오 사이트입니다.">
+    <!-- TODO: 대표 이미지가 준비되면 og:image 를 추가한다 (assets/og.png, 1200x630). -->
+    <link rel="icon" href="assets/favicon.svg" type="image/svg+xml">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&family=Noto+Sans+KR:wght@400;600;700&display=swap"
+        rel="stylesheet">
+    <link rel="stylesheet" href="css/site.css">
+</head>
+
+<body data-title-key="page_title">
+    <a class="skip-link" href="#main" data-key="skip_link">본문으로 건너뛰기</a>
+
+    <header class="site-header">
+        <div class="container">
+            <a class="brand" href="./">
+                <img class="brand-mark" src="assets/favicon.svg" alt="" width="30" height="30">
+                <span class="brand-name">HYUNSEOK OH</span>
+                <span class="brand-role" data-key="brand_role">PORTFOLIO</span>
+            </a>
+
+            <nav class="site-nav" id="siteNav">
+                <ul class="nav-list">
+                    <li><a href="#about" data-key="nav_about">소개</a></li>
+                    <li><a href="cv/" data-key="nav_cv">이력서</a></li>
+                    <li><a href="coverletter/" data-key="nav_coverletter">자기소개서</a></li>
+                    <li><a href="portfolio/" data-key="nav_portfolio">포트폴리오</a></li>
+                    <li><a href="#contact" data-key="nav_contact">연락처</a></li>
+                </ul>
+                <div class="lang-switch" role="group" aria-label="언어 선택">
+                    <button type="button" class="lang-btn" data-lang="ko">KO</button>
+                    <button type="button" class="lang-btn" data-lang="en">EN</button>
+                </div>
+            </nav>
+
+            <button type="button" class="menu-toggle" aria-expanded="false" aria-controls="siteNav"
+                aria-label="메뉴 열기" data-key-aria-label="nav_menu">☰</button>
+        </div>
+    </header>
+
+    <main id="main">
+
+        <!-- ===================== 히어로 ===================== -->
+        <section class="hero">
+            <div class="container">
+                <p class="hero-eyebrow" data-key="hero_eyebrow">내용 준비 중</p>
+                <h1 class="hero-title" data-key="hero_title">이력과 작업을 슬라이드로 정리하고, 그대로 PDF 로 내보냅니다.</h1>
+                <p class="hero-lead" data-key="hero_lead">이 사이트는 이력서 · 자기소개서 · 포트폴리오를 웹에서 바로 열람할 수 있게 만든 개인
+                    포트폴리오입니다. 이력서와 자기소개서는 A4 세로 문서로, 포트폴리오는 16:9 슬라이드로 구성되며, 어느 쪽이든 같은 화면을 PDF 로 저장해 제출용으로 쓸 수 있습니다.</p>
+                <div class="hero-actions">
+                    <a class="btn btn-primary" href="cv/" data-key="hero_cta_primary">이력서 보기</a>
+                    <a class="btn" href="portfolio/" data-key="hero_cta_secondary">포트폴리오 보기</a>
+                </div>
+            </div>
+        </section>
+
+        <!-- ===================== 지원 버전 ===================== -->
+        <!-- 카드는 js/applications.js 가 applications.js 의 목록으로 그린다.
+             지원 한 건 = 카드 하나 = 이력서·자기소개서·포트폴리오 세 문서의 조합. -->
+        <section class="section" id="applications">
+            <div class="container">
+                <div class="section-head">
+                    <p class="section-kicker" data-key="apps_kicker">APPLICATIONS</p>
+                    <h2 class="section-title" data-key="apps_title">지원 버전</h2>
+                    <p class="section-lead" data-key="apps_lead">지원처에 맞춰 이력서와 자기소개서를 따로 씁니다. 경력 사실은 한 벌만 두고 배치와
+                        강조만 버전마다 다릅니다. 어느 문서든 상단 PDF 버튼으로 전체를 내보냅니다.</p>
+                </div>
+
+                <div class="app-grid" id="applicationList"></div>
+
+                <noscript>
+                    <p class="section-lead">
+                        지원 버전 목록은 자바스크립트로 그립니다.
+                        <a href="cv/">이력서</a> · <a href="coverletter/">자기소개서</a> ·
+                        <a href="portfolio/">포트폴리오</a> 기본판은 바로 열 수 있습니다.
+                    </p>
+                </noscript>
+            </div>
+        </section>
+
+        <!-- ===================== 소개 ===================== -->
+        <section class="section" id="about">
+            <div class="container">
+                <div class="section-head">
+                    <p class="section-kicker" data-key="about_kicker">ABOUT</p>
+                    <h2 class="section-title" data-key="about_title">소개</h2>
+                </div>
+
+                <!-- 내용이 확정되면 이 블록을 통째로 교체한다. -->
+                <div class="pending-block">
+                    <div>
+                        <p class="pending-label" data-key="pending_label">CONTENT PENDING</p>
+                        <p class="pending-copy" data-key="about_pending_copy">자기소개 문단이 들어갈 자리입니다. 어떤 일을 해 왔고 지금 무엇에
+                            관심이 있는지, 세 문단 안으로 정리할 예정입니다.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- ===================== 연락처 ===================== -->
+        <section class="section" id="contact">
+            <div class="container">
+                <div class="section-head">
+                    <p class="section-kicker" data-key="contact_kicker">CONTACT</p>
+                    <h2 class="section-title" data-key="contact_title">연락처</h2>
+                    <p class="section-lead" data-key="contact_lead">연락 가능한 경로를 정리해 둘 자리입니다. 실제 값은 내용 작성 단계에서 채웁니다.
+                    </p>
+                </div>
+
+                <ul class="contact-list">
+                    <li class="contact-item">
+                        <p class="contact-label" data-key="contact_email_label">EMAIL</p>
+                        <p class="contact-value" data-key="contact_pending_value">작성 예정</p>
+                    </li>
+                    <li class="contact-item">
+                        <p class="contact-label" data-key="contact_github_label">GITHUB</p>
+                        <p class="contact-value" data-key="contact_pending_value">작성 예정</p>
+                    </li>
+                    <li class="contact-item">
+                        <p class="contact-label" data-key="contact_etc_label">그 외</p>
+                        <p class="contact-value" data-key="contact_pending_value">작성 예정</p>
+                    </li>
+                </ul>
+            </div>
+        </section>
+
+    </main>
+
+    <footer class="site-footer">
+        <div class="container">
+            <p>&copy; <span id="footerYear">2026</span> Hyunseok Oh · <span data-key="footer_note">이 사이트는 GitHub Pages 로
+                    배포됩니다.</span></p>
+            <div class="footer-links">
+                <a href="https://github.com/codepump-net/cv-portfolio" target="_blank" rel="noopener"
+                    data-key="footer_source">소스 저장소</a>
+            </div>
+        </div>
+    </footer>
+
+    <!-- 로드 순서: 목록 데이터 → 렌더러 → i18n(언어를 정하고 렌더러를 부른다) -->
+    <script src="applications.js"></script>
+    <script src="js/applications.js"></script>
+    <script src="js/i18n.js"></script>
+    <script src="js/main.js"></script>
+</body>
+
+</html>

@@ -1,0 +1,54 @@
+{
+  "_": "복사해서 spec.json 으로. 항목 하나 = 영상 하나. 시나리오는 docs/applications/overdare-portfolio-video.md 3절. 경로는 저장소 루트 기준. in/out 은 '초' · '분:초' · '시:분:초'.",
+
+  "videos": [
+    {
+      "output": "portfolio/overdare/assets/tfr-gameplay.mp4",
+      "intro": { "title": "Tower Flood Race", "subtitle": "ROBLOX · 2026.01 – · 11.05M visits" },
+      "clips": [
+        { "src": "raw/tfr/cold-open.mp4", "in": "0:00", "out": "0:03" },
+        { "src": "raw/tfr/run-01.mp4",    "in": "0:12", "out": "0:18", "caption": "랜덤 타워 — 매판 다르다" },
+        { "src": "raw/tfr/run-02.mp4",    "in": "1:03", "out": "1:07" },
+        { "src": "raw/tfr/run-03.mp4",    "in": "0:40", "out": "0:52", "caption": "물에 잡히기 직전" }
+      ],
+      "outro": { "title": "codepump-net.github.io/cv-portfolio" }
+    },
+
+    {
+      "output": "portfolio/overdare/assets/tfr-pipeline.mp4",
+      "intro": { "title": "3인 스튜디오 · 라이브 6종", "subtitle": "어떻게 — 제작 파이프라인 워크스루", "seconds": 3 },
+      "clips": [
+        { "src": "raw/pipeline/dashboard.mp4", "in": "0:00", "out": "0:12", "caption": "지표에서 문제를 찾는다 — 사람" },
+        { "src": "raw/pipeline/session.mp4",   "in": "0:00", "out": "0:20", "caption": "프롬프트 — 무엇을 만들지는 사람이 정한다" },
+        { "src": "raw/pipeline/session.mp4",   "in": "0:20", "out": "4:00", "speed": 6, "caption": "에이전트 작업 (6배속)" },
+        { "src": "raw/pipeline/session.mp4",   "in": "4:00", "out": "4:30", "caption": "산출물" },
+        { "src": "raw/pipeline/review.mp4",    "in": "0:00", "out": "0:30", "caption": "검토 — 이 부분은 되돌렸다" },
+        { "src": "raw/pipeline/ingame.mp4",    "in": "0:00", "out": "0:25", "caption": "배포 → 인게임" }
+      ],
+      "outro": { "title": "기획 → 배포 N시간 · 주 N회 반복", "seconds": 3 }
+    },
+
+    {
+      "output": "portfolio/overdare/assets/water-colosseum.mp4",
+      "intro": { "title": "Water Colosseum", "subtitle": "UEFN (Unreal Editor for Fortnite) · 플랫폼 검증 프로토타입" },
+      "clips": [
+        { "src": "raw/uefn/editor-viewport.mp4", "in": "0:05", "out": "0:12", "caption": "UEFN 에디터" },
+        { "src": "raw/uefn/editor-verse.mp4",    "in": "0:00", "out": "0:08", "caption": "Verse" },
+        { "src": "raw/uefn/gameplay.mp4",        "in": "0:30", "out": "0:47", "caption": "플랫폼 검증 프로토타입" },
+        { "src": "raw/uefn/gameplay.mp4",        "in": "0:47", "out": "0:52", "caption": "검증하려던 것: X" },
+        { "src": "raw/uefn/gameplay.mp4",        "in": "0:52", "out": "0:57", "caption": "발견: Y" },
+        { "src": "raw/uefn/gameplay.mp4",        "in": "0:57", "out": "1:02", "caption": "결정: Z" }
+      ],
+      "outro": { "title": "codepump-net.github.io/cv-portfolio" }
+    },
+
+    {
+      "output": "portfolio/overdare/assets/1million-land.mp4",
+      "intro": { "title": "1MILLION Land", "subtitle": "SKT ifland · 2021 · 9명" },
+      "clips": [
+        { "src": "raw/ifland/archive.mp4", "in": "0:10", "out": "0:30", "caption": "2021 · 9명" }
+      ],
+      "outro": { "title": "2026 · ROBLOX 6종 · 3명", "seconds": 3 }
+    }
+  ]
+}

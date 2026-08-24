@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="ko">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>자기소개서 | 오현석</title>
+    <meta name="description" content="오현석 자기소개서 — OVERDARE Technical Product Manager 지원용.">
+    <meta name="referrer" content="strict-origin-when-cross-origin">
+    <meta name="theme-color" content="#14171B">
+    <link rel="icon" href="../../assets/favicon.svg" type="image/svg+xml">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&family=Noto+Sans+KR:wght@400;600;700&display=swap"
+        rel="stylesheet">
+    <link rel="stylesheet" href="../../paper/shared/paper.css">
+</head>
+
+<body>
+    <header class="paper-bar">
+        <a class="paper-wordmark" href="../" data-doc-key-aria-label="ui_versions">HYUNSEOK OH</a>
+        <div class="paper-tools">
+            <div class="paper-langs" role="group" aria-label="언어 선택" data-doc-key-aria-label="ui_lang_group">
+                <button type="button" class="paper-lang" data-lang="ko">KO</button>
+                <span class="paper-lang-sep" aria-hidden="true">|</span>
+                <button type="button" class="paper-lang" data-lang="en">EN</button>
+            </div>
+            <button type="button" class="paper-tool" id="paperPdf" data-doc-key-title="ui_pdf">
+                <svg class="paper-tool-icon" viewBox="0 0 24 24" aria-hidden="true">
+                    <path d="M6 9V3h12v6M6 18H4v-6h16v6h-2M8 14h8v7H8z" />
+                </svg>
+                <span data-doc-key="ui_pdf_label">PDF</span>
+            </button>
+        </div>
+    </header>
+
+    <!-- 본문은 render.js 가 ../data.js(정본) + version.js(이 버전의 구성)로 그린다.
+         버전 목록: ../  ·  작성 규칙: paper/README.md -->
+    <main class="paper-pages" id="paperPages">
+        <noscript>
+            <div class="sheet">
+                <div class="sheet-body">
+                    <p class="doc-text">이 문서는 자바스크립트로 구성됩니다. 브라우저에서 자바스크립트를 허용한 뒤 다시 열어 주세요.</p>
+                </div>
+            </div>
+        </noscript>
+    </main>
+
+    <p class="paper-sr" aria-live="polite" id="paperAnnounce"></p>
+
+    <script src="../../paper/shared/render.js"></script>
+    <script src="../data.js"></script>
+    <script src="version.js"></script>
+    <script src="../../paper/shared/paper.js"></script>
+</body>
+
+</html>

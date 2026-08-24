@@ -1,0 +1,21 @@
+# 참고용 원본 저장소 (별도 git 저장소이며 이 사이트로 배포하지 않는다)
+nnn-games-website/
+
+# OS / 편집기
+.DS_Store
+Thumbs.db
+.idea/
+.vscode/
+*.swp
+
+# 로그 / 환경 변수
+*.log
+.env
+.env.*
+!.env.example
+
+# 포트폴리오 영상 원본. 결과물(portfolio/*/assets/*.mp4)만 커밋한다
+raw/
+
+# 의존성 (현재 무빌드 구성이라 사용하지 않지만, 도입 시를 대비해 둔다)
+node_modules/

@@ -1,0 +1,380 @@
+<!DOCTYPE html>
+<html lang="ko">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+    <title data-deck-key="ui_page_title">포트폴리오 | 오현석</title>
+    <meta name="description" content="오현석 포트폴리오 — OVERDARE Technical Product Manager 지원용. 5개 UGC 플랫폼 실적과 AI 제작 파이프라인.">
+    <meta name="referrer" content="strict-origin-when-cross-origin">
+    <meta name="theme-color" content="#14171B">
+    <link rel="icon" href="../../assets/favicon.svg" type="image/svg+xml">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&family=Noto+Sans+KR:wght@400;600;700&display=swap"
+        rel="stylesheet">
+    <link rel="stylesheet" href="../../slides/shared/deck.css">
+</head>
+
+<body>
+    <div class="deck">
+        <div class="deck-rail" aria-hidden="true"><span class="deck-rail-fill" id="deckRail"></span></div>
+
+        <header class="deck-bar deck-bar-top">
+            <a class="deck-wordmark" href="../" data-deck-key-aria-label="ui_versions">HYUNSEOK OH</a>
+            <div class="deck-tools">
+                <div class="deck-langs" role="group" aria-label="언어 선택" data-deck-key-aria-label="ui_lang_group">
+                    <button type="button" class="deck-lang" data-lang="ko">KO</button>
+                    <span class="deck-lang-sep" aria-hidden="true">|</span>
+                    <button type="button" class="deck-lang" data-lang="en">EN</button>
+                </div>
+                <button type="button" class="deck-tool" id="deckPdf" aria-label="PDF 로 저장">
+                    <svg class="deck-tool-icon" viewBox="0 0 24 24" aria-hidden="true">
+                        <path d="M6 9V3h12v6M6 18H4v-6h16v6h-2M8 14h8v7H8z" />
+                    </svg>
+                </button>
+                <button type="button" class="deck-tool" id="deckFull" aria-pressed="false" aria-label="전체화면">
+                    <svg class="deck-tool-icon" data-icon="enter" viewBox="0 0 24 24" aria-hidden="true">
+                        <path d="M4 9V4h5M20 9V4h-5M4 15v5h5M20 15v5h-5" />
+                    </svg>
+                    <svg class="deck-tool-icon" data-icon="exit" viewBox="0 0 24 24" aria-hidden="true">
+                        <path d="M9 4v5H4M15 4v5h5M9 20v-5H4M15 20v-5h5" />
+                    </svg>
+                </button>
+            </div>
+        </header>
+
+        <!-- 장 구성의 근거: docs/applications/overdare-tpm.md 4.4절 · 순서: version.js
+             각 장의 작성 안내는 작성자용 메모라 번역하지 않는다(data-deck-key 없음).
+             내용을 채울 때 .temp-placeholder 블록을 실제 레이아웃으로 교체한다. -->
+        <div class="deck-viewport" id="deckViewport">
+            <div class="deck-stage" id="deckStage" role="group" aria-label="포트폴리오 슬라이드"
+                data-deck-key-aria-label="ui_deck_label">
+
+                <!-- ===================== 표지 ===================== -->
+                <section class="slide temp-cover" data-slide="cover" data-theme="accent" role="region"
+                    aria-roledescription="slide">
+                    <div>
+                        <p class="slide-kicker">PORTFOLIO — OVERDARE TECHNICAL PRODUCT MANAGER</p>
+                        <h1 class="slide-title">5개 플랫폼 · AI 제작 파이프라인</h1>
+                        <p class="slide-lead">표지 제목은 숫자로 — 13.3M 방문 · 5개 플랫폼 · 3인. 부제 한 줄: "AI 가 설계에 없던 플랫폼 다섯 곳에서
+                            AI 기반 제작을 했다". 여기에 "AI" 라는 단어가 첫 단어로 오지 않게.</p>
+                        <p class="temp-cover-meta">오현석 · 2026.08 · 이력서 · 자기소개서 링크</p>
+                    </div>
+                    <p class="temp-footnote">작성 안내 — 내용을 채우면 이 문구를 지운다</p>
+                </section>
+
+                <!-- ===================== 한눈에 ===================== -->
+                <section class="slide" data-slide="glance" data-theme="paper" role="region" aria-roledescription="slide">
+                    <p class="slide-kicker">AT A GLANCE</p>
+                    <h2 class="slide-title">5개 플랫폼, 11개 프로젝트</h2>
+                    <div class="temp-placeholder">
+                        <div class="temp-placeholder-main">
+                            <p class="temp-placeholder-label">작성 안내</p>
+                            <p class="temp-placeholder-title">표 하나. 읽는 쪽은 이 장만 보고 나머지를 볼지 정한다</p>
+                            <ul class="temp-placeholder-list">
+                                <li>행 = 플랫폼(ROBLOX / ZEPETO / UEFN / Meta Horizon / ifland). 열 = 프로젝트 · 시기 · 상태 · 지표 · 제작 방식.</li>
+                                <li>상태 열에 라이브 / 검증 프로토타입 / 파트너십을 구분한다. 지표 없는 칸은 "—". 프로토타입을 라이브처럼 보이게 하면 나머지 숫자도 의심받는다.</li>
+                                <li>제작 방식 열에 "Claude Code 에이전트" 가 네 줄에 반복되면 "같은 파이프라인이 네 툴체인에서" 가 저절로 읽힌다. ifland(2021)만 이전이다.</li>
+                                <li>이력서의 "UGC 플랫폼 실적" 절과 같은 내용이어야 한다. 둘이 어긋나면 안 된다.</li>
+                            </ul>
+                        </div>
+                        <div class="temp-placeholder-side" aria-hidden="true"></div>
+                    </div>
+                </section>
+
+                <!-- ===================== 01 TFR — 숫자 ===================== -->
+                <section class="slide" data-slide="tfr-numbers" data-theme="paper" role="region"
+                    aria-roledescription="slide">
+                    <p class="slide-kicker">01 TOWER FLOOD RACE</p>
+                    <h2 class="slide-title">7개월, 11M</h2>
+                    <div class="temp-placeholder">
+                        <div class="temp-placeholder-main">
+                            <p class="temp-placeholder-label">작성 안내</p>
+                            <p class="temp-placeholder-title">이 장에 "AI" 라는 단어가 없다. 숫자 먼저</p>
+                            <ul class="temp-placeholder-list">
+                                <li>지표 곡선 — 2026-01 출시부터 월별 누적 방문. 11,051,027(2026-08-23 기준, projects.json).</li>
+                                <li>방문 외 숫자 하나 더 — D1/D7 리텐션, 동시접속 피크, 수익 중 하나. 방문만 있으면 "봇 아니냐" 가 나온다.</li>
+                                <li>유입 경로 — Roblox 추천 / 광고 / 커뮤니티 비율. 있으면 곡선에 이벤트 표시.</li>
+                                <li>3인 스튜디오라는 사실을 이 장에 한 번 적는다. 다음 장의 파이프라인이 "왜 필요했나" 의 답이 된다.</li>
+                            </ul>
+                        </div>
+                        <div class="temp-placeholder-side" aria-hidden="true"></div>
+                    </div>
+                </section>
+
+                <!-- ===================== 01 TFR — 파이프라인 ===================== -->
+                <section class="slide" data-slide="tfr-pipeline" data-theme="paper" role="region"
+                    aria-roledescription="slide">
+                    <p class="slide-kicker">01 TOWER FLOOD RACE</p>
+                    <h2 class="slide-title">제작 파이프라인</h2>
+                    <div class="temp-placeholder">
+                        <div class="temp-placeholder-main">
+                            <p class="temp-placeholder-label">작성 안내</p>
+                            <p class="temp-placeholder-title">다이어그램 하나. "AI 로 만들었다" 가 아니라 "이 시스템을 설계했다"</p>
+                            <ul class="temp-placeholder-list">
+                                <li>단계: 컨셉·코어 루프 → 게임 로직(Luau) → 레벨 → 에셋 → UI·카피 → QA → 출시 → 라이브 콘텐츠.</li>
+                                <li>단계마다 세 칸 — 에이전트가 한 것 / 사람이 한 것 / 검토 지점. 도구명을 적는다(Claude Code, 그 외 실제로 쓴 것).</li>
+                                <li>레벨의 "절차적 생성" 은 알고리즘인지 AI 인지 구분한다. 섞으면 나머지 주장도 의심받는다.</li>
+                                <li>이 다이어그램이 필수요건 2(복잡한 시스템 구조화)의 직접 증거다. 검토 메모 2절 Q2 의 표를 먼저 채우고 그대로 옮긴다.</li>
+                            </ul>
+                        </div>
+                        <div class="temp-placeholder-side" aria-hidden="true"></div>
+                    </div>
+                </section>
+
+                <!-- ===================== 01 TFR — 지침 문서 ===================== -->
+                <section class="slide" data-slide="tfr-rules" data-theme="paper" role="region"
+                    aria-roledescription="slide">
+                    <p class="slide-kicker">01 TOWER FLOOD RACE</p>
+                    <h2 class="slide-title">에이전트 지침 문서</h2>
+                    <div class="temp-placeholder">
+                        <div class="temp-placeholder-main">
+                            <p class="temp-placeholder-label">작성 안내</p>
+                            <p class="temp-placeholder-title">실물 발췌. TPM 은 문서로 일한다 — 이것이 필수요건 3 의 증거</p>
+                            <ul class="temp-placeholder-list">
+                                <li>에이전트에게 준 규칙·지침 파일(스튜디오 저장소의 .ai/rule.md 류) 1~2쪽 캡처. 읽을 수 있는 크기로.</li>
+                                <li>무엇을 규정했나 — 코드 규약 / 금지 사항 / 검토 요청 조건 / 플랫폼 제약. 항목별 한 줄.</li>
+                                <li>지침이 어떻게 진화했나 — 초기 버전과 현재의 차이 한 줄. 실패가 규칙이 된 사례가 있으면 그것.</li>
+                                <li>파이프라인 워크스루 영상(2–3분, 자막) 링크를 여기 둔다. Claude Code 세션 → 산출물 → 인게임. "보여 줄 수 있나" 의 답.</li>
+                            </ul>
+                        </div>
+                        <div class="temp-placeholder-side" aria-hidden="true"></div>
+                    </div>
+                </section>
+
+                <!-- ===================== 01 TFR — 맡기지 않은 것 ===================== -->
+                <section class="slide" data-slide="tfr-decisions" data-theme="paper" role="region"
+                    aria-roledescription="slide">
+                    <p class="slide-kicker">01 TOWER FLOOD RACE</p>
+                    <h2 class="slide-title">AI 에 맡기지 않은 것</h2>
+                    <div class="temp-placeholder">
+                        <div class="temp-placeholder-main">
+                            <p class="temp-placeholder-label">작성 안내</p>
+                            <p class="temp-placeholder-title">TPM 면접관이 가장 보고 싶은 장. 판단이 사람에게 있음을 보인다</p>
+                            <ul class="temp-placeholder-list">
+                                <li>3~5개 항목. 각각 세 줄 — 무엇을 / 왜 사람이 / 그 결과. 예: "코어 루프 결정 — 에이전트 제안 N개 중 사람이 선택. 지표로만 판단 불가. 결과 X".</li>
+                                <li>실패한 위임 하나를 반드시 — AI 에 맡겼다가 되돌린 것. 그것이 기준을 만든 계기다. 실패가 없으면 기준이 어디서 왔는지 설명이 안 된다.</li>
+                                <li>이 장이 공고 미션 ③ "AI 와 사람이 함께" 의 "함께" 가 무엇인지에 대한 답이다. 우선순위를 정할 줄 안다는 것도 여기서 읽힌다.</li>
+                                <li>자기소개서 강점 절의 "결정" 문단과 같은 내용이어야 한다.</li>
+                            </ul>
+                        </div>
+                        <div class="temp-placeholder-side" aria-hidden="true"></div>
+                    </div>
+                </section>
+
+                <!-- ===================== 01 TFR — 라이브 ===================== -->
+                <section class="slide" data-slide="tfr-liveops" data-theme="paper" role="region"
+                    aria-roledescription="slide">
+                    <p class="slide-kicker">01 TOWER FLOOD RACE</p>
+                    <h2 class="slide-title">라이브 업데이트 한 사이클</h2>
+                    <div class="temp-placeholder">
+                        <div class="temp-placeholder-main">
+                            <p class="temp-placeholder-label">작성 안내</p>
+                            <p class="temp-placeholder-title">미션 ② "빠르고 안정적으로" 의 실적</p>
+                            <ul class="temp-placeholder-list">
+                                <li>업데이트 한 건 — 지표에서 문제 발견 → 기획 → 에이전트 제작 → 검토 → 배포 → 지표 변화. 날짜와 숫자로.</li>
+                                <li>업데이트 주기(주 N회 등)와 6종 동시 운영. 3인이 이 주기를 유지한 것이 곧 파이프라인의 안정성 증거.</li>
+                                <li>게임플레이 영상 30–60초. 무음 가능. portfolio/overdare/assets/ 에 두고 &lt;video&gt; 로.</li>
+                                <li>영상은 문서를 보조한다. 영상이 주가 되면 쇼릴이고 쇼릴은 TPM 포트폴리오가 아니다.</li>
+                            </ul>
+                        </div>
+                        <div class="temp-placeholder-side" aria-hidden="true"></div>
+                    </div>
+                </section>
+
+                <!-- ===================== 02 ROBLOX ===================== -->
+                <section class="slide" data-slide="roblox-more" data-theme="paper" role="region"
+                    aria-roledescription="slide">
+                    <p class="slide-kicker">02 ROBLOX</p>
+                    <h2 class="slide-title">같은 파이프라인, 더 많은 출력</h2>
+                    <div class="temp-placeholder">
+                        <div class="temp-placeholder-main">
+                            <p class="temp-placeholder-label">작성 안내</p>
+                            <p class="temp-placeholder-title">개별 성공담이 아니라 반복성의 증거</p>
+                            <ul class="temp-placeholder-list">
+                                <li>Free UGC RNG(0.27M, 2026-05) · Fruit Battles(0.06M, 2026-04) — 숫자가 작은 게임을 크게 만들지 않는다. "같은 파이프라인이 N주 만에 다음 게임을 냈다" 가 요점. 제작 기간을 적는다.</li>
+                                <li>자체 제작 UGC 10종 — 아바타 아이템. 커뮤니티 165K. OVERDARE 도 아바타 커스터마이징이 있다 — 게임 외 UGC 경험.</li>
+                                <li>라이브 6종 · 개발 중 5종 전체 목록 한 줄씩(projects.json). 합계 13.3M.</li>
+                                <li>스크린샷은 작게, 표는 크게.</li>
+                            </ul>
+                        </div>
+                        <div class="temp-placeholder-side" aria-hidden="true"></div>
+                    </div>
+                </section>
+
+                <!-- ===================== 02 ZEPETO ===================== -->
+                <section class="slide" data-slide="zepeto" data-theme="paper" role="region" aria-roledescription="slide">
+                    <p class="slide-kicker">02 ZEPETO</p>
+                    <h2 class="slide-title">Get Train · Nightmare Lab</h2>
+                    <div class="temp-placeholder">
+                        <div class="temp-placeholder-main">
+                            <p class="temp-placeholder-label">작성 안내</p>
+                            <p class="temp-placeholder-title">브랜드 IP 제약 안에서의 설계. 네이버제트 쪽 실적</p>
+                            <ul class="temp-placeholder-list">
+                                <li>Get Train — JR동일본 브랜드 월드. 600K WAU. JRE WALLET 앱 연동 캠페인. ZEPETO World Jam Fall 2023 우승. 회사 소개 덱에 있는 숫자와 배너를 그대로.</li>
+                                <li>Nightmare Lab — 시기 · 지표. ZEPETO 가 일회성이 아니라는 것.</li>
+                                <li>ZEPETO Studio 는 Unity 기반이다 — 이 툴에서 파이프라인이 Roblox 와 어떻게 달랐나 한 줄. 이것이 03 비교표의 한 행이 된다.</li>
+                                <li>영상 또는 스크린샷 2~3장.</li>
+                            </ul>
+                        </div>
+                        <div class="temp-placeholder-side" aria-hidden="true"></div>
+                    </div>
+                </section>
+
+                <!-- ===================== 02 UEFN ===================== -->
+                <section class="slide" data-slide="uefn" data-theme="paper" role="region" aria-roledescription="slide">
+                    <p class="slide-kicker">02 UEFN — UNREAL EDITOR FOR FORTNITE</p>
+                    <h2 class="slide-title">Water Colosseum</h2>
+                    <div class="temp-placeholder">
+                        <div class="temp-placeholder-main">
+                            <p class="temp-placeholder-label">작성 안내</p>
+                            <p class="temp-placeholder-title">우대요건 1 의 유일한 증거. 플랫폼 검증 프로토타입 — 요점은 게임이 아니라 툴 평가</p>
+                            <ul class="temp-placeholder-list">
+                                <li>"UEFN(Unreal Editor for Fortnite)" 이라고 정확히. UE5 에디터 워크플로 + Verse. "언리얼 엔진" 이라고 쓰지 않는다 — 읽는 쪽은 차이를 안다.</li>
+                                <li>"플랫폼 검증 프로토타입" 이라고 쓴다. "미출시" 가 아니다 — 출시하려다 못 한 게 아니라 검증하려고 만든 것이다. 읽는 쪽의 질문이 "왜 출시 안 했나" 에서 "뭘 알아냈나" 로 바뀐다.</li>
+                                <li>영상 30–60초 — 에디터·Verse 가 먼저, 플레이는 짧게, 검증 결과 세 줄로 끝낸다.</li>
+                                <li>검증에는 결과가 있어야 한다 — 무엇을 검증하려 했나 / 무엇을 발견했나 / 무엇을 결정했나. 세 줄. 없으면 "만들다 만 것", 있으면 "플랫폼 평가 보고". UEFN 은 OVERDARE 가 만드는 것과 같은 범주(UE5 기반 크리에이터 툴)라 이 세 줄이 곧 OVERDARE 스튜디오가 다르게 할 수 있는 지점이다.</li>
+                            </ul>
+                        </div>
+                        <div class="temp-placeholder-side" aria-hidden="true"></div>
+                    </div>
+                </section>
+
+                <!-- ===================== 02 META HORIZON ===================== -->
+                <section class="slide" data-slide="horizon" data-theme="paper" role="region" aria-roledescription="slide">
+                    <p class="slide-kicker">02 META HORIZON</p>
+                    <h2 class="slide-title">Slime Sanctum</h2>
+                    <div class="temp-placeholder">
+                        <div class="temp-placeholder-main">
+                            <p class="temp-placeholder-label">작성 안내</p>
+                            <p class="temp-placeholder-title">네 번째 크리에이터 툴. 플랫폼 검증 프로토타입</p>
+                            <ul class="temp-placeholder-list">
+                                <li>"플랫폼 검증 프로토타입" 이라고 쓴다. "미출시" 가 아니다.</li>
+                                <li>영상 30–60초.</li>
+                                <li>검증 목적 / 발견 / 결정 세 줄. VR 제작 툴에서 에이전트가 낄 자리가 있었나 — 이것이 03 비교표의 한 행이자 이 장의 값이다.</li>
+                            </ul>
+                        </div>
+                        <div class="temp-placeholder-side" aria-hidden="true"></div>
+                    </div>
+                </section>
+
+                <!-- ===================== 02 IFLAND ===================== -->
+                <section class="slide" data-slide="ifland" data-theme="paper" role="region" aria-roledescription="slide">
+                    <p class="slide-kicker">02 SKT IFLAND</p>
+                    <h2 class="slide-title">1MILLION Land — 파이프라인 이전</h2>
+                    <div class="temp-placeholder">
+                        <div class="temp-placeholder-main">
+                            <p class="temp-placeholder-label">작성 안내</p>
+                            <p class="temp-placeholder-title">이 장의 요점은 대비다. 생산성을 주장하지 않고 병치로 보인다</p>
+                            <ul class="temp-placeholder-list">
+                                <li>2021, SKT ifland, 9인 팀, 한국콘텐츠진흥원 과제. 원밀리언 CTO 시절. 이력서에 있는 사실 그대로.</li>
+                                <li>같은 사람이 같은 종류의 것(메타버스 월드)을 2021년엔 9인으로, 2026년엔 3인으로 여섯 개. AI 파이프라인이 그 차이다. 이 문장 하나면 된다.</li>
+                                <li>크리에이터 툴이 아니라 커스텀 개발이었다면 그렇게 적는다. "5개 플랫폼" 중 이것만 성격이 다르다 — 감추면 비교표에서 드러난다.</li>
+                                <li>스크린샷 1~2장.</li>
+                            </ul>
+                        </div>
+                        <div class="temp-placeholder-side" aria-hidden="true"></div>
+                    </div>
+                </section>
+
+                <!-- ===================== 03 툴 비교 ===================== -->
+                <section class="slide" data-slide="compare" data-theme="paper" role="region" aria-roledescription="slide">
+                    <p class="slide-kicker">03 TOOL COMPARISON</p>
+                    <h2 class="slide-title">5개 크리에이터 툴, 같은 파이프라인</h2>
+                    <div class="temp-placeholder">
+                        <div class="temp-placeholder-main">
+                            <p class="temp-placeholder-label">작성 안내</p>
+                            <p class="temp-placeholder-title">이 포트폴리오에서 가장 고유한 산출물. 다섯을 다 써 본 사람이 없다</p>
+                            <ul class="temp-placeholder-list">
+                                <li>표 하나. 행 = Roblox Studio / ZEPETO Studio / UEFN / Horizon / ifland. 열 = 스크립팅 / 에셋 반입 / 배포·심사 / 라이브 운영 / 에이전트 친화도.</li>
+                                <li>각 칸에 마찰 지점 한 줄. "좋다/나쁘다" 가 아니라 "X 를 하려면 Y 단계가 필요했다". 읽는 쪽이 그 툴을 알면 진위가 즉시 드러난다.</li>
+                                <li>필수요건 5(툴 사용자 UX 분석)와 미션 ①(제작 환경 설계)의 직접 답. 이력서에는 "썼다" 만 있고 "분석했다" 가 없다 — 이 표가 분석이다.</li>
+                                <li>마지막 행 "OVERDARE Studio" — 지원 전에 써 봤다면 채운다. 채워져 있으면 이 표가 곧 입사 후 30일 계획이다.</li>
+                            </ul>
+                        </div>
+                        <div class="temp-placeholder-side" aria-hidden="true"></div>
+                    </div>
+                </section>
+
+                <!-- ===================== 04 문서 ===================== -->
+                <section class="slide" data-slide="docs" data-theme="paper" role="region" aria-roledescription="slide">
+                    <p class="slide-kicker">04 DOCUMENTS</p>
+                    <h2 class="slide-title">기획 문서</h2>
+                    <div class="temp-placeholder">
+                        <div class="temp-placeholder-main">
+                            <p class="temp-placeholder-label">작성 안내</p>
+                            <p class="temp-placeholder-title">필수요건 4(PRD·명세·플로우차트)의 직접 증거. 이력서에 없는 것을 여기서 채운다</p>
+                            <ul class="temp-placeholder-list">
+                                <li>실물 발췌 2~3건 — TFR 기획서, Tomato Splatter 12개월 계획(jumpstart 덱), 라이브 업데이트 기획서. 에이전트 지침은 이미 앞 장에 있다.</li>
+                                <li>각 발췌에 세 줄 — 문서명 / 누구를 위해 썼나 / 무엇이 결정됐나.</li>
+                                <li>문서 페이지 캡처는 읽을 수 있는 크기로. 흐릿한 썸네일은 없는 것과 같다.</li>
+                                <li>플로우차트가 있으면 하나. 없으면 만들지 않는다 — 있던 것만.</li>
+                            </ul>
+                        </div>
+                        <div class="temp-placeholder-side" aria-hidden="true"></div>
+                    </div>
+                </section>
+
+                <!-- ===================== 마무리 ===================== -->
+                <section class="slide temp-closing" data-slide="closing" data-theme="dark" role="region"
+                    aria-roledescription="slide">
+                    <div>
+                        <p class="slide-kicker">CONTACT</p>
+                        <h2 class="slide-title">한 문장 위치</h2>
+                        <p class="slide-lead">"AI 가 설계에 없던 다섯 플랫폼에서 AI 기반 제작을 했다. 이제 AI 가 설계에 있는 플랫폼의 툴을 만들고 싶다."
+                            아래에 이메일, 이력서·자기소개서 링크.</p>
+                        <p class="temp-status">작성 안내</p>
+                    </div>
+                    <p class="temp-closing-brand">HYUNSEOK OH</p>
+                </section>
+
+                <!-- ===================== 부록 ===================== -->
+                <section class="slide" data-slide="appendix-mobile" data-theme="paper" role="region"
+                    aria-roledescription="slide">
+                    <p class="slide-kicker">APPENDIX</p>
+                    <h2 class="slide-title">2012 → 2026 — 게임 제작 14년</h2>
+                    <div class="temp-placeholder">
+                        <div class="temp-placeholder-main">
+                            <p class="temp-placeholder-label">작성 안내</p>
+                            <p class="temp-placeholder-title">"AI 없이도 만들 수 있는 사람인가" 의 답. 14년을 만들어 온 사람이 2026년에 AI 를 얹은 것</p>
+                            <ul class="temp-placeholder-list">
+                                <li>타임라인 한 줄 — 2012 HTML5 엔진·Great Stone(스프링스트림) → 2015–18 모바일 Runaway Duffy·Mine Sweeper·Commando Quest(소프트펌프) → 2018 AR 렌더링 엔진(스노우) → 2021 ifland 9명 → 2024 ZEPETO → 2026 ROBLOX 3명·AI 파이프라인.</li>
+                                <li>게임 카드 둘이 아니라 시기별 점 일곱 개. 각 점에 연도·플랫폼·한 줄. 스크린샷은 작게.</li>
+                                <li>Mine Sweeper 는 이력서에 없다 — data.js 소프트펌프 항목에 시기·플랫폼·역할을 먼저 넣는다.</li>
+                                <li>마지막 두 점(2021 9명 → 2026 3명)이 ifland 장의 대비를 한 번 더 찍는다.</li>
+                                <li>부록이라 본편 번호에 들어가지 않는다. 읽는 쪽이 안 봐도 손해 없게 — 그러나 "AI 붐" 의심이 있는 면접관은 이 장을 찾는다.</li>
+                            </ul>
+                        </div>
+                        <div class="temp-placeholder-side" aria-hidden="true"></div>
+                    </div>
+                </section>
+
+            </div>
+        </div>
+
+        <footer class="deck-bar deck-bar-bottom">
+            <button type="button" class="deck-nav" id="deckPrev">
+                <span aria-hidden="true">←</span><span data-deck-key="ui_prev">이전</span>
+            </button>
+            <div class="deck-center">
+                <div class="deck-dots" id="deckDots"></div>
+                <p class="deck-counter">
+                    <b id="deckCurrent">01</b><span id="deckSep" aria-hidden="true"> / </span><span
+                        id="deckTotal">15</span>
+                </p>
+            </div>
+            <button type="button" class="deck-nav deck-nav-primary" id="deckNext">
+                <span id="deckNextLabel">다음</span><span aria-hidden="true">→</span>
+            </button>
+        </footer>
+
+        <p class="deck-sr" aria-live="polite" id="deckAnnounce"></p>
+    </div>
+
+    <script src="../data.js"></script>
+    <script src="version.js"></script>
+    <script src="../../slides/shared/deck.js"></script>
+</body>
+
+</html>

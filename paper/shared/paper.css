@@ -1,0 +1,568 @@
+/*
+ * 공용 A4 세로 문서 셸 — /cv, /coverletter 가 함께 쓴다.
+ * (16:9 발표 덱은 slides/shared/deck.css 를 쓴다. 두 체계는 서로 독립적이다.)
+ *
+ * 이 파일이 책임지는 것
+ *  - 워드/구글 문서처럼 보이는 A4 시트 화면 (회색 배경 위에 흰 종이)
+ *  - 인쇄 시 A4 세로 + 여백 지정. 페이지 분할은 브라우저에 맡긴다
+ *  - 항목이 페이지 경계에서 쪼개지지 않도록 하는 분할 제어
+ *  - 내용 확정 전까지 쓰는 임시 블록(doc-pending)
+ *
+ * 치수 단위 원칙 — 슬라이드 덱과 반대다.
+ *   덱은 화면 크기에 따라 배율이 변하므로 rem 을 쓴다.
+ *   문서는 실제 종이에 찍히는 물리 크기가 고정이어야 하므로 px 를 쓴다.
+ *   96dpi 기준 1px = 1/96 인치라, 화면과 인쇄가 같은 크기로 맞는다.
+ */
+
+:root {
+    --accent: #e2542f;
+    --accent-ink: #7d2a12;
+    --ink: #15181d;
+    --ink-muted: #5b6472;
+    --ink-faint: #8b94a3;
+    --line: #dcd8d1;
+    --shell: #14171b;
+    --canvas: #d7d4cf;
+
+    /* A4 210x297mm @96dpi */
+    --sheet-w: 794px;
+    --sheet-h: 1123px;
+    --margin-x: 60px;
+    /* 16mm */
+    --margin-y: 68px;
+    /* 18mm */
+}
+
+*,
+*::before,
+*::after {
+    box-sizing: border-box;
+}
+
+body {
+    margin: 0;
+    background: var(--canvas);
+    color: var(--ink);
+    font-family: Inter, "Noto Sans KR", system-ui, -apple-system, sans-serif;
+    /* 화면과 인쇄가 같은 값이어야 한다. 여기만 바꾸면 한쪽만 촘촘해져 장수가 어긋난다. */
+    font-size: 13.5px;
+    line-height: 1.8;
+    -webkit-font-smoothing: antialiased;
+}
+
+h1,
+h2,
+h3,
+p,
+ul {
+    margin: 0;
+}
+
+ul {
+    padding: 0;
+    list-style: none;
+}
+
+a {
+    color: inherit;
+}
+
+.paper-sr {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    overflow: hidden;
+    clip: rect(0 0 0 0);
+    clip-path: inset(50%);
+    white-space: nowrap;
+}
+
+/* --------------------------------------------------------- 상단 바 */
+
+.paper-bar {
+    position: sticky;
+    top: 0;
+    z-index: 20;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 12px;
+    height: 48px;
+    padding: 0 16px;
+    background: var(--shell);
+}
+
+.paper-wordmark {
+    color: #a8b0ba;
+    font: 700 12px/1 Inter, sans-serif;
+    letter-spacing: .18em;
+    text-decoration: none;
+    transition: color .16s ease;
+}
+
+.paper-wordmark:hover {
+    color: #fff;
+}
+
+.paper-tools,
+.paper-langs {
+    display: flex;
+    align-items: center;
+}
+
+.paper-tools {
+    gap: 6px;
+}
+
+.paper-langs {
+    gap: 2px;
+}
+
+.paper-lang,
+.paper-tool {
+    font: inherit;
+    border: 0;
+    background: none;
+    cursor: pointer;
+}
+
+.paper-lang {
+    padding: 5px 9px;
+    border-radius: 7px;
+    color: #98a2ad;
+    font: 600 12px/1 Inter, sans-serif;
+}
+
+.paper-lang:hover {
+    color: #fff;
+}
+
+.paper-lang.is-active {
+    background: var(--accent);
+    color: #fff;
+}
+
+.paper-lang-sep {
+    color: #3a4149;
+    font-size: 11px;
+}
+
+.paper-tool {
+    display: inline-flex;
+    align-items: center;
+    gap: 7px;
+    height: 30px;
+    padding: 0 12px;
+    border-radius: 8px;
+    background: var(--accent);
+    color: #fff;
+    font: 600 12px/1 Inter, "Noto Sans KR", sans-serif;
+}
+
+.paper-tool:hover {
+    background: #f0714c;
+}
+
+.paper-tool-icon {
+    width: 15px;
+    height: 15px;
+    fill: none;
+    stroke: currentColor;
+    stroke-width: 2;
+    stroke-linecap: round;
+    stroke-linejoin: round;
+}
+
+.paper-lang:focus-visible,
+.paper-tool:focus-visible,
+.paper-wordmark:focus-visible {
+    outline: 2px solid var(--accent);
+    outline-offset: 3px;
+}
+
+/* PDF 준비(이미지 강제 로드) 동안의 커서 */
+html.is-exporting {
+    cursor: progress;
+}
+
+/* ------------------------------------------------------------ 시트 */
+
+.paper-pages {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 22px;
+    padding: 28px 16px 56px;
+}
+
+/* 한 장의 A4. paper.js 가 내용을 재어 여러 장으로 나눈다.
+ * 스크립트가 돌지 않아도 한 장짜리 긴 시트로 정상 표시된다. */
+.sheet {
+    width: var(--sheet-w);
+    min-height: var(--sheet-h);
+    max-width: 100%;
+    padding: var(--margin-y) var(--margin-x);
+    background: #fff;
+    box-shadow: 0 2px 6px rgba(21, 24, 29, .1), 0 12px 32px rgba(21, 24, 29, .12);
+}
+
+.sheet-body {
+    height: 100%;
+}
+
+/* ------------------------------------------------------- 문서 요소 */
+
+.doc-head {
+    padding-bottom: 18px;
+    border-bottom: 2px solid var(--ink);
+}
+
+.doc-name {
+    font-size: 32px;
+    font-weight: 700;
+    line-height: 1.2;
+    letter-spacing: -.02em;
+}
+
+.doc-tagline {
+    margin-top: 6px;
+    color: var(--ink-muted);
+    font-size: 14px;
+}
+
+.doc-contact {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 4px 14px;
+    margin-top: 12px;
+    color: var(--ink-muted);
+    font-size: 12.5px;
+}
+
+.doc-contact li {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+}
+
+.doc-contact li:not(:last-child)::after {
+    color: var(--line);
+    content: "·";
+}
+
+/* 절 번호는 언어와 무관하다. 제목 문구만 번역 대상이라 KO/EN 어느 쪽에서도
+ * 같은 내용이 두 번 나오지 않는다. */
+.doc-heading {
+    display: flex;
+    align-items: baseline;
+    gap: 10px;
+    margin-top: 30px;
+    padding-bottom: 6px;
+    border-bottom: 1px solid var(--line);
+    font-size: 18px;
+    font-weight: 700;
+    letter-spacing: -.01em;
+}
+
+.doc-heading-no {
+    flex: 0 0 auto;
+    color: var(--accent);
+    font-size: 12px;
+    font-weight: 700;
+    letter-spacing: .1em;
+}
+
+/* 경력 한 건의 머리 — 회사명, 기간, 직함.
+ * 뒤따르는 성과(.doc-point)와 떨어지면 안 되므로 마크업에서 data-doc-keep 을 붙인다. */
+.doc-entry {
+    margin-top: 18px;
+}
+
+.doc-item-head {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: baseline;
+    justify-content: space-between;
+    gap: 8px;
+}
+
+.doc-item-title {
+    font-size: 15px;
+    font-weight: 700;
+}
+
+.doc-item-meta {
+    color: var(--ink-faint);
+    font-size: 12.5px;
+    font-weight: 600;
+}
+
+.doc-item-role {
+    margin-top: 2px;
+    color: var(--accent-ink);
+    font-size: 13px;
+    font-weight: 600;
+}
+
+/* 성과 한 줄과 그 아래 세부 항목. 이것이 페이지 분할의 최소 단위다 —
+ * 회사 전체를 한 덩어리로 두면 긴 경력에서 페이지 아래가 크게 빈다. */
+.doc-point {
+    margin-top: 6px;
+    padding-left: 14px;
+    color: var(--ink-muted);
+    text-indent: -14px;
+}
+
+.doc-point-main::before {
+    color: var(--accent);
+    content: "— ";
+}
+
+/* 성과 아래 붙는 세부 항목 */
+.doc-sub {
+    margin: 3px 0 0;
+    padding-left: 15px;
+    color: var(--ink-faint);
+    font-size: 12.5px;
+    text-indent: 0;
+}
+
+.doc-sub li {
+    padding-left: 11px;
+    text-indent: -11px;
+}
+
+.doc-sub li::before {
+    content: "· ";
+}
+
+/* 학력 · 강의 · 수상처럼 한 줄짜리 항목이 이어지는 목록 */
+.doc-list {
+    margin-top: 14px;
+}
+
+.doc-list li {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: baseline;
+    justify-content: space-between;
+    gap: 2px 14px;
+    padding: 7px 0;
+    border-bottom: 1px solid var(--line);
+}
+
+.doc-list li:last-child {
+    border-bottom: 0;
+}
+
+.doc-list-main {
+    flex: 1 1 20em;
+}
+
+.doc-list-meta {
+    flex: 0 0 auto;
+    color: var(--ink-faint);
+    font-size: 12.5px;
+    font-weight: 600;
+}
+
+/* 요약처럼 통 문단으로 들어가는 본문 */
+.doc-text {
+    margin-top: 14px;
+    color: var(--ink-muted);
+}
+
+/* ------------------------------------------------ 작성 안내 블록 */
+
+/* 아직 본인이 문장을 쓰지 않은 자리. 무엇을 쓰면 좋은지만 적어 둔다.
+ * 완성 문장과 확실히 구분되어야 한다 — 이 상태로 제출되면 곧바로 보이도록. */
+.doc-guide {
+    margin-top: 14px;
+    padding: 13px 16px;
+    border: 1px dashed var(--line);
+    border-left: 3px solid var(--accent);
+    border-radius: 0 8px 8px 0;
+    background: repeating-linear-gradient(-45deg, rgba(226, 84, 47, .04), rgba(226, 84, 47, .04) 9px, transparent 9px, transparent 18px);
+}
+
+.doc-guide-label {
+    color: var(--accent-ink);
+    font-size: 10.5px;
+    font-weight: 700;
+    letter-spacing: .14em;
+}
+
+.doc-guide-body {
+    margin-top: 5px;
+    color: var(--ink-muted);
+    font-size: 13px;
+}
+
+.doc-guide-list {
+    margin-top: 5px;
+    color: var(--ink-muted);
+    font-size: 13px;
+}
+
+.doc-guide-list li {
+    padding-left: 13px;
+    text-indent: -13px;
+}
+
+.doc-guide-list li::before {
+    color: var(--accent);
+    content: "· ";
+}
+
+.doc-guide-list li + li {
+    margin-top: 3px;
+}
+
+/* 논문 서지 */
+.doc-cite {
+    margin-top: 14px;
+    color: var(--ink-muted);
+    font-size: 13px;
+    line-height: 1.7;
+}
+
+.doc-cite b {
+    color: var(--ink);
+}
+
+.doc-close {
+    margin-top: 34px;
+    padding-top: 18px;
+    border-top: 1px solid var(--line);
+    color: var(--ink-muted);
+}
+
+.doc-sign {
+    margin-top: 14px;
+    color: var(--ink);
+    font-size: 15px;
+    font-weight: 700;
+    text-align: right;
+}
+
+/* ------------------------------------------ 임시 블록 (내용 대기) */
+
+/* 내용이 확정되면 이 블록을 doc-item 등으로 교체한다. */
+.doc-pending {
+    min-height: 132px;
+    margin-top: 16px;
+    padding: 20px 22px;
+    border: 1px dashed var(--line);
+    border-radius: 8px;
+    background: repeating-linear-gradient(-45deg, rgba(226, 84, 47, .045), rgba(226, 84, 47, .045) 9px, transparent 9px, transparent 18px);
+}
+
+.doc-pending-label {
+    color: var(--accent-ink);
+    font-size: 10.5px;
+    font-weight: 700;
+    letter-spacing: .14em;
+}
+
+.doc-pending-title {
+    margin-top: 6px;
+    font-size: 15px;
+    font-weight: 700;
+}
+
+.doc-pending-copy {
+    margin-top: 6px;
+    color: var(--ink-muted);
+    font-size: 13px;
+}
+
+/* ---------------------------------------------------------- 모바일 */
+
+/* 화면이 A4 폭보다 좁으면 종이 흉내를 포기하고 읽기 좋은 폭으로 흘린다.
+ * paper.js 도 이 폭에서는 페이지 분할을 하지 않는다. */
+@media screen and (max-width: 899px) {
+    .paper-pages {
+        padding: 0 0 32px;
+    }
+
+    .sheet {
+        width: 100%;
+        min-height: 0;
+        padding: 32px 20px 40px;
+        box-shadow: none;
+    }
+
+    .doc-name {
+        font-size: 26px;
+    }
+}
+
+@media (prefers-reduced-motion: reduce) {
+
+    .paper-tool,
+    .paper-lang,
+    .paper-wordmark {
+        transition: none !important;
+    }
+}
+
+/* --------------------------------------------------- 인쇄 (PDF) */
+
+@page {
+    size: A4;
+    margin: 18mm 16mm;
+}
+
+@media print {
+    /* 글자 크기는 여기서 바꾸지 않는다 — 화면 분할과 인쇄 분할이 어긋난다. */
+    body {
+        background: #fff;
+    }
+
+    .paper-bar,
+    .paper-sr {
+        display: none !important;
+    }
+
+    .paper-pages {
+        display: block;
+        padding: 0;
+    }
+
+    /* 화면용으로 나눠 둔 시트 상자를 걷어내고 내용만 한 줄기로 흘린다.
+     * 페이지 분할은 브라우저가 @page 여백에 맞춰 직접 처리한다 —
+     * 화면에서 몇 장으로 보였든 인쇄 결과가 기준이다. */
+    .sheet,
+    .sheet-body {
+        display: contents;
+    }
+
+    /* 한 항목이 페이지 경계에서 쪼개지지 않게 한다. */
+    .doc-point,
+    .doc-entry,
+    .doc-guide,
+    .doc-pending,
+    .doc-head,
+    .doc-close,
+    .doc-list li {
+        break-inside: avoid;
+        page-break-inside: avoid;
+    }
+
+    /* 절 제목과 회사 머리글이 페이지 맨 아래에 홀로 남는 것을 막는다. */
+    .doc-heading,
+    [data-doc-keep] {
+        break-inside: avoid;
+        break-after: avoid;
+        page-break-after: avoid;
+    }
+
+    .doc-pending {
+        -webkit-print-color-adjust: exact;
+        print-color-adjust: exact;
+    }
+
+    a {
+        text-decoration: none;
+    }
+}
