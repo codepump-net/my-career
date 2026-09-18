@@ -14,9 +14,14 @@
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&family=Noto+Sans+KR:wght@400;600;700&display=swap"
         rel="stylesheet">
     <link rel="stylesheet" href="../../slides/shared/deck.css">
+    <style>
+        .archive-notice { position: fixed; bottom: 4rem; left: 1rem; z-index: 100; max-width: calc(100vw - 2rem); padding: .5rem .8rem; background: #fff; color: #14171b; border: .05rem solid #ccc; font: .6rem/1.5 sans-serif; }
+        @media print { .archive-notice { display: none; } }
+    </style>
 </head>
 
 <body>
+    <aside class="archive-notice">아카이브 · 지원 종료 / Archived · Closed<br>3차 면접 불합격 / Rejected after third interview</aside>
     <div class="deck">
         <div class="deck-rail" aria-hidden="true"><span class="deck-rail-fill" id="deckRail"></span></div>
 
@@ -372,7 +377,7 @@
         <p class="deck-sr" aria-live="polite" id="deckAnnounce"></p>
     </div>
 
-    <script src="../data.js"></script>
+    <script src="data.js"></script>
     <script src="version.js"></script>
     <script src="../../slides/shared/deck.js"></script>
 </body>

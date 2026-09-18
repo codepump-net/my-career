@@ -1,65 +1,65 @@
-/*
- * 지원 버전 목록 — 메인 페이지가 이 배열로 카드를 그린다.
- *
- * 한 항목이 지원 한 건이다. 이력서 · 자기소개서 · 포트폴리오 세 문서의 버전을 묶어
- * 하나로 관리한다. 세 문서는 각자 독립된 버전 체계를 갖고 있으므로, 여기서는
- * "이 지원에서는 어느 버전을 쓰는가"만 가리킨다.
- *
- * 새 지원을 추가할 때
- *   1. cv/versions/<이름>.js, coverletter/versions/<이름>.js 를 만든다.
- *      (포트폴리오는 당분간 default 를 공유해도 된다)
- *   2. 아래 배열에 항목을 추가한다.
- *   3. `node tools/check.js` 가 가리키는 버전 파일이 실제로 있는지 확인해 준다.
- *
- * 항목 필드
- *   id            이 지원의 식별자 (카드 앵커로 쓰인다)
- *   label         지원처 또는 분야 이름
- *   role          지원 직무. 없으면 표시하지 않는다
- *   note          카드에 붙는 한 줄 설명
- *   status        상태 배지. 없으면 표시하지 않는다
- *   cv            cv/versions/ 의 파일명(확장자 제외)
- *   coverletter   coverletter/versions/ 의 파일명
- *   portfolio     portfolio/versions/ 의 파일명
- *
- * 주의 — 이 목록은 메인 페이지에 그대로 공개된다. 지원처끼리 서로의 문서를 볼 수 있다.
- * 특정 지원을 감추려면 항목을 빼고 링크만 직접 전달한다(문서 자체는 여전히 열린다).
- */
-
+/* 지원 목록. archived 항목은 접힌 아카이브에 표시한다. 기록일은 면접일이 아니다. */
 window.APPLICATIONS = [
     {
-        id: 'default',
-        label: { ko: '기본판', en: 'Default' },
-        note: {
-            ko: '지원처를 정하지 않은 표준 문서. 새 버전을 만들 때 출발점으로 쓴다.',
-            en: 'The standard set, not aimed at any particular employer. The starting point for new versions.'
+        "id": "default",
+        "label": {
+            "ko": "아주대학교 디지털미디어학과",
+            "en": "Ajou University · Digital Media"
         },
-        cv: 'default',
-        coverletter: 'default',
-        portfolio: 'default'
+        "role": {
+            "ko": "교수 지원 · 범용 기본 문서",
+            "en": "Faculty application · General base"
+        },
+        "status": {
+            "ko": "정리 중",
+            "en": "In preparation"
+        },
+        "note": {
+            "ko": "학력·연구·강의·산업 경력을 연결하는 기본 문서입니다. 특정 채용 공고에 종속되지 않으며, 커버레터와 교육·연구계획은 작성 안내를 포함합니다.",
+            "en": "A general set connecting education, research, teaching, and industry experience. Independent of a specific vacancy; cover letter and teaching/research plans include writing prompts."
+        },
+        "cv": "default",
+        "coverletter": "default",
+        "portfolio": "default"
     },
     {
-        id: 'overdare',
-        label: { ko: 'OVERDARE', en: 'OVERDARE' },
-        role: { ko: 'Technical Product Manager', en: 'Technical Product Manager' },
-        status: { ko: '작성 중', en: 'Drafting' },
-        note: {
-            ko: '크래프톤·네이버제트 합작 UGC 플랫폼. ROBLOX·ZEPETO 라이브 실적, UEFN·Horizon 플랫폼 검증 프로토타입, AI 에이전트 제작 파이프라인을 앞세운다.',
-            en: 'KRAFTON × NAVER Z UGC platform. Leads with live titles on ROBLOX and ZEPETO, platform-validation prototypes on UEFN and Horizon, and the AI-agent production pipeline.'
+        "id": "research",
+        "label": {
+            "ko": "연구 · 교육 참고판",
+            "en": "Research & teaching reference"
         },
-        cv: 'overdare',
-        coverletter: 'overdare',
-        portfolio: 'overdare'
+        "status": {
+            "ko": "참고",
+            "en": "Reference"
+        },
+        "note": {
+            "ko": "기존 연구 중심 CV 배치를 보존한 참고판입니다.",
+            "en": "The earlier research-oriented CV arrangement, retained for reference."
+        },
+        "cv": "research"
     },
     {
-        id: 'research',
-        label: { ko: '연구 · 교육', en: 'Research & teaching' },
-        status: { ko: '본보기', en: 'Template' },
-        note: {
-            ko: '논문·강의·학력을 앞에 두고 경력을 연구 비중 순으로 고른 배치 예시.',
-            en: 'An example arrangement: publication, lectures, and education first, with experience filtered by research relevance.'
+        "id": "overdare",
+        "label": {
+            "ko": "OVERDARE",
+            "en": "OVERDARE"
         },
-        cv: 'research',
-        coverletter: 'default',
-        portfolio: 'default'
+        "role": {
+            "ko": "Technical Product Manager",
+            "en": "Technical Product Manager"
+        },
+        "archived": true,
+        "recordedAt": "2026-09-19",
+        "status": {
+            "ko": "종료 · 3차 면접 불합격",
+            "en": "Closed · Rejected after third interview"
+        },
+        "note": {
+            "ko": "지원 종료 기록. 지원 준비 자료와 당시 데이터를 보존합니다. 기록일 2026-09-19.",
+            "en": "Closed application. Preparation materials and source data are preserved. Recorded September 19, 2026."
+        },
+        "cv": "overdare",
+        "coverletter": "overdare",
+        "portfolio": "overdare"
     }
 ];

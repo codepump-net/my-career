@@ -14,9 +14,14 @@
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&family=Noto+Sans+KR:wght@400;600;700&display=swap"
         rel="stylesheet">
     <link rel="stylesheet" href="../../paper/shared/paper.css">
+    <style>
+        .archive-notice { position: fixed; bottom: 4rem; left: 1rem; z-index: 100; max-width: calc(100vw - 2rem); padding: .5rem .8rem; background: #fff; color: #14171b; border: 1px solid #ccc; font: 12px/1.5 sans-serif; }
+        @media print { .archive-notice { display: none; } }
+    </style>
 </head>
 
 <body>
+    <aside class="archive-notice">아카이브 · 지원 종료 / Archived · Closed<br>3차 면접 불합격 / Rejected after third interview</aside>
     <header class="paper-bar">
         <a class="paper-wordmark" href="../" data-doc-key-aria-label="ui_versions">HYUNSEOK OH</a>
         <div class="paper-tools">
@@ -49,7 +54,7 @@
     <p class="paper-sr" aria-live="polite" id="paperAnnounce"></p>
 
     <script src="../../paper/shared/render.js"></script>
-    <script src="../data.js"></script>
+    <script src="data.js"></script>
     <script src="version.js"></script>
     <script src="../../paper/shared/paper.js"></script>
 </body>

@@ -37,9 +37,9 @@
 
             brand_role: 'PORTFOLIO',
 
-            hero_eyebrow: '내용 준비 중',
-            hero_title: '이력과 작업을 슬라이드로 정리하고, 그대로 PDF 로 내보냅니다.',
-            hero_lead: '이 사이트는 이력서 · 자기소개서 · 포트폴리오를 웹에서 바로 열람할 수 있게 만든 개인 포트폴리오입니다. 이력서와 자기소개서는 A4 세로 문서로, 포트폴리오는 16:9 슬라이드로 구성되며, 어느 쪽이든 같은 화면을 PDF 로 저장해 제출용으로 쓸 수 있습니다.',
+            hero_eyebrow: "아주대학교 디지털미디어학과 · 교수 지원",
+            hero_title: "컴퓨터그래픽스와 게임 기술, 연구와 교육으로 연결합니다.",
+            hero_lead: "학력·논문·강의와 산업 연구개발 경험을 모은 교수 지원용 범용 문서입니다. CV, 커버레터, 포트폴리오를 열람하고 PDF로 저장할 수 있습니다.",
             hero_cta_primary: '이력서 보기',
             hero_cta_secondary: '포트폴리오 보기',
 
@@ -56,17 +56,18 @@
             pf_list_title: '포트폴리오 버전',
             pf_list_lead: '지원처에 따라 보여 줄 케이스와 순서를 달리 구성합니다.',
 
+            archive_title: '종료된 지원 아카이브',
             apps_kicker: 'APPLICATIONS',
-            apps_title: '지원 버전',
-            apps_lead: '지원처에 맞춰 이력서와 자기소개서를 따로 씁니다. 경력 사실은 한 벌만 두고 배치와 강조만 버전마다 다릅니다. 어느 문서든 상단 PDF 버튼으로 전체를 내보냅니다.',
+            apps_title: "교수 지원 문서",
+            apps_lead: "현재 기본판은 아주대학교 디지털미디어학과 교수 지원용입니다. 특정 공고에 맞추기 전의 범용 자료이며, 종료된 지원은 아래 아카이브에서 확인할 수 있습니다.",
 
             about_kicker: 'ABOUT',
             about_title: '소개',
-            about_pending_copy: '자기소개 문단이 들어갈 자리입니다. 어떤 일을 해 왔고 지금 무엇에 관심이 있는지, 세 문단 안으로 정리할 예정입니다.',
+            about_pending_copy: "컴퓨터그래픽스·게임 기술을 기반으로 연구, 강의, 산업 개발을 병행해 왔습니다. 학문적 배경과 대학 강의 이력, 그래픽스 엔진·실감콘텐츠 개발 경험을 문서 세트에 정리합니다.",
 
             contact_kicker: 'CONTACT',
             contact_title: '연락처',
-            contact_lead: '연락 가능한 경로를 정리해 둘 자리입니다. 실제 값은 내용 작성 단계에서 채웁니다.',
+            contact_lead: "연구·교육 및 지원 관련 연락처입니다.",
             contact_email_label: 'EMAIL',
             contact_github_label: 'GITHUB',
             contact_etc_label: '그 외',
@@ -91,9 +92,9 @@
 
             brand_role: 'PORTFOLIO',
 
-            hero_eyebrow: 'Content pending',
-            hero_title: 'Career and work as slide decks — readable on the web, exportable as PDF.',
-            hero_lead: 'A personal portfolio that puts the CV, cover letter, and project work on the web. The CV and cover letter are A4 portrait documents, the portfolio is a 16:9 deck, and either exports to PDF from the same source you read on screen.',
+            hero_eyebrow: "Ajou University · Digital Media · Faculty application",
+            hero_title: "Computer graphics and game technology, connected to research and teaching.",
+            hero_lead: "General faculty application materials bringing together education, publication, teaching, and industry R&D. Read the CV, cover letter, and portfolio, or save them as PDFs.",
             hero_cta_primary: 'View CV',
             hero_cta_secondary: 'View portfolio',
 
@@ -110,17 +111,18 @@
             pf_list_title: 'Portfolio versions',
             pf_list_lead: 'Which case studies to show, and in what order, changes with the employer.',
 
+            archive_title: 'Archived applications',
             apps_kicker: 'APPLICATIONS',
-            apps_title: 'Applications',
-            apps_lead: 'The CV and cover letter are rewritten for each employer. The career facts are kept in one place; only the arrangement and emphasis change between versions. Every document exports in full from the PDF button in the top bar.',
+            apps_title: "Faculty application materials",
+            apps_lead: "The current base set is for a faculty application in Digital Media at Ajou University, before tailoring to a specific vacancy. Closed applications are available in the archive below.",
 
             about_kicker: 'ABOUT',
             about_title: 'About',
-            about_pending_copy: 'The introduction goes here — what the work has been so far and where the current interest lies, in three paragraphs or fewer.',
+            about_pending_copy: "My work spans research, teaching, and industry development in computer graphics and game technology. These materials bring together academic background, university teaching, graphics engines, and immersive content.",
 
             contact_kicker: 'CONTACT',
             contact_title: 'Contact',
-            contact_lead: 'The place for ways to get in touch. Real values go in during the content pass.',
+            contact_lead: "Contact for research, teaching, and application enquiries.",
             contact_email_label: 'EMAIL',
             contact_github_label: 'GITHUB',
             contact_etc_label: 'OTHER',

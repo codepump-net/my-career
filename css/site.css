@@ -769,3 +769,7 @@ a.contact-value:hover {
         padding: 18px 0;
     }
 }
+
+/* Completed applications remain accessible separately from current documents. */
+.app-archive { grid-column: 1 / -1; margin-top: 24px; }
+.app-archive > summary { cursor: pointer; font-weight: 600; padding: 16px 0; }

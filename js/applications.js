@@ -40,6 +40,10 @@
 
     function render(lang, t) {
         host.textContent = '';
+        var archive = el('details', 'app-archive');
+        archive.appendChild(el('summary', null, t('archive_title')));
+        var archiveCards = el('div', 'app-grid');
+        archive.appendChild(archiveCards);
 
         window.APPLICATIONS.forEach(function (app) {
             var card = el('article', 'app-card');
@@ -64,8 +68,9 @@
             });
             card.appendChild(links);
 
-            host.appendChild(card);
+            (app.archived ? archiveCards : host).appendChild(card);
         });
+        if (archiveCards.children.length) host.appendChild(archive);
     }
 
     // js/i18n.js 가 언어를 정하고 이 함수를 부른다(최초 1회 + 전환할 때마다).

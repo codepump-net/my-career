@@ -1,0 +1,4 @@
+.temp-placeholder { grid-template-columns: 1fr; }
+.temp-placeholder-copy { white-space: pre-line; max-width: 48rem; }
+.temp-placeholder-title { max-width: 48rem; }
+.temp-closing a { color: inherit; }

@@ -42,6 +42,11 @@ let failures = 0;
 const fail = (message) => { failures++; console.log(`  [FAIL] ${message}`); };
 const pass = (message) => console.log(`  [ok]   ${message}`);
 const read = (file) => fs.readFileSync(path.join(ROOT, file), 'utf8');
+// Archived versions use a frozen local data source.
+function dataFile(doc, version) {
+    const local = `${doc}/${version}/data.js`;
+    return fs.existsSync(path.join(ROOT, local)) ? local : `${doc}/data.js`;
+}
 const matchAll = (text, pattern) => [...text.matchAll(pattern)].map((m) => m[1]);
 
 /* HTML 주석에는 작성 안내용 예시 마크업이 들어 있다. 실제 사용으로 세면 안 된다. */
@@ -86,7 +91,7 @@ for (const deck of DECKS) {
         const file = `${name}/version.js`;
         const win = {};
         try {
-            runInto(win, `${deck}/data.js`);
+            runInto(win, dataFile(deck, name));
             runInto(win, `${deck}/${file}`);
         } catch (error) {
             report.push(`${file} 실행 실패 -> ${error.message}`);
@@ -132,6 +137,18 @@ for (const deck of DECKS) {
     const js = read(`${deck}/data.js`);
 
     const used = [...new Set(matchAll(html, /data-deck-key(?:-alt|-aria-label)?="([^"]+)"/g))];
+    for (const name of versionDirs(deck)) {
+        const win = {};
+        runInto(win, dataFile(deck, name));
+        const usedHere = matchAll(readHtml(`${deck}/${name}/index.html`), /data-deck-key(?:-alt|-aria-label)?="([^"]+)"/g);
+        for (const key of usedHere) {
+            if (deckUiKeys.includes(key)) continue;
+            if (!win.DECK_I18N.ko[key] || !win.DECK_I18N.en[key]) {
+                fail(`${deck}/${name}: loaded dictionary missing ${key}`);
+            }
+        }
+    }
+
     const koKeys = dictKeys(js, '    ko: {', '    en: {', 8);
     const enKeys = dictKeys(js, '    en: {', null, 8);
 
@@ -260,6 +277,8 @@ for (const paper of PAPERS) {
     for (const file of versionFiles) {
         const scoped = Object.assign({}, win);
         try {
+            runInto(scoped, dataFile(paper, file));
+            checkI18n(scoped.DOC_DATA, `${file}.DOC_DATA`, report);
             runInto(scoped, `${paper}/${file}/version.js`);
         } catch (error) {
             fail(`${paper}/${file}/version.js 실행 실패 -> ${error.message}`);
@@ -301,7 +320,9 @@ for (const paper of PAPERS) {
         if (!version.title) report.push(`${file}: title 이 없다`);
         if (!version.sections || !version.sections.length) report.push(`${file}: sections 이 비었다`);
 
-        checkVersion(entry.data, version, file, report);
+        const scoped = {};
+        runInto(scoped, dataFile(paper, file));
+        checkVersion(scoped.DOC_DATA, version, file, report);
         guides += countGuides(version);
     });
 
