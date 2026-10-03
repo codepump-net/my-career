@@ -26,6 +26,11 @@ CV는 기존 사실을 학력·연구·강의 중심으로 재배치했다. 커�
 포트폴리오는 기존 실적과 보완할 증빙·계획을 정리한 8장 초안이다.
 [교수 지원 정리 및 남은 항목](docs/applications/ajou-faculty.md)을 참고한다.
 
+박사 졸업과 향후 교수 지원을 위한 Roblox 기반 Computer Graphics·AI 활용·MIS 연구는
+[`research/`](research/README.md)에서 관리한다. [연구 계획서](research/research-plan.md)에
+핵심 과제, 실험 설계, 3년 일정과 논문 실적 관리 기준을 정리했다.
+[세 분야 조사 문서](research/literature/README.md)에서 주요 학술지·학회와 최신 연구동향을 확인할 수 있다.
+
 OVERDARE 지원은 **3차 면접 불합격으로 종료**했다. [아카이브 기록](docs/archive/overdare/README.md)에
 준비 자료와 당시 데이터 스냅샷을 보존했다. 기존 문서 주소는 유지하고 웹 목록에서 접어 표시한다.
 
@@ -61,5 +66,6 @@ slides/shared/        16:9 슬라이드 공용 셸       → slides/README.md
 portfolio/              index.html(목록) + data.js + <버전>/(덱)
 tools/                점검 스크립트
 docs/prd.md           제품 요구사항 문서
+research/             박사 졸업·교수 지원을 위한 연구 계획과 기록
 nnn-games-website/    참고용 원본 저장소 (수정 금지, 배포 제외)
 ```
