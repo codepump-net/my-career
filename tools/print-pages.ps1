@@ -9,7 +9,7 @@
 
       /cv/default/           A4 세로  595 x 842 pt  (210 x 297 mm)   페이지 수는 내용에 따라 달라짐
       /coverletter/default/  A4 세로  595 x 842 pt                   페이지 수는 내용에 따라 달라짐
-      /portfolio/default/    16:9     960 x 540 pt  (1280 x 720 px)  슬라이드 1장 = 1페이지 (현재 8)
+      /portfolio/default/    16:9     960 x 540 pt  (1280 x 720 px)  슬라이드 1장 = 1페이지 (현재 6)
 
     문서(A4)는 브라우저가 내용 길이에 맞춰 페이지를 나누므로 장수를 고정값으로 보지 않는다.
     용지 크기가 틀어졌다면 인쇄 CSS 가 깨진 것이다.
@@ -37,7 +37,7 @@ $profileDir = Join-Path $OutDir 'chrome-profile'
 $targets = @(
     @{ name = 'cv'; box = '594.95996 841.91998'; label = 'A4 세로'; expectPages = 0 },
     @{ name = 'coverletter'; box = '594.95996 841.91998'; label = 'A4 세로'; expectPages = 0 },
-    @{ name = 'portfolio'; box = '960 540'; label = '16:9'; expectPages = 8 }
+    @{ name = 'portfolio'; box = '960 540'; label = '16:9'; expectPages = 6 }
 )
 
 $failed = 0

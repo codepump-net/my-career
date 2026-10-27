@@ -1,0 +1,39 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://example.local/schemas/agent-grader.schema.json",
+  "title": "Agent Eval Grader",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["schema_version", "id", "version", "type", "scope", "rubric_ref", "config", "calibration", "failure_policy"],
+  "properties": {
+    "schema_version": { "type": "string", "pattern": "^1\\.[0-9]+$" },
+    "id": { "type": "string", "pattern": "^GRADER-[A-Z0-9][A-Z0-9-]*$" },
+    "version": { "type": "string", "pattern": "^[0-9]+\\.[0-9]+\\.[0-9]+$" },
+    "type": { "enum": ["deterministic", "rubric", "model", "human"] },
+    "scope": { "enum": ["output", "trace", "output_and_trace"] },
+    "rubric_ref": { "type": ["string", "null"] },
+    "config": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["scale_min", "scale_max", "pass_score", "critical_override"],
+      "properties": {
+        "scale_min": { "type": "number" },
+        "scale_max": { "type": "number" },
+        "pass_score": { "type": "number" },
+        "critical_override": { "type": "boolean" }
+      }
+    },
+    "calibration": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["golden_set_ref", "sample_review_rate", "max_disagreement_rate", "last_reviewed_at"],
+      "properties": {
+        "golden_set_ref": { "type": ["string", "null"] },
+        "sample_review_rate": { "type": "number", "minimum": 0, "maximum": 1 },
+        "max_disagreement_rate": { "type": "number", "minimum": 0, "maximum": 1 },
+        "last_reviewed_at": { "type": ["string", "null"], "format": "date" }
+      }
+    },
+    "failure_policy": { "enum": ["fail_closed", "human_review"] }
+  }
+}

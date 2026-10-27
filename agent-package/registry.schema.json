@@ -1,0 +1,27 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://example.local/schemas/agent-registry.schema.json",
+  "title": "Agent Registry",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["schema_version", "updated_at", "agents"],
+  "properties": {
+    "schema_version": { "type": "string", "pattern": "^1\\.[0-9]+$" },
+    "updated_at": { "type": "string", "format": "date" },
+    "agents": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["id", "path", "version", "status"],
+        "properties": {
+          "id": { "type": "string", "pattern": "^[a-z0-9]+(?:-[a-z0-9]+)*$" },
+          "path": { "type": "string", "pattern": "^agents/[a-z0-9]+(?:-[a-z0-9]+)*$" },
+          "version": { "type": "string", "pattern": "^[0-9]+\\.[0-9]+\\.[0-9]+$" },
+          "status": { "enum": ["proposed", "experimental", "candidate", "active", "deprecated", "retired", "rejected", "rolled_back"] },
+          "release_record": { "type": ["string", "null"], "pattern": "^releases/[a-z0-9]+(?:-[a-z0-9]+)*/[0-9]+\\.[0-9]+\\.[0-9]+\\.json$" }
+        }
+      }
+    }
+  }
+}

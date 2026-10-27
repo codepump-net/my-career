@@ -1,0 +1,543 @@
+/* 5개 프로젝트 슬라이드가 공유하는 흰 지면과 타이포그래피 규칙. */
+.slide-skeleton {
+    padding: 2.4rem 3.4rem 2.6rem;
+    background: #fff;
+    transform: none;
+    transition: none;
+}
+
+/* 0장: 전체 포트폴리오와 지원 정보를 먼저 읽히게 하는 표지. */
+.portfolio-cover {
+    padding: 3rem 3.4rem;
+}
+
+.cover-top {
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+    gap: 2rem;
+}
+
+.cover-name,
+.cover-subtitle,
+.cover-detail {
+    color: #15181d;
+    font-family: Inter, "Noto Sans KR", sans-serif;
+}
+
+.cover-name {
+    font-size: 1rem;
+    font-weight: 700;
+    line-height: 1.3;
+    letter-spacing: .04em;
+    text-align: left;
+}
+
+.cover-main {
+    margin-top: 6rem;
+}
+
+.cover-title {
+    margin-top: 0;
+    color: #15181d;
+    font: 700 4.6rem/.9 Inter, sans-serif;
+    letter-spacing: -.07em;
+}
+
+.cover-subtitle {
+    margin-top: 1.25rem;
+    font-size: .78rem;
+    font-weight: 600;
+    line-height: 1.4;
+    letter-spacing: .09em;
+}
+
+.cover-details {
+    display: grid;
+    grid-template-columns: .8fr 1.5fr 1.35fr;
+    gap: 1.5rem;
+    margin-top: auto;
+    padding-top: .9rem;
+    border-top: 1px solid #15181d;
+}
+
+.cover-detail {
+    min-width: 0;
+    margin: 0;
+    font-size: .62rem;
+    font-weight: 600;
+    line-height: 1.4;
+    letter-spacing: .02em;
+}
+
+.cover-detail a {
+    color: inherit;
+    text-decoration: none;
+}
+
+.project-head {
+    display: grid;
+    grid-template-columns: 7rem minmax(0, 1fr) auto;
+    gap: 1.2rem;
+    align-items: end;
+    padding-bottom: .9rem;
+    border-bottom: 1px solid #15181d;
+}
+
+.project-category,
+.project-number,
+.project-caption {
+    color: #15181d;
+    font-family: Inter, "Noto Sans KR", sans-serif;
+    font-weight: 600;
+    letter-spacing: .12em;
+}
+
+.project-category {
+    font-size: .67rem;
+    line-height: 1.3;
+}
+
+.project-title {
+    color: #15181d;
+    font: 700 1.75rem/1.05 Inter, "Noto Sans KR", sans-serif;
+    letter-spacing: -.035em;
+}
+
+.project-number {
+    font-size: .58rem;
+    line-height: 1.3;
+}
+
+.project-body {
+    flex: 1;
+    min-height: 0;
+    margin-top: 1.2rem;
+}
+
+/* 단일 프로젝트: 16:9 대표 이미지와 요약 정보를 한 화면에 함께 읽는다. */
+.project-body-single {
+    display: grid;
+    grid-template-columns: minmax(0, 2.55fr) minmax(15rem, 1fr);
+    gap: 1.5rem;
+    align-items: center;
+}
+
+.project-hero {
+    min-width: 0;
+    margin: 0;
+}
+
+.project-hero img {
+    display: block;
+    width: 100%;
+    height: auto;
+    aspect-ratio: 16 / 9;
+    object-fit: cover;
+}
+
+.project-summary {
+    display: flex;
+    min-width: 0;
+    min-height: 22.2rem;
+    padding: 1.25rem 0;
+    border-top: 1px solid #15181d;
+    border-bottom: 1px solid #15181d;
+    flex-direction: column;
+}
+
+.project-status-row {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 1rem;
+}
+
+.project-status {
+    display: inline-flex;
+    width: fit-content;
+    align-items: center;
+    gap: .42rem;
+    color: #15181d;
+    font: 700 .57rem/1.2 Inter, "Noto Sans KR", sans-serif;
+    letter-spacing: .12em;
+}
+
+.project-status::before {
+    width: .38rem;
+    height: .38rem;
+    border: 1px solid currentColor;
+    border-radius: 50%;
+    content: "";
+}
+
+.project-release {
+    color: #6b7280;
+    font: 600 .5rem/1.2 Inter, "Noto Sans KR", sans-serif;
+    letter-spacing: .09em;
+    white-space: nowrap;
+}
+
+.project-metrics {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: .8rem;
+    margin-top: 1.25rem;
+}
+
+.project-metric {
+    min-width: 0;
+    padding-top: .7rem;
+    border-top: 1px solid #d5d8dc;
+}
+
+.project-metric strong,
+.project-metric span {
+    display: block;
+}
+
+.project-metric strong {
+    color: #15181d;
+    font: 700 1.35rem/1 Inter, "Noto Sans KR", sans-serif;
+    letter-spacing: -.04em;
+}
+
+.project-metric span {
+    margin-top: .38rem;
+    color: #6b7280;
+    font: 600 .5rem/1.35 Inter, "Noto Sans KR", sans-serif;
+    letter-spacing: .08em;
+    text-transform: uppercase;
+}
+
+.project-features {
+    margin-top: 1.45rem;
+}
+
+.project-info-label {
+    color: #6b7280;
+    font: 700 .5rem/1.2 Inter, "Noto Sans KR", sans-serif;
+    letter-spacing: .13em;
+}
+
+.project-feature-list {
+    margin: .72rem 0 0;
+    padding: 0;
+    list-style: none;
+    color: #15181d;
+    font: 500 .68rem/1.48 Inter, "Noto Sans KR", sans-serif;
+}
+
+.project-feature-list li {
+    position: relative;
+    padding-left: .72rem;
+}
+
+.project-feature-list li::before {
+    position: absolute;
+    top: 0;
+    left: 0;
+    content: "·";
+}
+
+.project-feature-list li + li {
+    margin-top: .28rem;
+}
+
+.project-systems {
+    margin-top: 1.05rem;
+}
+
+.project-system-list {
+    margin: .68rem 0 0;
+    padding: 0;
+    list-style: none;
+}
+
+.project-system-list li + li {
+    margin-top: .52rem;
+}
+
+.project-system-name {
+    display: block;
+    color: #15181d;
+    font: 700 .47rem/1.2 Inter, "Noto Sans KR", sans-serif;
+    letter-spacing: .09em;
+}
+
+.project-system-list p {
+    margin-top: .16rem;
+    color: #515861;
+    font: 500 .53rem/1.42 Inter, "Noto Sans KR", sans-serif;
+}
+
+.project-link {
+    display: inline-flex;
+    width: fit-content;
+    align-items: center;
+    gap: .5rem;
+    margin-top: auto;
+    padding-bottom: .2rem;
+    border-bottom: 1px solid currentColor;
+    color: #15181d;
+    font: 700 .58rem/1.3 Inter, "Noto Sans KR", sans-serif;
+    letter-spacing: .1em;
+    text-decoration: none;
+}
+
+.project-link:hover,
+.project-link:focus-visible {
+    color: #515861;
+}
+
+.project-link:focus-visible {
+    outline: 2px solid #15181d;
+    outline-offset: 4px;
+}
+
+/* UGC 장은 수치 없이 두 플랫폼의 제작·판매 범위만 보여 준다. */
+.project-body-ugc {
+    display: flex;
+    flex-direction: column;
+}
+
+.project-ugc-gallery {
+    display: grid;
+    flex: 1;
+    min-height: 0;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 1.2rem;
+}
+
+.project-ugc-figure {
+    display: flex;
+    min-width: 0;
+    min-height: 0;
+    margin: 0;
+    flex-direction: column;
+}
+
+.project-ugc-media {
+    display: grid;
+    flex: 1;
+    min-height: 0;
+    place-items: center;
+    overflow: hidden;
+    border: 1px solid #e0e2e5;
+}
+
+.project-ugc-media img {
+    display: block;
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+}
+
+.project-ugc-platform {
+    margin-top: .55rem;
+    color: #15181d;
+    font: 700 .62rem/1.3 Inter, "Noto Sans KR", sans-serif;
+    letter-spacing: .06em;
+}
+
+.project-ugc-copy {
+    margin-top: 1rem;
+    padding-top: .85rem;
+    border-top: 1px solid #15181d;
+}
+
+.project-ugc-points {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 1.2rem;
+    margin: .55rem 0 0;
+    padding: 0;
+    list-style: none;
+    color: #515861;
+    font: 500 .56rem/1.45 Inter, "Noto Sans KR", sans-serif;
+}
+
+.project-ugc-points li {
+    position: relative;
+    padding-left: .7rem;
+}
+
+.project-ugc-points li::before {
+    position: absolute;
+    left: 0;
+    content: "·";
+}
+
+/* 복수 프로젝트: 같은 정보 모듈을 카드 단위로 반복한다. */
+.project-body-cards {
+    display: grid;
+    gap: 1.15rem;
+    align-items: stretch;
+}
+
+.project-body-cards[data-count="2"] {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+}
+
+.project-body-cards[data-count="3"] {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: .9rem;
+}
+
+.project-card {
+    display: grid;
+    min-width: 0;
+    min-height: 0;
+    grid-template-rows: 11.5rem minmax(0, 1fr);
+    border-bottom: 1px solid #15181d;
+}
+
+.project-body-cards[data-count="3"] .project-card {
+    grid-template-rows: 10rem minmax(0, 1fr);
+}
+
+.project-card-media {
+    display: grid;
+    min-width: 0;
+    min-height: 0;
+    margin: 0;
+    place-items: center;
+    overflow: hidden;
+    border: 1px solid #e0e2e5;
+}
+
+.project-card-media img {
+    display: block;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.project-card-media.is-contain img {
+    object-fit: contain;
+}
+
+.project-card-content {
+    display: flex;
+    min-height: 0;
+    padding: .9rem 0 .8rem;
+    flex-direction: column;
+}
+
+.project-card-head {
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+    gap: .8rem;
+}
+
+.project-card-title {
+    color: #15181d;
+    font: 700 .95rem/1.15 Inter, "Noto Sans KR", sans-serif;
+    letter-spacing: -.025em;
+}
+
+.project-card .project-status {
+    flex: 0 0 auto;
+    font-size: .48rem;
+}
+
+.project-card .project-metrics {
+    gap: .7rem;
+    margin-top: .75rem;
+}
+
+.project-card .project-metrics-single {
+    grid-template-columns: 1fr;
+}
+
+.project-card .project-metric {
+    padding-top: .52rem;
+}
+
+.project-card .project-metric strong {
+    font-size: 1rem;
+}
+
+.project-card .project-metric span {
+    margin-top: .28rem;
+    font-size: .43rem;
+}
+
+.project-card .project-features {
+    margin-top: .7rem;
+}
+
+.project-card .project-feature-list {
+    margin-top: .42rem;
+    font-size: .56rem;
+    line-height: 1.42;
+}
+
+.project-card .project-feature-list li + li {
+    margin-top: .12rem;
+}
+
+.project-card .project-link {
+    margin-top: .58rem;
+    font-size: .48rem;
+}
+
+.project-body-cards[data-count="3"] .project-card-title {
+    font-size: .82rem;
+}
+
+.project-body-cards[data-count="3"] .project-status {
+    max-width: 6.5rem;
+    font-size: .41rem;
+    text-align: right;
+}
+
+.project-body-cards[data-count="3"] .project-metric strong {
+    font-size: .82rem;
+}
+
+.project-body-cards[data-count="3"] .project-feature-list {
+    font-size: .5rem;
+}
+
+@media screen and (max-width: 767px) {
+    .slide-skeleton,
+    .portfolio-cover {
+        padding: 2.2rem 1.5rem;
+    }
+
+    .project-head {
+        grid-template-columns: 1fr auto;
+    }
+
+    .project-category {
+        grid-column: 1 / -1;
+    }
+
+    .project-body-single,
+    .project-ugc-gallery,
+    .project-ugc-points,
+    .project-body-cards[data-count="2"],
+    .project-body-cards[data-count="3"] {
+        grid-template-columns: 1fr;
+    }
+
+    .project-summary {
+        min-height: 20rem;
+    }
+
+    .project-card,
+    .project-body-cards[data-count="3"] .project-card {
+        grid-template-rows: 14rem auto;
+        min-height: 27rem;
+    }
+
+    .cover-main {
+        margin-top: 4rem;
+    }
+
+    .cover-details {
+        grid-template-columns: 1fr;
+    }
+}

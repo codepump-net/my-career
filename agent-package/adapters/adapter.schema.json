@@ -1,0 +1,101 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://example.local/schemas/runtime-adapter.schema.json",
+  "title": "Runtime Adapter Manifest",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["schema_version", "id", "version", "status", "target", "source", "environment_profile", "generated_artifacts", "mapping", "unsupported_contracts", "controls", "verification", "direct_edit_policy"],
+  "properties": {
+    "schema_version": { "type": "string", "pattern": "^1\\.[0-9]+$" },
+    "id": { "type": "string", "pattern": "^[a-z0-9]+(?:-[a-z0-9]+)*$" },
+    "version": { "type": "string", "pattern": "^[0-9]+\\.[0-9]+\\.[0-9]+$" },
+    "status": { "enum": ["proposed", "candidate", "verified", "deprecated"] },
+    "target": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["provider", "runtime", "runtime_version"],
+      "properties": {
+        "provider": { "enum": ["openai", "anthropic", "local", "other"] },
+        "runtime": { "type": "string", "minLength": 1 },
+        "runtime_version": { "type": "string", "minLength": 1 }
+      }
+    },
+    "source": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["agent_id", "agent_version", "content_hash"],
+      "properties": {
+        "agent_id": { "type": "string", "pattern": "^[a-z0-9]+(?:-[a-z0-9]+)*$" },
+        "agent_version": { "type": "string", "pattern": "^[0-9]+\\.[0-9]+\\.[0-9]+$" },
+        "content_hash": { "type": "string", "minLength": 1 }
+      }
+    },
+    "environment_profile": { "type": "string", "minLength": 1 },
+    "generated_artifacts": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["path", "content_hash", "generated"],
+        "properties": {
+          "path": { "type": "string", "minLength": 1 },
+          "content_hash": { "type": "string", "minLength": 1 },
+          "generated": { "const": true }
+        }
+      }
+    },
+    "mapping": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["instructions", "context", "skills", "tools", "approvals", "output_schema", "limits", "telemetry"],
+      "properties": {
+        "instructions": { "type": "string", "minLength": 1 },
+        "context": { "type": "string", "minLength": 1 },
+        "skills": { "type": "string", "minLength": 1 },
+        "tools": { "type": "string", "minLength": 1 },
+        "approvals": { "type": "string", "minLength": 1 },
+        "output_schema": { "type": "string", "minLength": 1 },
+        "limits": { "type": "string", "minLength": 1 },
+        "telemetry": { "type": "string", "minLength": 1 }
+      }
+    },
+    "unsupported_contracts": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["contract", "reason", "mitigation", "accepted_by"],
+        "properties": {
+          "contract": { "type": "string", "minLength": 1 },
+          "reason": { "type": "string", "minLength": 1 },
+          "mitigation": { "type": "string", "minLength": 1 },
+          "accepted_by": { "type": "string", "minLength": 1 }
+        }
+      }
+    },
+    "controls": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["permission_enforcement", "approval_enforcement", "schema_enforcement", "limit_enforcement", "drift_detection"],
+      "properties": {
+        "permission_enforcement": { "type": "string", "minLength": 1 },
+        "approval_enforcement": { "type": "string", "minLength": 1 },
+        "schema_enforcement": { "type": "string", "minLength": 1 },
+        "limit_enforcement": { "type": "string", "minLength": 1 },
+        "drift_detection": { "type": "string", "minLength": 1 }
+      }
+    },
+    "verification": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["eval_set_ref", "conformance_report", "verified_at", "verified_by"],
+      "properties": {
+        "eval_set_ref": { "type": ["string", "null"] },
+        "conformance_report": { "type": ["string", "null"] },
+        "verified_at": { "type": ["string", "null"], "format": "date-time" },
+        "verified_by": { "type": ["string", "null"] }
+      }
+    },
+    "direct_edit_policy": { "const": "forbidden_regenerate_from_source" }
+  }
+}

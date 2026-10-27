@@ -1,0 +1,14 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://example.local/schemas/agent-eval-stage.schema.json",
+  "title": "Agent Evaluation Rollout Stage",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["enabled", "entry_gate", "exit_gate", "evidence_required"],
+  "properties": {
+    "enabled": { "type": "boolean" },
+    "entry_gate": { "type": "string", "minLength": 1 },
+    "exit_gate": { "type": "string", "minLength": 1 },
+    "evidence_required": { "type": "array", "items": { "type": "string", "minLength": 1 }, "uniqueItems": true }
+  }
+}

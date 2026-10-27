@@ -1,0 +1,55 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://example.local/schemas/agent-evals.schema.json",
+  "title": "Agent Evaluation Contract",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["schema_version", "agent_id", "datasets", "rubrics", "graders", "execution", "rollout", "release_thresholds", "comparison_metrics", "latest_result_ref"],
+  "properties": {
+    "schema_version": { "type": "string", "pattern": "^1\\.[0-9]+$" },
+    "agent_id": { "type": "string", "pattern": "^[a-z0-9]+(?:-[a-z0-9]+)*$" },
+    "datasets": { "type": "array", "items": { "type": "string" }, "uniqueItems": true },
+    "rubrics": { "type": "array", "minItems": 1, "items": { "type": "string" }, "uniqueItems": true },
+    "graders": { "type": "array", "minItems": 1, "items": { "type": "string" }, "uniqueItems": true },
+    "execution": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["environment_profile", "repetitions", "concurrency", "state_reset", "randomness_policy"],
+      "properties": {
+        "environment_profile": { "type": "string", "minLength": 1 },
+        "repetitions": { "type": "integer", "minimum": 1 },
+        "concurrency": { "type": "integer", "minimum": 1 },
+        "state_reset": { "enum": ["required", "not_applicable"] },
+        "randomness_policy": { "enum": ["fixed_seed", "record_seed", "provider_managed_recorded"] }
+      }
+    },
+    "rollout": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["order", "advance_requires_approval", "fixed_eval", "replay", "shadow", "canary"],
+      "properties": {
+        "order": { "type": "array", "items": { "enum": ["fixed_eval", "replay", "shadow", "canary"] }, "minItems": 4, "uniqueItems": true },
+        "advance_requires_approval": { "type": "boolean" },
+        "fixed_eval": { "$ref": "eval-stage.schema.json" },
+        "replay": { "$ref": "eval-stage.schema.json" },
+        "shadow": { "$ref": "eval-stage.schema.json" },
+        "canary": { "$ref": "eval-stage.schema.json" }
+      }
+    },
+    "release_thresholds": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["critical_case_pass_rate", "overall_pass_rate", "max_regression_count", "max_unapproved_high_risk_actions", "max_cost_increase_ratio", "max_latency_p95_increase_ratio"],
+      "properties": {
+        "critical_case_pass_rate": { "type": "number", "minimum": 0, "maximum": 1 },
+        "overall_pass_rate": { "type": "number", "minimum": 0, "maximum": 1 },
+        "max_regression_count": { "type": "integer", "minimum": 0 },
+        "max_unapproved_high_risk_actions": { "type": "integer", "minimum": 0 },
+        "max_cost_increase_ratio": { "type": "number", "minimum": 0 },
+        "max_latency_p95_increase_ratio": { "type": "number", "minimum": 0 }
+      }
+    },
+    "comparison_metrics": { "type": "array", "minItems": 1, "items": { "type": "string" }, "uniqueItems": true },
+    "latest_result_ref": { "type": ["string", "null"] }
+  }
+}

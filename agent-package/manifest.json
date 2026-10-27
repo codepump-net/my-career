@@ -1,0 +1,41 @@
+{
+  "schema_version": "1.1",
+  "package_id": "tpm-agent-development-package",
+  "package_version": "0.2.0",
+  "status": "active",
+  "updated_at": "2026-08-31",
+  "control_plane": {
+    "provider_neutral": true,
+    "source_of_truth": "agent-package",
+    "runtime_artifacts_are_generated": true
+  },
+  "owners": {
+    "product": "Project TPM",
+    "technical": "Agent Maintainer",
+    "approval": "Project Owner"
+  },
+  "defaults": {
+    "write_policy": "read_only",
+    "network_policy": "deny_unless_authorized",
+    "high_risk_approval": "required",
+    "approval_failure_mode": "fail_closed",
+    "environment_policy": "version_and_hash_in_release",
+    "session_budget_policy": "required",
+    "data_retention_policy": "explicit_per_agent_and_environment",
+    "raw_trace_repository": "external_or_gitignored",
+    "secrets_in_repository": "forbidden"
+  },
+  "paths": {
+    "registry": "registry.json",
+    "agents": "agents",
+    "skills": "skills",
+    "environments": "environments",
+    "policies": "policies",
+    "evals": "evals",
+    "runs": "runs",
+    "releases": "releases",
+    "decisions": "decisions",
+    "changes": "changes",
+    "adapters": "adapters"
+  }
+}

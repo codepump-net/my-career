@@ -1,0 +1,39 @@
+{
+  "schema_version": "1.0",
+  "run_id": "RUN-AGENT-20260831-001",
+  "timestamp": "2026-08-31T00:00:00Z",
+  "stage": "development",
+  "version_tuple": {
+    "agent": "agent-id@0.1.0",
+    "instructions_hash": "TBD",
+    "context_hash": "TBD",
+    "skills_hash": "TBD",
+    "model": "provider/model-version",
+    "tools_hash": "TBD",
+    "orchestration_hash": "TBD",
+    "adapter": "adapter-id@version#hash",
+    "environment": "environment-id@version#hash",
+    "policy_hash": "TBD",
+    "eval_set_hash": "TBD"
+  },
+  "eval_or_request_ref": "approved-non-sensitive-reference",
+  "status": "blocked",
+  "metrics": {
+    "latency_ms": 0,
+    "tool_calls": 0,
+    "retries": 0,
+    "input_tokens": 0,
+    "output_tokens": 0,
+    "cost_amount": 0,
+    "cost_currency": "USD"
+  },
+  "approval_events": [],
+  "failure_class": null,
+  "evidence_uri": "approved-secure-location",
+  "data_handling": {
+    "contains_sensitive_data": false,
+    "trace_level": "metadata",
+    "retention_until": null,
+    "redaction_verified": true
+  }
+}

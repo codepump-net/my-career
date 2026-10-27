@@ -1,0 +1,53 @@
+{
+  "schema_version": "1.0",
+  "eval_run_id": "EVAL-AGENT-CANDIDATE-001",
+  "started_at": "2026-08-31T00:00:00Z",
+  "completed_at": "2026-08-31T00:00:00Z",
+  "stage": "fixed_eval",
+  "baseline": {
+    "agent": "agent-id@0.0.0",
+    "instructions_hash": "TBD",
+    "context_hash": "TBD",
+    "skills_hash": "TBD",
+    "model": "provider/model-version",
+    "tools_hash": "TBD",
+    "orchestration_hash": "TBD",
+    "adapter": "adapter-id@version#hash",
+    "environment": "environment-id@version#hash",
+    "policy_hash": "TBD",
+    "eval_set_hash": "TBD"
+  },
+  "candidate": {
+    "agent": "agent-id@0.1.0",
+    "instructions_hash": "TBD",
+    "context_hash": "TBD",
+    "skills_hash": "TBD",
+    "model": "provider/model-version",
+    "tools_hash": "TBD",
+    "orchestration_hash": "TBD",
+    "adapter": "adapter-id@version#hash",
+    "environment": "environment-id@version#hash",
+    "policy_hash": "TBD",
+    "eval_set_hash": "TBD"
+  },
+  "datasets": ["evals/cases/agent-id.jsonl"],
+  "graders": ["evals/graders/default.json"],
+  "execution": {
+    "repetitions": 3,
+    "concurrency": 1,
+    "state_reset": "required",
+    "randomness_record": "seed or provider request identifiers"
+  },
+  "summary": {
+    "case_count": 1,
+    "overall_pass_rate": 0,
+    "critical_pass_rate": 0,
+    "regression_count": 0,
+    "grader_disagreement_rate": 0,
+    "latency_p95_ms": 0,
+    "cost_per_task": 0
+  },
+  "critical_failures": [],
+  "artifacts": ["approved-evidence-location"],
+  "decision": "fail"
+}

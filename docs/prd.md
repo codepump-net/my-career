@@ -2,8 +2,8 @@
 
 | 항목 | 값 |
 | --- | --- |
-| 문서 버전 | 0.5 (버전별 페이지, 지원 허브, 작성 안내 방식) |
-| 최종 갱신 | 2026-09-19 |
+| 문서 버전 | 0.8 (Agent 개발·유지보수 패키지 추가) |
+| 최종 갱신 | 2026-10-27 |
 | 저장소 | `https://github.com/codepump-net/cv-portfolio` |
 | 배포 주소 | `https://codepump-net.github.io/cv-portfolio/` |
 | 상태 | 교수 지원용 기본판 재편 / 커버레터 본문 및 포트폴리오 증빙·계획 보완 필요 |
@@ -106,14 +106,16 @@
 | --- | --- | --- |
 | `/cv` | 머리(이름·연락처) · 01 요약 · 02 경력 · 03 학력 · 04 강의 · 05 논문 · 06 수상 | **작성 완료** |
 | `/coverletter` | 머리(지원 직무) · 01 지원 동기 · 02 강점과 문제 해결 · 03 협업과 성장 · 04 입사 후 계획 · 맺음말 | 절 구성 확정, 문장 대기 |
-| `/portfolio` | 표지 · 개요 · 케이스 01~03 · 작업 방식 · 연락처 · (부록) 상세 자료 | 대기 |
+| `/portfolio` | 지원 정보 표지(0장) · [Roblox] Tower Flood Race · [Roblox] FREE UGC RNG · [UGC] Roblox/ZEPETO · [ZEPETO] Get Train/Nightmare Lab · [ETC] UEFN/Meta Horizon Worlds/ifland | 대표 이미지·핵심 지표·주요 기능·라이브 링크 1차 반영 |
 
 `/cv` 는 `cv/data/오현석_CV.pdf` 를 원본으로 작성했다. 절 구성은 원본의
 OBJECTIVE / EXPERIENCE / EDUCATION / LECTURE / PUBLICATION / AWARDS 를 그대로 따른다.
 KO 기준 3페이지, EN 기준 4페이지로 출력된다.
 
 `/coverletter` 는 절 구성이 확정됐고 각 자리에 **작성 안내**만 들어 있다. 문장은 본인이 쓴다.
-`/portfolio` 는 레이아웃 확정용 임시 문구(`CONTENT PENDING`)가 들어 있다.
+`/portfolio` 는 지원 정보 표지와 번호가 붙은 대표 이미지 5개 프로젝트 슬라이드로 구성된다.
+단일 프로젝트 장은 대표 이미지와 정보 패널, 복수 프로젝트 장은 같은 구조의 프로젝트 카드로
+표시한다. 공개된 성과 수치가 없는 프로토타입은 수치를 만들지 않고 상태와 검증 범위를 적는다.
 
 현재 기본판은 아주대학교 디지털미디어학과 교수 지원용 범용 문서다.
 CV는 개요 → 학력 → 논문 → 강의 → 산업·R&D 경력 → 수상 순이다.
@@ -177,9 +179,13 @@ cv-portfolio/
 │   ├── check.js            정합성 점검
 │   ├── print-pages.ps1     PDF 추출 회귀 확인
 │   └── video/              포트폴리오 영상 렌더 (spec.json → ffmpeg)
+├── agent-package/          Agent 정의·Tool·Eval·Release의 공용 개발 패키지
 ├── docs/
 │   ├── prd.md              이 문서
-│   └── applications/       지원 건별 검토 메모 (요건 대조, 서류 전략, 영상 시나리오)
+│   ├── applications/       지원 건별 검토 메모 (요건 대조, 서류 전략, 영상 시나리오)
+│   ├── guides/             TPM·Agent 기반 기능 개발 학습 가이드
+│   ├── harnesses/          프로젝트 공용 실행 하네스
+│   └── templates/          기능별 Feature Packet 복사 원본
 ├── .nojekyll               GitHub Pages 의 Jekyll 처리 비활성화
 └── CLAUDE.md               AI 작업 규칙
 ```
@@ -329,7 +335,7 @@ PDF 3페이지로 어긋난 적이 있어, 지금은 한 값만 쓴다.
 | --- | --- | --- | --- |
 | `/cv` | 594.96×841.92pt = A4 세로 | KO 3 / EN 4 | 일치 |
 | `/coverletter` | 동일 | 2 (내용 길이에 따라 변동) | 일치 |
-| `/portfolio` | 960×540pt = 1280×720px @96DPI | 8 (본편 7 + 부록 1) | — |
+| `/portfolio` | 960×540pt = 1280×720px @96DPI | 6 (표지 1 + 프로젝트 5) | — |
 
 `tools/print-pages.ps1` 로 재현한다. 문서는 장수를 고정값으로 검사하지 않고 용지 크기만
 확인하며, 덱은 슬라이드 수와 페이지 수가 일치해야 한다.
@@ -512,6 +518,10 @@ PDF 추출 결과는 Chromium 계열에서 가장 정확하다.
 
 | 날짜 | 결정 | 근거 |
 | --- | --- | --- |
+| 2026-08-31 | Agent 개발·유지보수를 위한 독립 `agent-package/`를 둔다 | 프로젝트 하네스·Feature Packet과 Agent 자체의 정본을 분리한다. Agent별 정의·지침·컨텍스트·Tool·Eval·Runbook·변경 기록을 버전 관리하고, 공용 Release Gate·Trace·ADR·runtime adapter·자동 구조 검사로 변경과 배포를 재현 가능하게 한다. |
+| 2026-08-31 | 학습 가이드와 별도로 프로젝트 공용 TPM Agent 하네스를 둔다 | 새 기능 개발뿐 아니라 기존 문서 전수 조사·기능 매핑·재구성·검증·정본 전환을 `BOOTSTRAP/MIGRATE/FEATURE/AUDIT` 모드와 MG0~MG5로 통제한다. 과거 기록은 출처·의도 상태·검증 수준을 분리하고 없는 Agent Trace를 사후 생성하지 않는다. |
+| 2026-08-30 | 모든 프로젝트의 기능 개발 문서를 Feature Packet 4종으로 표준화 | 목표·요구사항은 `feature.md` 한 곳에 두고 Agent 실행·평가·결정 기록을 분리해 정본 중복을 막는다. OpenAI의 Agent·orchestration·guardrail·trace eval 원칙과 Claude Code의 CLAUDE.md·Skills·MCP·Subagents·Hooks 책임 구분을 공통 Gate에 반영한다. |
+| 2026-08-25 | 포트폴리오 프로젝트 정보를 공통 모듈로 통일 | 각 프로젝트의 상태·지표·주요 기능을 같은 순서로 읽게 하고, 현재 라이브 서비스인 Roblox 프로젝트만 공식 서비스 링크를 노출한다. 공개 지표가 없는 검증 프로토타입은 상태와 검증 범위로 대체한다. |
 | 2026-08-24 | 언어는 KO/EN 2개 국어 | 국내 채용과 해외 지원을 모두 커버하면서 번역 유지 비용이 적다. 확장 여지는 남겨 둠 |
 | 2026-08-24 | 빌드 없이 `main` 브랜치 루트 배포 | 페이지 4개 규모. 두 지면 체계 모두 수기 CSS 라 빌드로 얻는 이득이 작다 |
 | 2026-08-24 | 경로는 `/coverletter` | 요청서의 `/corverletter` 는 오타. 참고 프로젝트의 한 단어 경로 규칙(`/company`, `/jumpstart`)에 맞춤 |

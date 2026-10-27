@@ -1,0 +1,112 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://example.local/schemas/agent.schema.json",
+  "title": "Provider-neutral Agent Contract",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["schema_version", "id", "display_name", "version", "status", "updated_at", "owners", "purpose", "non_goals", "runtime", "contracts", "risk", "data", "capabilities", "links"],
+  "properties": {
+    "schema_version": { "type": "string", "pattern": "^1\\.[0-9]+$" },
+    "id": { "type": "string", "pattern": "^[a-z0-9]+(?:-[a-z0-9]+)*$" },
+    "display_name": { "type": "string", "minLength": 1 },
+    "version": { "type": "string", "pattern": "^[0-9]+\\.[0-9]+\\.[0-9]+$" },
+    "status": { "enum": ["proposed", "experimental", "candidate", "active", "deprecated", "retired", "rejected", "rolled_back"] },
+    "updated_at": { "type": "string", "format": "date" },
+    "owners": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["product", "technical", "operations", "security"],
+      "properties": {
+        "product": { "type": "string", "minLength": 1 },
+        "technical": { "type": "string", "minLength": 1 },
+        "operations": { "type": "string", "minLength": 1 },
+        "security": { "type": "string", "minLength": 1 }
+      }
+    },
+    "purpose": { "type": "string", "minLength": 1 },
+    "non_goals": { "type": "array", "minItems": 1, "items": { "type": "string", "minLength": 1 }, "uniqueItems": true },
+    "runtime": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["provider", "model", "model_version_policy", "reasoning_policy", "environment_profile", "max_turns", "max_tool_calls", "max_parallel_tasks", "timeout_seconds", "session_cost_limit"],
+      "properties": {
+        "provider": { "enum": ["unbound", "openai", "anthropic", "local", "other"] },
+        "model": { "type": "string", "minLength": 1 },
+        "model_version_policy": { "enum": ["pin_before_candidate", "pinned", "controlled_alias"] },
+        "reasoning_policy": { "type": "string", "minLength": 1 },
+        "environment_profile": { "type": "string", "minLength": 1 },
+        "max_turns": { "type": "integer", "minimum": 1 },
+        "max_tool_calls": { "type": "integer", "minimum": 0 },
+        "max_parallel_tasks": { "type": "integer", "minimum": 1 },
+        "timeout_seconds": { "type": "integer", "minimum": 1 },
+        "session_cost_limit": { "type": "number", "minimum": 0 }
+      }
+    },
+    "contracts": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["input_schema", "output_schema", "failure_schema", "completion_evidence_required"],
+      "properties": {
+        "input_schema": { "type": "object" },
+        "output_schema": { "type": "object" },
+        "failure_schema": { "type": "object" },
+        "completion_evidence_required": { "type": "boolean" }
+      }
+    },
+    "risk": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["level", "autonomy_level", "default_write_policy", "approval_policy", "human_approval", "can_decide", "requires_approval", "must_refuse"],
+      "properties": {
+        "level": { "enum": ["low", "medium", "high", "critical"] },
+        "autonomy_level": { "enum": ["observe", "recommend", "act_with_approval", "act_within_policy"] },
+        "default_write_policy": { "enum": ["read_only", "deny", "scoped_write"] },
+        "approval_policy": { "type": "string", "minLength": 1 },
+        "human_approval": { "enum": ["none", "required_for_high_risk_actions", "required_for_all_side_effects"] },
+        "can_decide": { "type": "array", "items": { "type": "string", "minLength": 1 }, "uniqueItems": true },
+        "requires_approval": { "type": "array", "items": { "type": "string", "minLength": 1 }, "uniqueItems": true },
+        "must_refuse": { "type": "array", "items": { "type": "string", "minLength": 1 }, "uniqueItems": true }
+      }
+    },
+    "data": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["governance_policy", "allowed_classifications", "prohibited_data", "retention_policy", "raw_trace_policy"],
+      "properties": {
+        "governance_policy": { "type": "string", "minLength": 1 },
+        "allowed_classifications": { "type": "array", "minItems": 1, "items": { "enum": ["public", "internal", "confidential", "restricted"] }, "uniqueItems": true },
+        "prohibited_data": { "type": "array", "items": { "type": "string", "minLength": 1 }, "uniqueItems": true },
+        "retention_policy": { "type": "string", "minLength": 1 },
+        "raw_trace_policy": { "type": "string", "minLength": 1 }
+      }
+    },
+    "capabilities": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["skills", "delegation"],
+      "properties": {
+        "skills": { "type": "array", "items": { "type": "string", "minLength": 1 }, "uniqueItems": true },
+        "delegation": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": ["enabled", "allowed_agent_ids", "max_depth"],
+          "properties": {
+            "enabled": { "type": "boolean" },
+            "allowed_agent_ids": { "type": "array", "items": { "type": "string", "pattern": "^[a-z0-9]+(?:-[a-z0-9]+)*$" }, "uniqueItems": true },
+            "max_depth": { "type": "integer", "minimum": 0 }
+          }
+        }
+      }
+    },
+    "links": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["feature_ids", "change_ids", "runtime_adapters"],
+      "properties": {
+        "feature_ids": { "type": "array", "items": { "type": "string" }, "uniqueItems": true },
+        "change_ids": { "type": "array", "items": { "type": "string" }, "uniqueItems": true },
+        "runtime_adapters": { "type": "array", "items": { "type": "string" }, "uniqueItems": true }
+      }
+    }
+  }
+}

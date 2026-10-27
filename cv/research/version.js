@@ -39,7 +39,7 @@ window.DOC_VERSION = {
             title: { ko: '연구 관련 경력', en: 'Research-related experience' },
             include: [
                 // 시선 추적 연구와 그래픽스 엔진 경력을 앞세운다.
-                { id: 'softpump', points: ['gaze', 'commando'] },
+                { id: 'softpump', points: ['gaze', 'commando', 'duffy'] },
                 { id: 'snow' },
                 { id: '1m', points: ['ifland', 'metaverse'] },
                 // 최근 이력은 맥락만 남기고 세부 항목은 접는다.

@@ -17,5 +17,9 @@ Thumbs.db
 # 포트폴리오 영상 원본. 결과물(portfolio/*/assets/*.mp4)만 커밋한다
 raw/
 
+# 페이지에서 참조하지 않는 대용량 원본 영상은 로컬에 보관한다.
+portfolio/assets/get-train.mp4
+portfolio/assets/Portfolio_HyunseokOh.mp4
+
 # 의존성 (현재 무빌드 구성이라 사용하지 않지만, 도입 시를 대비해 둔다)
 node_modules/

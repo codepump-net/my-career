@@ -1,0 +1,74 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://example.local/schemas/agent-tool.schema.json",
+  "title": "Agent Tool Contract",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "id",
+    "purpose",
+    "effect",
+    "risk",
+    "input_schema",
+    "output_schema",
+    "allowed_scopes",
+    "forbidden",
+    "data_classifications",
+    "credential_refs",
+    "approval",
+    "idempotency",
+    "retry_safe",
+    "preconditions",
+    "postconditions",
+    "success_signal",
+    "timeout_seconds",
+    "max_retries",
+    "rate_limit",
+    "cost_limit",
+    "partial_failure_behavior",
+    "compensation",
+    "error_behavior"
+  ],
+  "properties": {
+    "id": { "type": "string", "pattern": "^[a-z0-9]+(?:-[a-z0-9]+)*$" },
+    "purpose": { "type": "string", "minLength": 1 },
+    "effect": { "enum": ["read", "reversible_write", "shared_write", "external_side_effect", "destructive"] },
+    "risk": { "enum": ["low", "medium", "high", "critical"] },
+    "input_schema": { "type": "object" },
+    "output_schema": { "type": "object" },
+    "allowed_scopes": { "type": "array", "items": { "type": "string" } },
+    "forbidden": { "type": "array", "items": { "type": "string" } },
+    "data_classifications": { "type": "array", "items": { "enum": ["public", "internal", "confidential", "restricted"] }, "uniqueItems": true },
+    "credential_refs": { "type": "array", "items": { "type": "string" }, "uniqueItems": true },
+    "approval": { "enum": ["none", "required_before_call", "required_before_commit"] },
+    "idempotency": { "enum": ["idempotent", "idempotent_with_key", "non_idempotent"] },
+    "idempotency_key": { "type": ["string", "null"] },
+    "retry_safe": { "type": "boolean" },
+    "preconditions": { "type": "array", "items": { "type": "string", "minLength": 1 } },
+    "postconditions": { "type": "array", "items": { "type": "string", "minLength": 1 } },
+    "success_signal": { "type": "string", "minLength": 1 },
+    "timeout_seconds": { "type": "integer", "minimum": 1 },
+    "max_retries": { "type": "integer", "minimum": 0 },
+    "rate_limit": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["max_calls", "window_seconds"],
+      "properties": {
+        "max_calls": { "type": "integer", "minimum": 1 },
+        "window_seconds": { "type": "integer", "minimum": 1 }
+      }
+    },
+    "cost_limit": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["amount", "currency"],
+      "properties": {
+        "amount": { "type": "number", "minimum": 0 },
+        "currency": { "type": "string", "minLength": 1 }
+      }
+    },
+    "partial_failure_behavior": { "type": "string", "minLength": 1 },
+    "compensation": { "type": ["string", "null"] },
+    "error_behavior": { "type": "string", "minLength": 1 }
+  }
+}

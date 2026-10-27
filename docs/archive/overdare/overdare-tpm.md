@@ -4,6 +4,8 @@
 | --- | --- |
 | 공고 | `cv/data/[OVERDARE] Technical Product Manager (TPM).txt` |
 | 문서 | `/cv/overdare/` · `/coverletter/overdare/` · `/portfolio/overdare/` |
+| 커버레터 HR 가이드 | `overdare-coverletter-hr-guide.md` |
+| 이력서 작성안내 페이지 | `/docs/applications/overdare-resume-guide/` — 현재 제출본과 별도 보존 |
 | 영상 | `overdare-portfolio-video.md` — 시나리오 · 편집 규격 · Claude Code 자동 편집 |
 | 검토일 | 2026-08-24 (2차 — 본인 진술 반영) |
 | 근거 | ① `cv/data.js` ② 참고 저장소 `nnn-games-website/`(스튜디오 공개 자료, `data/projects.json` 2026-08-23) ③ **본인 진술** — Meta Horizon·UEFN 포트폴리오, 전 결과물 Claude Code 에이전트로 구현, Tower Flood Race 전 콘텐츠 AI 기반 제작 ④ **포트폴리오 재고 목록**(본인 진술) — 5개 플랫폼 11개 프로젝트 + UGC 10종 |
@@ -190,8 +192,8 @@ UEFN 이 UE5 다). 별도 문서로 두거나 포트폴리오 첫 장으로.
 | **Tower Flood Race** | 중심 케이스. 필수 2·3·4 + 우대 2·3·4 + 미션 ③ | 01, **5장** — 숫자 → 파이프라인 → 지침 → 결정 → 라이브 |
 | Free UGC RNG, Fruit Battles | 파이프라인 **반복성** — 개별 성공담 아님(0.27M, 0.06M) | 02 ROBLOX 1장, 제작 기간과 함께 |
 | 자체 UGC 10종 | 아바타 아이템 측면. OVERDARE 도 아바타 커스터마이징이 있다 | 02 ROBLOX 같은 장 |
-| **Get Train** | 두 번째 케이스급 — 600K WAU, JR동일본 IP, JRE WALLET, World Jam 우승 | 02 ZEPETO 1장 |
-| Nightmare Lab | ZEPETO 가 일회성이 아님 | 02 ZEPETO 같은 장 |
+| **Get Train** | 두 번째 케이스급 — 600K WAU, JR동일본 IP, JRE WALLET | 02 ZEPETO 1장 |
+| Nightmare Lab | ZEPETO Global World Jam Fall 2023 우승, 2024.02 출시 | 02 ZEPETO 같은 장 |
 | **Water Colosseum (UEFN)** | **우대 1 의 유일한 증거.** 플랫폼 검증 프로토타입 — 툴 평가 행위 자체가 TPM 의 일 | 02 UEFN 1장 + 영상. **검증 목적·발견·결정** 을 함께 |
 | Slime Sanctum (Meta Horizon) | 네 번째 크리에이터 툴. 플랫폼 검증 프로토타입 | 02 HORIZON 1장 + 영상. 검증 목적·발견·결정 |
 | 1MILLION Land (ifland) | **대비** — 2021 년 9인 vs 2026 년 3인. 생산성을 병치로 보인다 | 02 IFLAND 1장 |
@@ -208,7 +210,7 @@ UEFN 과 Horizon 은 **플랫폼 테스트용 프로토타입**이다. 감출 �
 
 | | 예 |
 | --- | --- |
-| 무엇을 검증하려 했나 | "우리 파이프라인이 UE5 툴체인에서 도는가", "VR 제작 툴에서 에이전트가 낄 자리가 있나" |
+| 무엇을 검증하려 했나 | "우리 파이프라인이 UE5 툴체인에서 도는가", "UGC 게임 제작 환경에서 에이전트가 낄 자리가 있나" |
 | 무엇을 발견했나 | 툴이 어디서 막혔나, 우회가 가능했나, 같은 결과까지 시간이 얼마나 들었나 |
 | 무엇을 결정했나 | 왜 다음 타겟으로 삼지 않았나(또는 삼았나). 기준이 무엇이었나 |
 
@@ -279,7 +281,7 @@ UEFN 과 Horizon 은 **플랫폼 테스트용 프로토타입**이다. 감출 �
 | 11M — 어떻게? 봇은 아닌가 | 리텐션·D1/D7·동시접속·수익. 유입 경로(Roblox 추천·광고·커뮤니티) |
 | Claude Code 로 뭘 어떻게 하나. 보여 줄 수 있나 | **시연 준비.** 에이전트 지침 문서와 실제 세션 |
 | UEFN 에서 뭘 만들었나. Verse 는 | Water Colosseum — 검증 목적·발견·결정. UEFN 의 제약과 OVERDARE 스튜디오가 다르게 할 수 있는 것 |
-| Meta Horizon 은 | Slime Sanctum — 검증 목적·발견·결정. VR 제작 툴에서 에이전트가 낄 자리가 있었나 |
+| Meta Horizon 은 | Slime Sanctum — UGC 게임 플랫폼 확장에 참여한 프로토타입. 검증 목적·발견·결정은 무엇이었나 |
 | 왜 스튜디오를 키우지 않나 | 2절 Q1 |
 | 우리 프로세스 안에서 일할 수 있나 | 우아한형제들·스노우 시기의 장면 |
 | 지금 회사는 | 자기소개서에서는 다루지 않는다. 답은 준비한다 |
@@ -293,10 +295,10 @@ UEFN 과 Horizon 은 **플랫폼 테스트용 프로토타입**이다. 감출 �
 - [ ] 트리플엔게임즈 항목을 ZEPETO 시기(2024–25) / ROBLOX 시기(2026) 로 분리
 - [ ] ROBLOX — 라이브 6종 게임별 방문 수·출시일(`projects.json` 에 있다), 개발 중 5종, 팀 규모, 업데이트 주기
 - [ ] Tower Flood Race — 11.05M / 2026-01 출시 / AI 가 한 것과 사람이 한 것 각 한 줄
-- [ ] ZEPETO — Get Train 600K WAU, JRE WALLET 앱 연동, World Jam Fall 2023 우승
+- [ ] ZEPETO — Get Train 600K WAU, JRE WALLET 앱 연동
 - [ ] **Meta Horizon — Slime Sanctum: 시기, 검증 목적·결과, 규모**
 - [ ] **UEFN — Water Colosseum: 시기, 검증 목적·결과, Verse 사용 여부**
-- [ ] ZEPETO — Nightmare Lab: 시기, 지표
+- [ ] ZEPETO — Nightmare Lab: ZEPETO Global World Jam Fall 2023 우승, 2024.02 출시
 - [ ] ROBLOX — 자체 제작 UGC 10종: 시기, 커뮤니티 165K 와의 관계
 - [ ] Mine Sweeper — 시기·플랫폼·역할 (소프트펌프 항목에)
 - [ ] **Claude Code / LLM 에이전트 — 프로덕션 워크플로: 무엇을 위임, 어떤 도구 연결, 어떻게 검토**
@@ -318,7 +320,7 @@ UEFN 과 Horizon 은 **플랫폼 테스트용 프로토타입**이다. 감출 �
 - [ ] 02 ROBLOX — RNG · Fruit Battles 제작 기간, UGC 10종, 11종 목록
 - [ ] 02 ZEPETO — Get Train 배너·지표, Nightmare Lab 시기·지표
 - [ ] 02 UEFN — Water Colosseum 영상, **검증 목적·발견·결정 세 줄**, 툴체인 관찰
-- [ ] 02 Horizon — Slime Sanctum 영상, **검증 목적·발견·결정 세 줄**, VR 툴 관찰
+- [ ] 02 Horizon — Slime Sanctum 영상, **검증 목적·발견·결정 세 줄**, UGC 게임 제작 툴 관찰
 - [ ] 02 ifland — 1MILLION Land 스크린샷, 9인 vs 3인 대비 문장
 - [ ] 03 툴 비교표 — 5 툴 × 5 열, OVERDARE Studio 행
 - [ ] 04 문서 — 기획서 발췌 2~3건

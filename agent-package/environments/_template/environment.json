@@ -1,0 +1,60 @@
+{
+  "schema_version": "1.0",
+  "id": "agent-environment",
+  "version": "0.1.0",
+  "status": "proposed",
+  "provider": "unbound",
+  "execution_mode": "ephemeral",
+  "sandbox": {
+    "isolation": "provider_managed",
+    "base_image_or_runtime": "TBD-before-candidate",
+    "privileged": false
+  },
+  "network": {
+    "default_policy": "deny",
+    "allowed_destinations": []
+  },
+  "filesystem": {
+    "read_scopes": [],
+    "write_scopes": [],
+    "persistent_scopes": []
+  },
+  "dependencies": [],
+  "secrets": {
+    "provider": "not-configured",
+    "allowed_refs": [],
+    "injection": "not_allowed",
+    "repository_storage": "forbidden"
+  },
+  "limits": {
+    "duration_seconds": 300,
+    "turns": 12,
+    "tool_calls": 20,
+    "parallel_tasks": 1,
+    "input_tokens": 0,
+    "output_tokens": 0,
+    "cost_amount": 0,
+    "cost_currency": "USD"
+  },
+  "state": {
+    "persistence": "none",
+    "compaction_policy": "Do not compact unless the runtime records the policy and preserves required evidence.",
+    "session_retention_days": 0
+  },
+  "telemetry": {
+    "trace_level": "metadata",
+    "storage_ref": "approved-external-or-gitignored-location",
+    "retention_days": 0,
+    "redaction_policy": "Remove credentials, personal data, and unapproved content before persistence."
+  },
+  "data": {
+    "allowed_classifications": ["public", "internal"],
+    "residency": "approved-region-only",
+    "training_use": "forbidden"
+  },
+  "approvals": {
+    "failure_mode": "fail_closed",
+    "evidence_log": "runs approval event index",
+    "expiry_required": true
+  }
+}

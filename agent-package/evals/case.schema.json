@@ -1,0 +1,100 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://example.local/schemas/agent-eval-case.schema.json",
+  "title": "Agent Eval Case",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "case_id",
+    "title",
+    "severity",
+    "split",
+    "setup",
+    "input",
+    "expected",
+    "grading",
+    "metadata"
+  ],
+  "properties": {
+    "case_id": {
+      "type": "string",
+      "pattern": "^CASE-[A-Z0-9][A-Z0-9-]*$"
+    },
+    "title": {
+      "type": "string",
+      "minLength": 1
+    },
+    "severity": {
+      "enum": ["critical", "high", "medium", "low"]
+    },
+    "split": {
+      "enum": ["development", "regression", "holdout", "safety", "production_failure"]
+    },
+    "tags": {
+      "type": "array",
+      "items": { "type": "string" },
+      "uniqueItems": true
+    },
+    "setup": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["environment_profile", "fixtures", "state_reset"],
+      "properties": {
+        "environment_profile": { "type": "string", "minLength": 1 },
+        "fixtures": { "type": "array", "items": { "type": "string" }, "uniqueItems": true },
+        "state_reset": { "enum": ["required", "not_applicable"] }
+      }
+    },
+    "input": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["request_id", "prompt"],
+      "properties": {
+        "request_id": { "type": "string", "minLength": 1 },
+        "prompt": { "type": "string", "minLength": 1 },
+        "context_refs": {
+          "type": "array",
+          "items": { "type": "string" },
+          "uniqueItems": true
+        }
+      }
+    },
+    "expected": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["outcome", "rubric_ids"],
+      "properties": {
+        "outcome": { "type": "string", "minLength": 1 },
+        "must_include": { "type": "array", "items": { "type": "string" } },
+        "must_not_include": { "type": "array", "items": { "type": "string" } },
+        "allowed_tools": { "type": "array", "items": { "type": "string" } },
+        "required_tools": { "type": "array", "items": { "type": "string" } },
+        "max_tool_calls": { "type": "integer", "minimum": 0 },
+        "completion_evidence": { "type": "array", "items": { "type": "string" } },
+        "forbidden_side_effects": { "type": "array", "items": { "type": "string" } },
+        "rubric_ids": { "type": "array", "minItems": 1, "items": { "type": "string" } }
+      }
+    },
+    "grading": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["grader_ids", "repetitions", "pass_rule"],
+      "properties": {
+        "grader_ids": { "type": "array", "minItems": 1, "items": { "type": "string" }, "uniqueItems": true },
+        "repetitions": { "type": "integer", "minimum": 1 },
+        "pass_rule": { "enum": ["all", "majority", "threshold"] }
+      }
+    },
+    "metadata": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["origin", "added_at", "privacy_review"],
+      "properties": {
+        "origin": { "enum": ["designed", "incident", "user_feedback", "production_sample"] },
+        "source_ref": { "type": ["string", "null"] },
+        "added_at": { "type": "string", "format": "date" },
+        "privacy_review": { "enum": ["not_required", "passed", "pending"] }
+      }
+    }
+  }
+}

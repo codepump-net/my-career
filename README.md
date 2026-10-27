@@ -4,6 +4,10 @@
 
 - 공개 주소: <https://codepump-net.github.io/cv-portfolio/>
 - 상세 사양: [`docs/prd.md`](docs/prd.md)
+- TPM Agent 기능 개발 가이드: [`docs/guides/tpm-agent-feature-development.md`](docs/guides/tpm-agent-feature-development.md)
+- 기능별 Feature Packet 템플릿: [`docs/templates/tpm-agent-feature/`](docs/templates/tpm-agent-feature/)
+- TPM Agent 프로젝트 공용 하네스: [`docs/harnesses/tpm-agent-project/`](docs/harnesses/tpm-agent-project/)
+- Agent 개발·유지보수 패키지: [`agent-package/`](agent-package/)
 
 ## 페이지
 
@@ -12,6 +16,8 @@
 | `/` | 메인 — 교수 지원 문서, 접힌 지원 아카이브, 소개, 연락처 |
 | `/cv/` `/coverletter/` `/portfolio/` | 각 문서의 버전 목록 (링크만) |
 | `/cv/default/` | 교수 지원 CV · A4 세로 문서 |
+| `/cv/roblox/` | 로블록스 강사 평가용 CV · 이력 및 최신 실적 |
+| `/portfolio/roblox/` | Roblox 게임·UGC 본편, ZEPETO·기타 플랫폼 부록 |
 | `/cv/overdare/` | 종료된 OVERDARE 지원 CV 아카이브 |
 | `/coverletter/default/` | 교수 지원 커버레터 · 작성 안내 |
 | `/portfolio/default/` | 연구·교육·산업 포트폴리오 · 16:9 슬라이드 |
@@ -65,7 +71,11 @@ cv/ coverletter/        index.html(목록) + data.js(정본) + <버전>/(문서)
 slides/shared/        16:9 슬라이드 공용 셸       → slides/README.md
 portfolio/              index.html(목록) + data.js + <버전>/(덱)
 tools/                점검 스크립트
+agent-package/        Agent 정의·Tool·Eval·Release 관리 패키지
 docs/prd.md           제품 요구사항 문서
+docs/guides/          TPM·Agent 기능 개발 학습 가이드
+docs/harnesses/       프로젝트 공용 실행 하네스
+docs/templates/       기능별 산출물 복사 원본
 research/             박사 졸업·교수 지원을 위한 연구 계획과 기록
 nnn-games-website/    참고용 원본 저장소 (수정 금지, 배포 제외)
 ```

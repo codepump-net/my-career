@@ -1,0 +1,21 @@
+{
+  "schema_version": "1.0",
+  "id": "GRADER-DEFAULT",
+  "version": "0.1.0",
+  "type": "rubric",
+  "scope": "output_and_trace",
+  "rubric_ref": "evals/rubrics/default.md",
+  "config": {
+    "scale_min": 0,
+    "scale_max": 2,
+    "pass_score": 0.9,
+    "critical_override": true
+  },
+  "calibration": {
+    "golden_set_ref": null,
+    "sample_review_rate": 0.1,
+    "max_disagreement_rate": 0.1,
+    "last_reviewed_at": null
+  },
+  "failure_policy": "human_review"
+}

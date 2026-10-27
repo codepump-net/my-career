@@ -1,0 +1,956 @@
+<!doctype html>
+<html lang="ko">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="robots" content="noindex, nofollow">
+    <meta name="theme-color" content="#11151c">
+    <title>OVERDARE TPM 실무 면접 126 Q&amp;A | 오현석</title>
+    <style>
+        :root {
+            color-scheme: dark;
+            --bg: #0d1117;
+            --surface: #151b24;
+            --surface-2: #1b2330;
+            --surface-3: #222d3b;
+            --text: #edf2f7;
+            --muted: #9aa8b8;
+            --faint: #6f7f92;
+            --line: #2b3746;
+            --accent: #ff7043;
+            --accent-soft: rgba(255, 112, 67, .13);
+            --green: #4bd39b;
+            --green-soft: rgba(75, 211, 155, .12);
+            --yellow: #f5c451;
+            --yellow-soft: rgba(245, 196, 81, .12);
+            --blue: #64a8ff;
+            --blue-soft: rgba(100, 168, 255, .12);
+            --radius: 16px;
+            --shadow: 0 18px 50px rgba(0, 0, 0, .22);
+        }
+
+        * { box-sizing: border-box; }
+        html { scroll-behavior: smooth; scroll-padding-top: 150px; }
+        body {
+            margin: 0;
+            background:
+                radial-gradient(circle at 8% -10%, rgba(255, 112, 67, .14), transparent 30rem),
+                radial-gradient(circle at 95% 8%, rgba(100, 168, 255, .09), transparent 28rem),
+                var(--bg);
+            color: var(--text);
+            font-family: Inter, Pretendard, "Noto Sans KR", system-ui, -apple-system, "Segoe UI", sans-serif;
+            font-size: 16px;
+            line-height: 1.68;
+            -webkit-font-smoothing: antialiased;
+        }
+        button, input, select { font: inherit; }
+        button { color: inherit; }
+        a { color: var(--blue); }
+        code { font-family: "Cascadia Code", Consolas, monospace; }
+        :focus-visible { outline: 2px solid var(--accent); outline-offset: 3px; }
+        .wrap { width: min(1180px, calc(100% - 40px)); margin: 0 auto; }
+
+        .hero { padding: 76px 0 40px; }
+        .eyebrow { color: var(--accent); font-size: 12px; font-weight: 800; letter-spacing: .15em; }
+        h1 { max-width: 850px; margin: 12px 0 0; font-size: clamp(2.3rem, 6vw, 4.7rem); line-height: 1.03; letter-spacing: -.055em; }
+        .hero-lead { max-width: 760px; margin: 22px 0 0; color: var(--muted); font-size: 1.08rem; }
+        .hero-note { max-width: 880px; margin-top: 24px; padding: 16px 18px; border: 1px solid rgba(245, 196, 81, .35); border-radius: 12px; background: var(--yellow-soft); color: #f5d98f; }
+
+        .dashboard { display: grid; grid-template-columns: repeat(4, 1fr); gap: 12px; margin-top: 30px; }
+        .metric { padding: 18px; border: 1px solid var(--line); border-radius: 14px; background: rgba(21, 27, 36, .82); box-shadow: var(--shadow); }
+        .metric strong { display: block; font-size: 1.75rem; line-height: 1; }
+        .metric span { display: block; margin-top: 8px; color: var(--muted); font-size: .83rem; }
+        .progress-track { height: 6px; margin-top: 12px; overflow: hidden; border-radius: 999px; background: var(--surface-3); }
+        .progress-fill { width: 0; height: 100%; border-radius: inherit; background: linear-gradient(90deg, var(--accent), #ffae57); transition: width .2s ease; }
+
+        .brief { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; margin: 10px auto 34px; }
+        .brief-card { padding: 24px; border: 1px solid var(--line); border-radius: var(--radius); background: var(--surface); }
+        .brief-card h2 { margin: 0 0 12px; font-size: 1.05rem; }
+        .brief-card.study-plan { grid-column: 1 / -1; }
+        .study-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 10px; margin-top: 14px; }
+        .study-step { padding: 13px; border-radius: 10px; background: var(--surface-2); }
+        .study-step strong { display: block; color: var(--text); font-size: .83rem; }
+        .study-step span { display: block; margin-top: 5px; color: var(--muted); font-size: .78rem; line-height: 1.55; }
+        .brief-card p, .brief-card li { color: var(--muted); }
+        .brief-card ul, .brief-card ol { margin: 0; padding-left: 20px; }
+        .brief-card li + li { margin-top: 7px; }
+        .facts { display: grid; grid-template-columns: repeat(2, 1fr); gap: 8px; margin-top: 14px; }
+        .fact { padding: 10px 12px; border-radius: 10px; background: var(--surface-2); color: var(--muted); font-size: .86rem; }
+        .fact strong { color: var(--text); }
+
+        .skill-map { grid-column: 1 / -1; }
+        .skill-map-head { display: flex; align-items: end; justify-content: space-between; gap: 20px; }
+        .skill-map-head p { max-width: 760px; margin: 6px 0 0; }
+        .skill-map-note { flex: none; padding: 7px 10px; border: 1px solid rgba(255, 112, 67, .32); border-radius: 999px; background: var(--accent-soft); color: #ff9c7d; font-size: .72rem; font-weight: 800; }
+        .skill-loop { display: grid; grid-template-columns: repeat(4, 1fr); gap: 8px; margin-top: 18px; }
+        .skill-loop-step { position: relative; padding: 12px 14px; border: 1px solid var(--line); border-radius: 10px; background: var(--surface-2); }
+        .skill-loop-step:not(:last-child)::after { content: "→"; position: absolute; z-index: 1; top: 50%; right: -13px; width: 18px; color: var(--accent); text-align: center; transform: translateY(-50%); }
+        .skill-loop-step strong { display: block; color: var(--text); font-size: .82rem; }
+        .skill-loop-step span { display: block; margin-top: 3px; color: var(--muted); font-size: .73rem; line-height: 1.45; }
+        .skill-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 10px; margin-top: 12px; }
+        .skill-card { padding: 16px; border: 1px solid var(--line); border-radius: 12px; background: var(--surface-2); }
+        .skill-card-head { display: flex; align-items: center; gap: 8px; }
+        .skill-priority { flex: none; padding: 3px 7px; border-radius: 999px; font-size: .65rem; font-weight: 900; letter-spacing: .06em; }
+        .skill-priority.p0 { background: var(--accent-soft); color: #ff9c7d; }
+        .skill-priority.p1 { background: var(--blue-soft); color: #94c3ff; }
+        .skill-card h3 { margin: 0; font-size: .95rem; line-height: 1.35; }
+        .skill-card p { margin: 9px 0 0; font-size: .82rem; line-height: 1.55; }
+        .skill-card .ready { color: #d9e1ea; }
+        .skill-card .ready strong { color: var(--green); }
+        .skill-links { display: flex; flex-wrap: wrap; gap: 5px; margin-top: 11px; }
+        .skill-link { padding: 4px 7px; border: 1px solid var(--line); border-radius: 7px; color: var(--muted); font-size: .67rem; font-weight: 700; text-decoration: none; }
+        .skill-link:hover { border-color: var(--accent); color: var(--text); }
+        .readiness-gate { display: grid; grid-template-columns: repeat(4, 1fr); gap: 8px; margin-top: 12px; padding-top: 12px; border-top: 1px solid var(--line); }
+        .readiness-gate div { color: var(--muted); font-size: .75rem; line-height: 1.5; }
+        .readiness-gate strong { display: block; color: var(--text); font-size: .78rem; }
+
+        .controls-shell { position: sticky; top: 0; z-index: 20; padding: 12px 0; background: rgba(13, 17, 23, .88); backdrop-filter: blur(14px); border-top: 1px solid transparent; border-bottom: 1px solid var(--line); }
+        .controls { display: grid; grid-template-columns: minmax(220px, 2fr) repeat(4, minmax(120px, .8fr)); gap: 8px; }
+        .control, .action {
+            min-height: 42px;
+            border: 1px solid var(--line);
+            border-radius: 10px;
+            background: var(--surface);
+            color: var(--text);
+        }
+        .control { width: 100%; padding: 0 12px; }
+        .control::placeholder { color: var(--faint); }
+        .action { padding: 0 14px; cursor: pointer; font-size: .84rem; font-weight: 700; }
+        .action:hover { border-color: var(--accent); background: var(--accent-soft); }
+        .control-actions { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 9px; }
+        .result-line { margin-left: auto; align-self: center; color: var(--muted); font-size: .82rem; }
+
+        main { padding: 34px 0 100px; }
+        .group { margin-top: 46px; }
+        .group:first-child { margin-top: 0; }
+        .group-head { display: flex; align-items: end; justify-content: space-between; gap: 20px; margin-bottom: 14px; }
+        .group-kicker { margin: 0; color: var(--accent); font-size: 11px; font-weight: 800; letter-spacing: .14em; }
+        .group h2 { margin: 4px 0 0; font-size: clamp(1.35rem, 3vw, 1.85rem); letter-spacing: -.025em; }
+        .group-desc { max-width: 580px; margin: 6px 0 0; color: var(--muted); font-size: .9rem; }
+        .group-count { color: var(--faint); font-size: .85rem; white-space: nowrap; }
+
+        .qa-card { margin-top: 10px; border: 1px solid var(--line); border-radius: 13px; background: var(--surface); overflow: clip; }
+        .qa-card.is-done { border-color: rgba(75, 211, 155, .5); }
+        .qa-card.is-starred { box-shadow: inset 3px 0 var(--yellow); }
+        .qa-card[hidden], .group[hidden] { display: none; }
+        summary { display: grid; grid-template-columns: auto 1fr auto; align-items: center; gap: 13px; padding: 17px 18px; cursor: pointer; list-style: none; }
+        summary::-webkit-details-marker { display: none; }
+        summary:hover { background: rgba(255, 255, 255, .018); }
+        .q-no { color: var(--accent); font: 800 .75rem/1.2 "Cascadia Code", Consolas, monospace; letter-spacing: .04em; }
+        .q-title { font-weight: 700; line-height: 1.45; }
+        .badges { display: flex; align-items: center; gap: 5px; }
+        .badge { padding: 3px 7px; border-radius: 999px; font-size: .67rem; font-weight: 800; letter-spacing: .04em; }
+        .tier-a { background: var(--accent-soft); color: #ff9c7d; }
+        .tier-b { background: var(--blue-soft); color: #94c3ff; }
+        .tier-c { background: var(--surface-3); color: var(--muted); }
+        .verify-badge { background: var(--yellow-soft); color: var(--yellow); }
+        .chevron { color: var(--faint); transition: transform .18s ease; }
+        details[open] .chevron { transform: rotate(180deg); }
+        .qa-body { padding: 0 18px 18px 72px; border-top: 1px solid var(--line); }
+        .answer-label { margin: 18px 0 7px; color: var(--green); font-size: .72rem; font-weight: 800; letter-spacing: .12em; }
+        .answer { max-width: 920px; color: #d9e1ea; }
+        .answer p { margin: 0; }
+        .answer p + p { margin-top: 10px; }
+        .verify { max-width: 920px; margin-top: 14px; padding: 12px 14px; border-left: 3px solid var(--yellow); border-radius: 8px; background: var(--yellow-soft); color: #ead18a; font-size: .86rem; }
+        .review-panel { max-width: 920px; margin-top: 18px; padding: 16px; border: 1px solid #35465a; border-radius: 12px; background: #111821; }
+        .review-head { display: flex; align-items: center; justify-content: space-between; gap: 12px; margin-bottom: 12px; }
+        .review-head strong { color: #b8d5ff; font-size: .78rem; letter-spacing: .1em; }
+        .review-grade { min-width: 48px; padding: 4px 9px; border: 1px solid currentColor; border-radius: 999px; text-align: center; font-size: .72rem; font-weight: 900; }
+        .grade-a { color: var(--green); background: var(--green-soft); }
+        .grade-b { color: var(--blue); background: var(--blue-soft); }
+        .grade-c { color: var(--yellow); background: var(--yellow-soft); }
+        .review-grid { display: grid; grid-template-columns: minmax(180px, .7fr) minmax(0, 1.6fr); gap: 10px; }
+        .review-item { padding: 11px 12px; border-radius: 9px; background: var(--surface-2); }
+        .review-item.assessment { grid-column: 1 / -1; }
+        .review-label { display: block; margin-bottom: 4px; color: var(--faint); font-size: .68rem; font-weight: 800; letter-spacing: .08em; }
+        .review-value { color: #c9d4e0; font-size: .86rem; line-height: 1.6; }
+        .qa-actions { display: flex; flex-wrap: wrap; gap: 7px; margin-top: 16px; }
+        .mini { padding: 7px 10px; border: 1px solid var(--line); border-radius: 8px; background: var(--surface-2); color: var(--muted); cursor: pointer; font-size: .76rem; font-weight: 700; }
+        .mini:hover, .mini.is-active { border-color: var(--accent); color: var(--text); }
+        .mini.done.is-active { border-color: var(--green); background: var(--green-soft); color: var(--green); }
+        .mini.star.is-active { border-color: var(--yellow); background: var(--yellow-soft); color: var(--yellow); }
+        .empty { padding: 70px 20px; text-align: center; color: var(--muted); }
+
+        footer { padding: 30px 0 48px; border-top: 1px solid var(--line); color: var(--faint); font-size: .82rem; }
+        footer p { margin: 0; }
+        footer p + p { margin-top: 7px; }
+
+        @media (max-width: 860px) {
+            .dashboard { grid-template-columns: repeat(2, 1fr); }
+            .brief { grid-template-columns: 1fr; }
+            .brief-card.study-plan, .skill-map { grid-column: auto; }
+            .skill-loop, .readiness-gate { grid-template-columns: repeat(2, 1fr); }
+            .study-grid { grid-template-columns: repeat(2, 1fr); }
+            .controls { grid-template-columns: 1fr 1fr; }
+            .controls .search { grid-column: 1 / -1; }
+            .qa-body { padding-left: 18px; }
+        }
+        @media (max-width: 560px) {
+            .wrap { width: min(100% - 24px, 1180px); }
+            .hero { padding-top: 48px; }
+            .dashboard, .facts, .controls { grid-template-columns: 1fr; }
+            .skill-map-head { align-items: start; flex-direction: column; gap: 8px; }
+            .skill-map-note { align-self: start; }
+            .skill-loop, .skill-grid, .readiness-gate, .study-grid { grid-template-columns: 1fr; }
+            .skill-loop-step:not(:last-child)::after { content: "↓"; top: auto; right: 50%; bottom: -17px; transform: translateX(50%); }
+            .controls .search { grid-column: auto; }
+            .controls-shell { position: static; }
+            .group-head { align-items: start; flex-direction: column; gap: 4px; }
+            summary { grid-template-columns: auto 1fr auto; padding: 15px 13px; gap: 9px; }
+            .badges .badge:not(.verify-badge) { display: none; }
+            .qa-body { padding: 0 13px 16px; }
+            .review-grid { grid-template-columns: 1fr; }
+            .review-item.assessment { grid-column: auto; }
+        }
+        @media (prefers-reduced-motion: reduce) { * { scroll-behavior: auto !important; transition: none !important; } }
+        @media print {
+            :root { color-scheme: light; --bg: #fff; --surface: #fff; --surface-2: #f7f7f7; --surface-3: #eee; --text: #111; --muted: #444; --faint: #666; --line: #d7d7d7; }
+            body { background: #fff; color: #111; font-size: 11pt; }
+            .hero { padding: 20px 0; }
+            .controls-shell, .dashboard, .brief, .qa-actions, footer { display: none !important; }
+            .wrap { width: 100%; }
+            main { padding: 0; }
+            .group { margin-top: 22px; break-before: page; }
+            .group:first-child { break-before: auto; }
+            .qa-card { break-inside: avoid; }
+            details > .qa-body { display: block !important; }
+            summary { padding: 10px 12px; }
+            .qa-body { padding: 0 12px 12px; }
+            .answer { color: #222; }
+            .review-panel { border-color: #aaa; background: #f7f7f7; }
+            .review-value { color: #222; }
+            .chevron { display: none; }
+        }
+    </style>
+</head>
+<body>
+    <header class="hero">
+        <div class="wrap">
+            <p class="eyebrow">TECHNICAL FIT INTERVIEW · STUDY GUIDE</p>
+            <h1>OVERDARE TPM<br>126 Questions &amp; Answers</h1>
+            <p class="hero-lead">오현석의 이력서·자기소개서·포트폴리오와 참여 프로젝트를 기준으로 만든 실무 면접 답변 연습 문서입니다. 답변은 결론부터 말하고, 실제 사례와 수치는 본인이 최종 확인합니다.</p>
+            <div class="hero-note"><strong>암기 원칙:</strong> 문장을 통째로 외우지 마세요. 각 답변의 <strong>결론 → 문제 → 판단 → 근거 → 배운 점</strong> 다섯 고리만 기억하고, 60~120초 안에 자신의 말로 재구성하는 편이 안전합니다.</div>
+            <div class="dashboard" aria-label="학습 현황">
+                <div class="metric"><strong>126</strong><span>전체 질문</span></div>
+                <div class="metric"><strong id="doneCount">0</strong><span>학습 완료</span><div class="progress-track"><div class="progress-fill" id="progressFill"></div></div></div>
+                <div class="metric"><strong id="starCount">0</strong><span>즐겨찾기</span></div>
+                <div class="metric"><strong id="visibleCount">126</strong><span>현재 표시</span></div>
+            </div>
+        </div>
+    </header>
+
+    <section class="brief wrap" aria-label="면접 핵심 기준">
+        <article class="brief-card">
+            <h2>한 문장 포지셔닝</h2>
+            <p>“저는 여러 UGC 플랫폼에서 콘텐츠를 직접 만들고 운영한 경험을, 크리에이터가 더 빠르고 안전하게 게임을 만들 수 있는 제작 환경의 요구사항으로 바꿀 수 있는 TPM입니다.”</p>
+            <ol>
+                <li>UGC 플레이어이자 라이브 콘텐츠 제작자</li>
+                <li>게임 시스템·API를 이해하는 구현 경험자</li>
+                <li>AI와 사람의 역할 경계를 설계한 제작 시스템 운영자</li>
+            </ol>
+        </article>
+        <article class="brief-card">
+            <h2>제출 자료 기준 사실표</h2>
+            <div class="facts">
+                <div class="fact"><strong>Tower Flood Race</strong><br>1,100만+ 방문 · 즐겨찾기 51.6만</div>
+                <div class="fact"><strong>FREE UGC RNG</strong><br>27만+ 방문 · 즐겨찾기 4.4천+</div>
+                <div class="fact"><strong>Roblox · 1인 제작</strong><br>전 프로젝트 기획·개발·출시·운영 · UGC 300종</div>
+                <div class="fact"><strong>Get Train</strong><br>250만 방문 · 최고 주간 활성 60만</div>
+                <div class="fact"><strong>Nightmare Lab</strong><br>Global World Jam Fall 2023 우승</div>
+                <div class="fact"><strong>툴 검증</strong><br>UEFN · Meta Horizon 프로토타입</div>
+            </div>
+            <p style="margin-top:12px;font-size:.82rem">숫자는 지원서 작성 시점 기준입니다. 면접 직전에 공개 지표의 기준일과 내부 분석 수치를 다시 확인하세요.</p>
+        </article>
+        <article class="brief-card skill-map">
+            <div class="skill-map-head">
+                <div>
+                    <h2>실무 면접 핵심 스킬 맵</h2>
+                    <p>이 포지션의 핵심은 기능 지식의 양이 아니라 <strong>크리에이터의 제작 마찰을 찾아 제품 요구사항으로 바꾸고, 기술적으로 설계한 뒤 지표로 검증하는 능력</strong>입니다.</p>
+                </div>
+                <span class="skill-map-note">P0 4개를 먼저 완성</span>
+            </div>
+
+            <div class="skill-loop" aria-label="TPM 문제 해결 흐름">
+                <div class="skill-loop-step"><strong>1 · 관찰</strong><span>크리에이터 여정과 중단 지점</span></div>
+                <div class="skill-loop-step"><strong>2 · 구조화</strong><span>문제·가정·범위·우선순위</span></div>
+                <div class="skill-loop-step"><strong>3 · 설계</strong><span>UX·시스템·API·Agent 흐름</span></div>
+                <div class="skill-loop-step"><strong>4 · 검증</strong><span>수용 기준·지표·실험·회고</span></div>
+            </div>
+
+            <div class="skill-grid">
+                <section class="skill-card">
+                    <div class="skill-card-head"><span class="skill-priority p0">P0</span><h3>크리에이터 문제 → 제품 요구사항 번역</h3></div>
+                    <p>UGC 제작 여정에서 막히는 지점을 관찰하고, 사용자·문제·원인·우선순위·성공 지표가 있는 제품 문제로 바꾸는 능력입니다.</p>
+                    <p class="ready"><strong>준비 완료:</strong> OVERDARE Studio 직접 사용 로그 1건과 플랫폼별 마찰 사례 1건을 가지고, 개선 가설과 핵심 지표를 3분 안에 설명합니다.</p>
+                    <div class="skill-links"><a class="skill-link" href="#q20">Q020</a><a class="skill-link" href="#q61">Q061–074</a><a class="skill-link" href="#q117">Q117</a><a class="skill-link" href="#q124">Q124</a></div>
+                </section>
+                <section class="skill-card">
+                    <div class="skill-card-head"><span class="skill-priority p0">P0</span><h3>게임 시스템·툴·API 구조화</h3></div>
+                    <p>복잡한 기능을 상태·책임·인터페이스·예외·복구로 나누고, 서버/클라이언트 및 서비스 경계를 논리적으로 정하는 능력입니다.</p>
+                    <p class="ready"><strong>준비 완료:</strong> Tower Flood Race의 실제 상태명과 전이, API 계약, 실패 경로를 코드와 일치하게 5분 화이트보드로 그립니다.</p>
+                    <div class="skill-links"><a class="skill-link" href="#q10">Q010</a><a class="skill-link" href="#q46">Q046–053</a><a class="skill-link" href="#q120">Q120–123</a><a class="skill-link" href="#q126">Q126</a></div>
+                </section>
+                <section class="skill-card">
+                    <div class="skill-card-head"><span class="skill-priority p0">P0</span><h3>PRD·기능 명세·플로우 문서화</h3></div>
+                    <p>아이디어를 문제 정의, 목표·비목표, 사용자 흐름, 요구사항, 수용 기준과 측정 계획으로 내려 구현 가능한 합의로 만드는 능력입니다.</p>
+                    <p class="ready"><strong>준비 완료:</strong> 실제 문서 1건을 화면에 띄우고 요구사항 하나가 구현·테스트·결과로 이어진 추적 사례와 버린 범위를 함께 보여줍니다.</p>
+                    <div class="skill-links"><a class="skill-link" href="#q18">Q018</a><a class="skill-link" href="#q54">Q054–060</a><a class="skill-link" href="#q122">Q122–123</a></div>
+                </section>
+                <section class="skill-card">
+                    <div class="skill-card-head"><span class="skill-priority p0">P0</span><h3>LLM Agent 워크플로 설계·검증</h3></div>
+                    <p>Agent·Skill·도구·컨텍스트·권한·중단 조건을 하나의 통제 가능한 실행 루프로 설계하고, 사람의 판단 경계를 두는 능력입니다.</p>
+                    <p class="ready"><strong>준비 완료:</strong> 실제 실행 로그·diff·실패 개선 사례 각 1건과 도입 전후 리드타임·재작업·사람 개입 시간의 기준선을 제시합니다.</p>
+                    <div class="skill-links"><a class="skill-link" href="./llm-agent/">전용 학습 페이지 →</a><a class="skill-link" href="#q15">Q015–017</a><a class="skill-link" href="#q75">Q075–094</a><a class="skill-link" href="#q118">Q118</a><a class="skill-link" href="#q120">Q120–121</a></div>
+                </section>
+                <section class="skill-card">
+                    <div class="skill-card-head"><span class="skill-priority p1">P1</span><h3>UGC·UE5 크리에이터 플랫폼 이해</h3></div>
+                    <p>Roblox·ZEPETO·UEFN·Horizon의 스크립팅, 에셋, 멀티플레이, 배포·라이브 흐름을 비교하고 OVERDARE의 기회로 연결하는 능력입니다.</p>
+                    <p class="ready"><strong>준비 완료:</strong> 플랫폼 비교표를 완성하고 UEFN 검증 프로토타입의 목적·발견·결정을 과장 없이 설명합니다.</p>
+                    <div class="skill-links"><a class="skill-link" href="#q31">Q031–045</a><a class="skill-link" href="#q67">Q067–074</a><a class="skill-link" href="#q95">Q095–104</a></div>
+                </section>
+                <section class="skill-card">
+                    <div class="skill-card-head"><span class="skill-priority p1">P1</span><h3>제품 판단·지표·협업 커뮤니케이션</h3></div>
+                    <p>불완전한 정보에서 가정을 밝히고 한 방향을 선택하며, 트레이드오프·위험·지표를 개발·디자인·사업 언어로 조율하는 능력입니다.</p>
+                    <p class="ready"><strong>준비 완료:</strong> 사례형 문제를 가정 → 결정 → 이유 → 핵심 지표와 가드레일 → 위험 순서로 5분 안에 풀고, 실제 갈등·실패 사례를 연결합니다.</p>
+                    <div class="skill-links"><a class="skill-link" href="#q105">Q105–116</a><a class="skill-link" href="#q117">Q117–126</a></div>
+                </section>
+            </div>
+
+            <div class="readiness-gate" aria-label="공통 준비 완료 기준">
+                <div><strong>말하기 · 90초</strong>결론부터 사례와 판단을 설명</div>
+                <div><strong>그리기 · 5분</strong>흐름·경계·예외를 화이트보드화</div>
+                <div><strong>증명하기 · 실물 1개</strong>문서·코드·로그·지표로 검증</div>
+                <div><strong>판단하기 · 트레이드오프</strong>버린 선택과 성공·중단 기준 제시</div>
+            </div>
+        </article>
+        <article class="brief-card study-plan">
+            <h2>주말 학습 순서</h2>
+            <p>‘확인 필요’ 배지를 먼저 해소한 뒤 소리 내어 답합니다. A 문항은 90초, B 문항은 60초, 현장 과제는 화이트보드 5분을 목표로 합니다.</p>
+            <div class="study-grid">
+                <div class="study-step"><strong>토요일 오전</strong><span>Q001–Q020 사실 확인<br>자기소개·지원동기 녹음</span></div>
+                <div class="study-step"><strong>토요일 오후</strong><span>Q046–Q094 시스템·Agent<br>구조도 직접 그리기</span></div>
+                <div class="study-step"><strong>일요일 오전</strong><span>Q031–Q045, Q095–Q104<br>프로젝트 화면·수치 대조</span></div>
+                <div class="study-step"><strong>일요일 오후</strong><span>Q117–Q126 화이트보드<br>랜덤 질문 무자료 모의면접</span></div>
+            </div>
+        </article>
+        <article class="brief-card study-plan">
+            <h2>심사자 관점 답변 준비도</h2>
+            <p>각 문항의 평가는 문장 완성도가 아니라 <strong>실제 소유권·구체적 사례·수치·트레이드오프·재현 가능한 근거</strong>를 기준으로 매겼습니다. <strong>A</strong>는 현재도 강한 합격 신호, <strong>B</strong>는 방향은 좋지만 사례나 수치 보강 필요, <strong>C</strong>는 원칙론 또는 미완성 답변으로 실전 전 교체가 필요하다는 뜻입니다. +/−는 같은 등급 안의 준비도 차이입니다.</p>
+        </article>
+    </section>
+
+    <div class="controls-shell">
+        <div class="wrap">
+            <div class="controls">
+                <input class="control search" id="search" type="search" placeholder="질문·답변 검색 (예: Agent, 11M, UEFN)" aria-label="질문과 답변 검색">
+                <select class="control" id="groupFilter" aria-label="영역 필터"><option value="all">모든 영역</option></select>
+                <select class="control" id="tierFilter" aria-label="우선순위 필터">
+                    <option value="all">모든 우선순위</option><option value="A">A · 반드시</option><option value="B">B · 중요</option><option value="C">C · 확장</option>
+                </select>
+                <select class="control" id="gradeFilter" aria-label="답변 준비도 필터">
+                    <option value="all">모든 답변 준비도</option><option value="A">A · 실전 가능</option><option value="B">B · 근거 보강</option><option value="C">C · 답변 교체</option>
+                </select>
+                <select class="control" id="studyFilter" aria-label="학습 상태 필터">
+                    <option value="all">모든 학습 상태</option><option value="todo">미완료</option><option value="done">완료</option><option value="star">즐겨찾기</option><option value="verify">사실 확인 필요</option>
+                </select>
+            </div>
+            <div class="control-actions">
+                <button class="action" id="randomBtn" type="button">랜덤 모의질문</button>
+                <button class="action" id="expandBtn" type="button">표시 답변 펼치기</button>
+                <button class="action" id="collapseBtn" type="button">모두 접기</button>
+                <button class="action" id="printBtn" type="button">인쇄 / PDF</button>
+                <span class="result-line" id="resultLine" aria-live="polite">126개 표시 중</span>
+            </div>
+        </div>
+    </div>
+
+    <main class="wrap" id="questionRoot"></main>
+    <div class="empty wrap" id="emptyState" hidden>조건에 맞는 질문이 없습니다.</div>
+
+    <footer>
+        <div class="wrap">
+            <p>근거 문서: OVERDARE 지원 이력서 · 자기소개서 · 포트폴리오, Roblox 프로젝트 PRD·기술 명세·Agent 규칙.</p>
+            <p>제품 맥락: <a href="https://www.overdare.com/" target="_blank" rel="noreferrer">OVERDARE 공식 사이트</a> · <a href="https://docs.overdare.com/manual/quick-start-guide/roblox-developer-guide" target="_blank" rel="noreferrer">Roblox 개발자용 가이드</a> · <a href="https://docs.overdare.com/manual/quick-start-guide/unreal-developer-guide" target="_blank" rel="noreferrer">Unreal 개발자용 가이드</a></p>
+        </div>
+    </footer>
+
+    <script>
+    const groups = [
+        {
+            id: "core",
+            title: "최우선 예상 질문",
+            range: "Q001–Q020",
+            desc: "서류의 핵심 주장과 가장 큰 리스크를 검증하는 질문입니다. 전부 90초 답변을 준비합니다.",
+            items: [
+                [1, `1~2분 안에 본인의 경력과 이번 TPM 지원 이유를 설명해 주세요.`, `저는 약 14년 동안 게임과 그래픽스 기술을 직접 구현하고, 조직과 제품을 이끌고, 서비스를 출시해 온 개발자이자 제품 책임자입니다. 최근 6년은 Roblox와 ZEPETO를 중심으로 UGC 콘텐츠를 기획·개발·운영했습니다. 특히 Roblox에서는 모든 프로젝트를 혼자 기획하고 개발해 출시와 라이브 운영까지 담당했습니다. 대표적으로 Tower Flood Race의 최대 50인 라운드·랜덤 타워·보상 시스템을 설계하고 플레이 데이터로 라이브 콘텐츠를 개선해 1,100만 이상의 방문을 만들었습니다. 이 과정에서 반복 개발을 전용 AI Agent와 공통 모듈로 구조화했고, 이제는 한 명의 제작자가 얻은 생산성 향상을 수많은 크리에이터가 활용할 수 있는 제작 환경으로 확장하고 싶어 OVERDARE TPM에 지원했습니다.`],
+                [2, `Technical Director·CTO·창업자 경력을 거쳐 왜 지금 TPM 직무를 선택했나요?`, `그동안 저는 주로 크리에이터 입장에서 여러 UGC 플랫폼의 콘텐츠를 직접 기획하고 개발하고 운영해 왔습니다. 이 과정에서 제작자의 실행력도 중요하지만, 제작 툴과 API, 테스트·배포 방식, 운영 데이터처럼 플랫폼이 제공하는 환경이 콘텐츠의 제작 속도와 품질의 상한을 결정한다는 것을 반복해서 경험했습니다.
+
+개별 제작자는 이런 제약을 우회할 수는 있지만, 많은 크리에이터가 공통으로 겪는 문제 자체를 해결하기는 어렵습니다. 그래서 이제는 한 콘텐츠의 성과를 만드는 것을 넘어, 제가 직접 겪은 제작 문제를 제품 요구사항으로 구조화하고 수많은 크리에이터가 사용하는 제작 환경을 개선하는 일에 기여하고 싶습니다.
+
+제가 Technical Director나 CTO로 일하면서도 실제로 가장 많이 해 온 일이 사용자 문제를 시스템과 기능 요구사항으로 바꾸고 개발 범위를 조율하는 일이었습니다. 그런 점에서 TPM은 새로운 방향으로 전환하는 것이라기보다, 제가 가장 잘해 온 일을 플랫폼 규모로 확장하는 선택이라고 생각해 지원했습니다.`],
+                [3, `본인 회사를 계속 성장시키는 대신 OVERDARE에 합류하려는 이유는 무엇인가요?`, `2025년 말 AI 성능이 빠르게 향상되는 것을 경험하면서, 콘텐츠 제작 품질이 더 이상 투입 인원에 단순하게 비례하지는 않을 것이라고 판단했습니다. 마침 진행하던 ZEPETO 프로젝트의 계약이 종료되는 시점이어서 해당 프로젝트 조직을 정리했고, 이후에는 혼자서 AI를 실제 게임 제작에 어디까지 적용할 수 있는지 검증하는 방향으로 전환했습니다.
+
+이후 약 6개월 동안 Roblox의 모든 프로젝트를 혼자 기획하고 개발하면서 게임 시스템, UI, 전투 기능, 공통 모듈과 AI 기반 개발 워크플로를 만들고 실제 라이브 서비스까지 운영했습니다. Tower Flood Race가 누적 방문 1,100만 이상을 기록하면서, AI를 잘 활용한 1인 제작도 이전보다 훨씬 넓은 제작 범위와 높은 생산성을 확보할 수 있다는 가능성을 확인했습니다.
+
+동시에 콘텐츠 제작사 입장에서는 제작 툴과 API, 테스트·배포 방식처럼 플랫폼이 결정하는 문제를 우회할 수는 있어도 근본적으로 개선하기는 어렵다는 한계도 경험했습니다. 그래서 AI를 활용해 콘텐츠 하나를 더 만드는 것보다, 이런 경험을 수많은 크리에이터가 사용하는 제작 환경에 적용하는 일에 관심을 갖게 됐습니다.
+
+OVERDARE는 UGC 플랫폼에 UE5와 Luau, AI 기반 제작 방식을 함께 적용하고 있기 때문에 제가 경험한 문제와 가장 직접적으로 맞닿아 있다고 판단했고, 콘텐츠 제작자의 경험을 플랫폼 제품으로 확장해 보고 싶어 지원했습니다.`, `현재 회사의 실제 운영 지속 여부, 대표직·지분·겸업 정리 계획을 구체적인 일정으로 확정해야 합니다.`],
+                [4, `Roblox나 ZEPETO가 아니라 OVERDARE여야 하는 이유는 무엇인가요?`, `Roblox와 ZEPETO는 이미 강한 생태계와 관성이 형성되어 있어 핵심 제작 구조를 바꾸는 비용이 큽니다. OVERDARE는 UE5 기반 품질, Luau의 접근성, 모바일 배포, AI 보조 제작을 한 제품 안에서 연결하려는 초기 단계입니다. 저는 Roblox의 라이브 운영, ZEPETO의 브랜드·서비스 연동, UEFN과 Horizon의 툴 검증을 모두 경험했기 때문에 각 플랫폼의 장점과 마찰을 비교해 초기 제품 결정에 기여할 수 있습니다. 완성된 플랫폼을 이용하는 것보다 제작 규칙이 만들어지는 시점에 참여하고 싶다는 것이 가장 큰 이유입니다.`],
+                [5, `콘텐츠 제작자가 아니라 플랫폼 제작 환경을 설계하는 쪽으로 관심이 이동한 계기는 무엇인가요?`, `콘텐츠를 반복해서 만들수록 아이디어보다 제작 과정의 마찰이 일정과 품질을 더 크게 좌우한다는 것을 체감했습니다. 같은 UI나 전투 기능을 다시 만들고, 플랫폼별 API 차이를 우회하고, 검증 절차를 사람이 반복하는 시간이 컸습니다. 이 문제를 공통 모듈과 Agent 규칙으로 구조화하자 다음 기능의 시작 비용이 줄고 제가 직접 판단하고 검증해야 할 지점도 명확해졌습니다. 그 경험을 통해 좋은 툴은 단순히 기능이 많은 제품이 아니라, 반복을 제거하고 사람이 중요한 판단에 집중하도록 만드는 제품이라는 관점을 갖게 됐습니다.`],
+                [6, `Tower Flood Race에서 본인이 직접 책임진 범위를 구체적으로 설명해 주세요.`, `Tower Flood Race를 포함한 Roblox의 모든 프로젝트는 제가 혼자 진행했습니다. 게임 콘셉트와 코어 루프 기획부터 최대 50인 라운드의 상태·전이, 랜덤 타워, 보상, 어뷰징 대응 시스템 설계와 구현, UI와 콘텐츠 제작, 테스트, 출시와 라이브 운영까지 전 과정을 직접 책임졌습니다. 반복되는 구현은 공통 모듈과 AI Agent 워크플로로 구조화했지만, 무엇을 만들지 결정하고 결과물을 검토하며 최종 품질과 배포를 판단한 책임은 저에게 있었습니다. 출시 후에도 플레이 데이터를 직접 확인해 난이도와 라이브 콘텐츠의 우선순위를 조정했습니다.`, `혼자 수행한 범위를 기획·개발·콘텐츠·QA·출시·운영으로 나누고, 각 영역의 대표 산출물 하나씩을 바로 보여줄 수 있게 준비하세요.`],
+                [7, `Tower Flood Race가 7개월 만에 1,100만 방문을 달성한 핵심 원인은 무엇이라고 분석하나요?`, `한 가지 원인으로 설명하지 않겠습니다. 짧은 라운드 안에 이해되는 오비 레이스, 매 라운드 달라지는 타워, 다른 플레이어와 함께 달리는 긴장감이 초기 제품 적합성을 만들었고, 이후 플랫폼 추천 노출과 라이브 업데이트가 성장을 확대했다고 봅니다. 제가 중요하게 본 것은 유입만 늘리는 것이 아니라 첫 플레이에서 규칙을 이해하고 다시 시작하기까지의 마찰을 줄이는 일이었습니다. 다만 이 답은 실제 유입 채널·리텐션·업데이트 시점 데이터를 함께 제시해야 인과관계로 인정받을 수 있습니다.`, `추천·광고·커뮤니티별 유입, D1/D7, 평균 세션, 주요 업데이트 전후 지표를 실제 값으로 채워야 합니다.`],
+                [8, `방문 수 외에 제품의 건강성을 판단하기 위해 어떤 지표를 봤나요?`, `방문 수는 누적 유입이어서 제품 건강성을 단독으로 설명하지 못합니다. 저는 동시접속, 신규 대비 재방문, 평균 세션과 라운드 재시작률, 구간별 이탈, 보상 획득과 소비, 업데이트 전후 변화처럼 코어 루프와 연결되는 지표를 함께 봅니다. 특히 오비 게임은 특정 난이도 구간의 이탈과 다음 라운드 진입률을 같이 봐야 단순 실패와 좌절 이탈을 구분할 수 있습니다. 면접에서는 실제로 수집한 지표만 말하고, 수집하지 못한 지표는 당시 한계로 인정하겠습니다.`, `실제 대시보드에서 확인한 지표명과 수치, 수집하지 못한 지표를 구분해야 합니다.`],
+                [9, `플레이 데이터를 보고 실제로 변경한 기획이나 기능 한 가지를 설명해 주세요.`, `답변은 한 사례로 좁히겠습니다. 특정 구간에서 실패와 이탈이 함께 높아졌다는 신호를 발견하고, 원인이 조작 난이도인지 시각 정보 부족인지 분리해 보았습니다. 이후 장애물 배치·텔레그래프·체크포인트 또는 보상 중 실제로 바꾼 한 요소를 선택해 전후 지표를 비교했고, 전체 난이도를 낮추기보다 불공정하게 느껴지는 지점만 줄였습니다. 핵심은 데이터를 보고 숫자를 움직인 것이 아니라, 사용자 행동에 대한 가설을 세우고 제한된 변경으로 검증했다는 점입니다.`, `현재 제출 자료에는 구체 변경점과 전후 수치가 없습니다. 반드시 실제 사례 하나로 교체하세요.`],
+                [10, `최대 50인 라운드 시스템을 어떤 상태와 전이로 구조화했나요?`, `먼저 라운드를 대기·준비·진행·결과·정리처럼 책임이 다른 상태로 나누고, 각 상태가 시작되는 조건과 종료되는 조건을 정의했습니다. 서버가 현재 상태와 타이머, 승패, 보상을 권위 있게 결정하고 클라이언트는 입력과 UI·연출을 담당하도록 분리했습니다. 전이는 시간 만료, 생존 또는 도착 조건, 플레이어 수 변화, 운영 중단 같은 명시적 이벤트로만 일어나게 했습니다. 이 구조의 장점은 기능을 설명하기 쉽고, 예외가 생겨도 어느 상태의 책임인지 빠르게 찾을 수 있다는 것입니다.`, `실제 코드의 상태명·전이 조건·타임아웃 값을 확인해 화이트보드로 그릴 수 있어야 합니다.`],
+                [11, `라운드 중 이탈·재접속·동률·서버 오류 같은 예외는 어떻게 처리했나요?`, `예외를 정상 플로우의 바깥이 아니라 상태 전이의 입력으로 취급했습니다. 이탈 시 참가자 집합과 승리 조건을 다시 평가하고, 보상은 서버에서 한 번만 확정되도록 식별자와 지급 상태를 관리하는 방식이 기본 원칙입니다. 재접속 허용 범위, 동률 판정, 최소 인원 미달, 타임아웃은 제품 정책이므로 코드보다 먼저 문서로 결정해야 합니다. 실제 구현에서 지원하지 않은 예외는 지원했다고 포장하지 않고, 당시 정책과 지금 다시 설계할 경우의 보완점을 나눠 말하겠습니다.`, `실제 재접속 지원 여부, 동률 규칙, 중복 보상 방지 방식과 장애 대응을 확인해야 합니다.`],
+                [12, `포트폴리오에 적은 Round Agent는 무엇이며 LLM 기반 AI Agent와 어떻게 다른가요?`, `여기서 Round Agent는 LLM Agent가 아니라 게임 런타임에서 라운드 생명주기를 책임지는 오케스트레이터를 뜻합니다. 상태·전이·타이머·참가자·종료 조건을 한 책임 아래 모아 서비스 간 결합을 줄이는 구조입니다. 반면 AI Agent는 개발 과정에서 문서와 코드베이스를 읽고 기능 구현이나 검토 작업을 수행하는 제작 도구입니다. 같은 Agent라는 단어를 썼지만 실행 시점과 책임이 완전히 다르기 때문에 면접에서는 처음부터 ‘런타임 오케스트레이터’와 ‘LLM 제작 Agent’로 구분해 부르겠습니다.`, `Round Agent가 실제 코드에서 사용하는 공식 명칭인지 확인하세요. 다르면 실제 클래스명으로 수정해야 합니다.`],
+                [13, `어뷰징 탐지 조건과 제재 단계를 어떻게 정의했나요?`, `클라이언트의 결과를 신뢰하지 않고 서버가 행동의 가능 여부와 보상 조건을 검증하는 것이 출발점이었습니다. 탐지는 한 번의 이상값보다 속도·빈도·상태 불일치처럼 설명 가능한 신호를 조합하고, 대응은 기록·무효화·일시 제한·강한 제재처럼 위험도에 따라 단계화하는 방식이 적절합니다. 운영자가 왜 탐지됐는지 확인할 수 있도록 이벤트와 근거를 남기는 것도 제품 요구사항에 포함해야 합니다. 실제 답변에서는 제가 구현한 탐지 규칙 하나를 입력·판정·조치 순서로 설명하겠습니다.`, `실제로 사용한 탐지 규칙, 임계값, 제재 단계, 운영 로그 한 사례를 준비해야 합니다.`],
+                [14, `정상 이용자를 잘못 제재하는 오탐 문제는 어떻게 다뤘나요?`, `오탐 비용이 크기 때문에 탐지와 영구 제재를 바로 연결하지 않는 것이 원칙입니다. 신뢰도가 낮은 신호는 보상 무효화나 관찰 대상으로 두고, 반복되거나 여러 신호가 일치할 때 제재 강도를 높입니다. 네트워크 지연·저사양 기기·접근성 도구처럼 정상 행동이 이상값으로 보일 조건도 예외 목록에 포함해야 합니다. 운영 로그와 이의 제기 경로까지 있어야 완성된 Trust & Safety 플로우라고 생각합니다.`, `실제 서비스에 수동 검토·이의 제기·단계 제재가 있었는지 확인하고, 없었다면 설계 원칙과 실제 구현을 분리해 말하세요.`],
+                [15, `Claude Code 기반 AI Agent 시스템의 전체 구조를 설명해 주세요.`, `구조는 컨텍스트, 전문 역할, 도구, 검증 게이트 네 층으로 설명할 수 있습니다. CLAUDE.md와 PRD·가이드가 프로젝트 구조와 제약을 제공하고, 기능 추가·코드 리뷰·동기화처럼 반복 업무를 Skills 또는 전용 Agent로 분리했습니다. Agent는 파일 시스템과 터미널을 이용해 Config·서버·클라이언트·네트워크 파일을 일관된 패턴으로 수정하지만, 먼저 계획을 제시하고 변경 후 정적 검사와 테스트를 수행합니다. 사람은 요구사항, 트레이드오프, 승인, Roblox Studio 플레이 테스트와 최종 배포를 책임집니다.`],
+                [16, `AI Agent에 맡긴 일과 사람이 직접 판단한 일을 어떤 기준으로 구분했나요?`, `정답을 규칙과 검증으로 설명할 수 있는 반복 작업은 Agent에 맡기고, 목표와 가치 판단이 필요한 일은 사람이 맡겼습니다. 예를 들어 기존 아키텍처에 맞춘 파일 스캐폴딩, 공통 패턴 적용, 테스트 초안, 문서 동기화는 위임하기 좋습니다. 반면 코어 루프, 사용자에게 허용할 위험, 난이도, 수익화, 아트 방향, 출시 여부는 사람이 결정합니다. 경계가 애매하면 Agent가 계획과 대안을 만들고 사람이 선택한 뒤 실행하도록 승인 단계를 둡니다.`],
+                [17, `AI Agent 도입 전후 생산성이 얼마나 개선됐으며, 어떻게 측정했나요?`, `생산성을 코드 줄 수로 말하지 않겠습니다. 같은 종류 기능의 요구사항 확정부터 플레이 가능한 빌드까지 걸린 시간, 수정 반복 횟수, 회귀 결함, 문서 누락, 사람이 직접 작업한 시간을 비교하는 것이 더 적절합니다. 제 경험에서는 공통 구조를 따르는 반복 기능의 시작 비용과 문서·코드 동기화 부담이 줄었지만, 제품 판단과 Studio 검증 시간까지 사라진 것은 아닙니다. 면접에서는 실제 기능 두 개의 리드타임을 비교해 수치로 보여주겠습니다.`, `도입 전후 비교 가능한 기능 2개와 소요 시간·재작업 횟수를 계산해야 합니다. 근거 없는 ‘몇 배 향상’은 말하지 마세요.`],
+                [18, `본인이 작성한 PRD·기능 명세·플로우차트 중 하나를 골라 설명해 주세요.`, `Slap Forge Battlegrounds PRD를 예로 들겠습니다. 한 줄 목표와 비목표를 먼저 고정하고, 로비와 전장 Place, 큐 상태, 매치 상태 머신, 서버 권한, 수용 기준으로 내려갔습니다. 아이디어를 기능 목록으로 나열하지 않고 사용자가 로비 진입부터 매치 종료 후 복귀까지 겪는 흐름과 시스템 책임을 연결한 문서입니다. 구현 단계에서는 상태와 패킷, 서비스 경계를 정의하고 MVP 수용 기준으로 완료 여부를 판단하도록 만들었습니다.`],
+                [19, `UEFN Water Colosseum 프로토타입에서 검증하려던 것과 실제 발견한 것은 무엇인가요?`, `출시용 게임을 만드는 것보다 UE5 기반 UGC 툴에서 아이디어가 에디터·Device·Verse·플레이 테스트로 이어지는 전체 제작 흐름을 검증하는 목적이었습니다. 답변은 ‘검증 가설, 실제 제작 단계, 마찰 지점, 다음 결정’ 네 부분으로 하겠습니다. 예를 들어 Device로 빠르게 가능한 영역과 Verse가 필요한 영역, 반복 테스트 비용, 에셋 배치와 디버깅 흐름을 Roblox와 비교할 수 있습니다. 중요한 것은 프로토타입을 완성품처럼 말하지 않고, 무엇을 알아내기 위한 실험이었는지 설명하는 것입니다.`, `제출 자료에는 실제 발견과 다음 결정이 없습니다. 본인이 겪은 마찰 2개와 그 결과 내린 결정 1개를 반드시 기록하세요.`],
+                [20, `OVERDARE Studio를 사용해 봤다면 가장 먼저 개선하고 싶은 제작 흐름은 무엇인가요?`, `먼저 직접 사용한 범위와 공개 문서로 확인한 범위를 구분하겠습니다. 제가 우선 볼 흐름은 아이디어를 입력한 뒤 스크립트를 만들고, 멀티플레이·모바일 환경에서 검증하고, 안전하게 적용하거나 되돌리는 과정입니다. 외부 IDE 연동과 Luau는 강점이지만 AI가 코드를 생성하는 것만으로는 충분하지 않고 API 유효성, 서버·클라이언트 경계, 모바일 성능, 변경 diff, 테스트 결과가 함께 보여야 합니다. 실제 사용 후에는 가장 오래 걸린 한 단계와 실패 복구가 어려웠던 한 단계를 근거로 개선안을 제시하겠습니다.`, `면접 전 OVERDARE Studio에서 작은 멀티플레이 기능을 직접 만들고, 화면 녹화와 마찰 로그를 남기는 것이 최우선입니다.`]
+            ]
+        },
+        {
+            id: "unreal",
+            title: "Unreal·UEFN",
+            range: "Q095–Q104",
+            desc: "UE5 기반 경험의 깊이를 과장하지 않으면서도 UGC 툴 평가 경험의 가치를 설명합니다.",
+            items: [
+                [95, `Unreal Engine과 UEFN 경험의 범위를 정확히 구분해 설명해 주세요.`, `저는 일반 UE5 상용 프로젝트를 장기간 개발했다고 주장하지 않습니다. 제출 자료에서 직접 증명되는 것은 UEFN에서 Water Colosseum 프로토타입을 기획·제작하며 에디터, Device, Verse 중심의 UE5 기반 UGC 제작 흐름을 검증한 경험입니다. 여기에 과거 Unity·C++·그래픽스 엔진 경험이 있어 런타임과 툴의 개념을 이해하지만, UEFN 경험과 일반 Unreal C++·Blueprint 경험은 분명히 구분하겠습니다.`],
+                [96, `Water Colosseum에서 직접 설계하거나 구현한 시스템은 무엇인가요?`, `답변에서는 프로토타입의 핵심 루프를 먼저 한 문장으로 설명하고, 제가 설계한 규칙과 UEFN Device로 구성한 부분, Verse로 보완한 부분, 레벨과 플레이 테스트 범위를 나누겠습니다. 중요한 것은 ‘프로토타입 전체 참여’가 아니라 제가 직접 결정하고 구현한 기능을 이름으로 말하는 것입니다. 제출 자료에는 세부 시스템명이 없으므로 면접 전 실제 프로젝트를 열어 기능 목록과 화면을 확인하겠습니다.`, `직접 구현한 기능 2~3개, 사용 Device, Verse 파일과 코드 규모를 확인하세요.`],
+                [97, `Verse를 어느 정도까지 사용했나요?`, `Verse를 사용한 범위를 기능 단위로 정확히 말씀드리겠습니다. 언어 전체의 숙련도를 과장하기보다 이벤트 연결, 상태 관리, Device 조합으로 해결하기 어려운 게임 규칙 중 실제 작성한 코드를 보여주는 편이 낫습니다. 익숙한 Luau·C#과 비교했을 때 타입과 실행 모델에서 배운 점, 막혔던 점까지 설명할 수 있습니다.`, `Verse를 사용하지 않았다면 솔직히 ‘Device 중심 프로토타입’이라고 답하세요. 사용했다면 실제 코드 예시 하나를 준비하세요.`],
+                [98, `UEFN의 Device와 Verse 중 어떤 기준으로 구현 방식을 선택했나요?`, `검증된 Device가 요구를 충족하면 제작 속도와 유지보수를 위해 먼저 사용하고, 상태 조합이나 예외 정책이 복잡해질 때 Verse로 확장합니다. Device만 과도하게 연결하면 흐름이 분산되고, 모든 것을 Verse로 만들면 UGC 툴이 제공하는 안전한 기본값을 잃을 수 있습니다. 반복 가능성, 디버깅, 다른 크리에이터의 이해 가능성을 기준으로 선택하겠습니다.`],
+                [99, `UEFN 프로토타입의 검증 가설은 무엇이었나요?`, `가설은 ‘UE5 기반 UGC 환경에서 짧은 기간에 핵심 게임 루프를 만들고 반복 테스트할 수 있는가’로 정리할 수 있습니다. 이를 에디터 학습, Device와 스크립트 경계, 에셋 제작, 멀티플레이 테스트, 배포 준비 단계로 나눠 관찰했습니다. 실제 답변에서는 시작 전에 세운 가설과 제작 후 알게 된 사실을 구분해 결과론적으로 꾸미지 않겠습니다.`, `당시 실제로 세운 목적이 다르면 본인의 표현으로 교체하고, 기간과 완료 기준을 확인하세요.`],
+                [100, `검증 결과 정식 출시를 진행하거나 중단하기로 한 기준은 무엇이었나요?`, `프로토타입의 완성도만 아니라 목표 사용자와 시장 접근, 제작·업데이트 비용, 팀의 기존 역량, 다른 플랫폼 대비 기회비용을 함께 봅니다. 기술적으로 만들 수 있다는 결과와 사업적으로 계속 투자한다는 결정은 다릅니다. 실제로 중단했다면 발견한 제약과 당시 우선순위를 설명하고, 실패를 미출시 사실로만 방어하지 않겠습니다.`, `실제 중단 또는 보류 이유와 의사결정자가 누구였는지 확인하세요.`],
+                [101, `UEFN과 Roblox Studio의 제작 흐름에서 가장 큰 차이는 무엇이었나요?`, `Roblox는 객체·Luau·배포와 라이브 운영이 가볍게 이어지고, UEFN은 UE5의 시각 품질과 Fortnite 생태계의 Device·Verse 구조를 활용하는 대신 프로젝트와 검증의 무게가 다릅니다. 같은 기능도 Roblox에서는 스크립트 중심, UEFN에서는 Device와 Verse의 조합으로 사고하게 됩니다. 저는 문법보다 아이디어를 첫 멀티플레이 결과로 만드는 단계 수와 디버깅 가시성의 차이를 중심으로 설명하겠습니다.`],
+                [102, `UE5 기반이라는 점이 크리에이터 툴 UX에 어떤 장점과 부담을 주나요?`, `장점은 높은 그래픽 품질, 검증된 렌더링과 물리, 전문 제작 생태계를 활용할 수 있다는 점입니다. 부담은 객체와 에셋 파이프라인의 복잡성, 빌드와 성능 비용, 모바일 제약, 초보자에게 노출되는 개념 수입니다. 플랫폼은 엔진 기능을 그대로 보여주기보다 안전한 객체 타입과 템플릿, 기본값, 점진적 공개로 복잡성을 제품화해야 합니다.`],
+                [103, `언리얼 경험이 깊은 개발자와 협업할 때 본인이 기여할 수 있는 영역은 무엇인가요?`, `엔진 구현의 최종 권위자 역할을 하려 하지 않겠습니다. 대신 Roblox·ZEPETO 크리에이터가 이해하는 개념과 UE5 구조 사이의 차이를 사용자 흐름과 요구사항으로 번역하고, 어떤 기능이 실제 제작을 막는지 우선순위를 정할 수 있습니다. 개발자와는 상태·성능·API 제약을 구체적으로 논의하고, 크리에이터에게는 복잡성을 노출하지 않는 제품 경계를 설계하는 데 기여하겠습니다.`],
+                [104, `“UE5 경험이 충분하지 않다”는 평가에 어떻게 답하겠습니까?`, `일반적인 UE5 개발 경력의 깊이만 비교하면 부족할 수 있다는 점을 인정하겠습니다. 그러나 이 직무는 엔진 프로그래머가 아니라 UE5 기반 UGC 제작 환경의 TPM이며, 저는 Roblox·ZEPETO 프로덕션과 UEFN·Horizon 프로토타입을 통해 크리에이터 관점의 비교 경험을 갖고 있습니다. 부족한 엔진 세부는 빠르게 검증하고 전문가와 협업하되, 제가 가진 사용자·시스템·AI 제작 흐름의 교차 경험으로 차별화하겠습니다.`]
+            ]
+        },
+        {
+            id: "collaboration",
+            title: "협업·리더십·실패",
+            range: "Q105–Q116",
+            desc: "Roblox는 전부 1인 제작이므로, 협업 사례는 ZEPETO·ifland·HomeDance·우아한형제들·SNOW 등 이전 조직 경험에서 답합니다.",
+            items: [
+                [105, `기획·개발·아트 의견이 충돌했던 사례를 설명해 주세요.`, `이 질문은 1인으로 진행한 Roblox가 아니라 이전 조직의 협업 사례로 답하겠습니다. 답변은 의견이 달랐다는 사실보다 결정 기준을 어떻게 만들었는지에 집중하겠습니다. 예를 들어 시각 품질을 높이면 모바일 성능과 일정이 악화되는 상황에서 목표 기기, 사용자에게 꼭 필요한 인상, 프레임 기준, 제작 비용을 테이블로 놓고 최소 표현을 합의했습니다. 제 안이 채택됐는지보다 실험 가능한 시안과 측정 결과로 논의를 바꾼 것이 핵심입니다.`, `ZEPETO·ifland·HomeDance·우아한형제들·SNOW 중 실제 프로젝트 하나의 참여자·쟁점·결정·결과를 STAR 형태로 준비하세요.`],
+                [106, `본인의 제안이 팀에서 받아들여지지 않았던 경험이 있나요?`, `Roblox 프로젝트에는 별도 팀이 없었으므로 이전 회사나 ZEPETO 협업 경험에서 사례를 선택하겠습니다. 좋은 제안도 현재 목표와 비용에 맞지 않으면 채택되지 않을 수 있습니다. 저는 반대 이유를 사용자 가치, 기술 리스크, 일정, 소유권으로 분리해 확인하고, 결정권자가 다른 방향을 선택하면 실행에 협조합니다. 이후 재검토 조건과 필요한 데이터를 남겨 감정적 대립이 아니라 학습 가능한 가설로 보존합니다.`, `이전 조직에서 실제로 기각된 제안 하나와 이후 행동을 준비하세요.`],
+                [107, `기술적으로 가능하지만 제품적으로 만들지 않기로 한 사례가 있나요?`, `기술 데모가 가능하다는 것과 사용자가 반복해서 쓸 제품이라는 것은 다릅니다. 유지 비용, 학습 부담, 핵심 루프 기여, 운영 위험이 가치보다 크면 만들지 않거나 범위를 줄입니다. 특히 AI 기능은 생성 가능성보다 오류를 사용자가 발견하고 복구할 수 있는지가 출시 판단의 핵심입니다.`, `실제 기능을 예로 들어 ‘가능성·비용·결정·결과’를 채워야 합니다.`],
+                [108, `본인이 내린 잘못된 제품 판단을 하나 설명해 주세요.`, `실패 사례에서는 외부 환경보다 제가 믿었던 가정부터 말하겠습니다. 예를 들어 사용자가 더 많은 기능이나 콘텐츠를 원한다고 보고 범위를 넓혔지만, 실제 병목이 첫 이해나 반복 동기였다면 판단 오류입니다. 뒤늦게라도 행동 데이터와 사용자 관찰로 가정을 수정하고, 이후에는 핵심 퍼널 검증 전 확장을 제한하는 기준을 만들었다고 설명하겠습니다.`, `실제 잘못된 판단과 손실, 본인이 책임진 부분을 선택하세요. 가상의 예시로 답하지 마세요.`],
+                [109, `출시 후 예상과 완전히 달랐던 사용자 행동은 무엇이었나요?`, `사용자는 기획자가 의도한 최적 경로보다 보상이 빠르거나 사회적으로 재미있는 행동을 선택합니다. 답변에서는 예상 행동, 실제 행동, 이를 보여준 데이터, 악용인지 새로운 가치인지 판단한 과정, 변경 결과를 설명하겠습니다. 예상과 다름을 바로 막기보다 제품의 새로운 사용법인지 먼저 확인하는 것이 중요했습니다.`, `TFR 또는 Get Train에서 실제 예상 밖 행동 하나를 정리하세요.`],
+                [110, `일정 때문에 품질 범위를 줄였던 사례와 기준은 무엇인가요?`, `핵심 사용자 흐름과 데이터 안전, 보상 공정성, 장애 복구는 지키고 장식적 연출·부가 모드·자동화 범위를 줄였습니다. 축소 항목은 임시 코드로 숨기지 않고 비목표와 후속 조건으로 기록합니다. 출시 후 관측할 지표와 롤백 조건까지 있어야 일정 타협이 무책임한 품질 저하가 되지 않습니다.`, `실제 출시에서 제외한 기능과 반드시 지킨 품질 기준을 준비하세요.`],
+                [111, `Roblox 프로젝트를 혼자 진행하면서 역할과 의사결정을 어떻게 관리했나요?`, `Roblox의 모든 프로젝트는 기획·개발·콘텐츠 제작·테스트·출시·운영까지 제가 혼자 담당했기 때문에 사람별 역할 분담은 없었습니다. 대신 한 사람이 모든 관점을 동시에 섞지 않도록 제품 목표, 시스템 설계, 구현, 검증과 운영을 단계별 산출물과 체크리스트로 분리했습니다. AI Agent는 반복 구현과 검토를 보조했지만 제품 방향, 우선순위, 품질 기준과 최종 배포는 제가 결정했습니다. 1인 제작의 장점은 의사결정 속도였고, 약점은 자기 확증과 검증 공백이므로 플레이 데이터·테스트·문서화로 이를 보완했습니다.`, `1인 제작을 증명할 수 있는 기획 문서, 커밋, Agent 규칙, 출시·운영 기록을 단계별로 준비하세요.`],
+                [112, `구성원의 결과물이 기대에 못 미쳤을 때 어떻게 대응했나요?`, `먼저 기대 수준이 전달됐는지, 필요한 정보와 시간이 있었는지, 역량과 역할이 맞는지 확인합니다. 결과만 다시 만들게 하기보다 예시와 수용 기준을 맞추고 중간 검토 지점을 짧게 둡니다. 반복 문제가 생기면 작업 범위나 책임을 조정하지만 사람의 문제로 단정하기 전에 시스템의 모호함을 제거합니다.`],
+                [113, `비개발자에게 복잡한 시스템을 설명한 사례가 있나요?`, `기술 구조를 클래스나 패킷 이름으로 시작하지 않고 사용자의 행동과 시스템의 약속으로 바꿔 설명합니다. 예를 들어 보상 시스템은 ‘언제 받을 자격이 생기고, 누가 확정하며, 실패하면 어떻게 복구되는가’의 흐름으로 보여줍니다. 상태도와 실제 화면 예시를 함께 사용하고, 설명 후 상대가 의사결정을 할 수 있는지를 성공 기준으로 봅니다.`, `브랜드 파트너 또는 아트·운영 담당자에게 설명한 실제 사례를 준비하세요.`],
+                [114, `엔지니어에게 요구사항을 전달할 때 가장 중요하게 확인하는 것은 무엇인가요?`, `해결책보다 사용자 문제와 성공 조건, 반드시 지켜야 하는 정책을 먼저 공유합니다. 정상 흐름뿐 아니라 권한, 데이터, 예외, 범위 밖 항목과 의사결정자를 명확히 합니다. 마지막에는 엔지니어가 이해한 구조와 리스크를 역으로 설명하게 해 문서가 같아도 해석이 다른 부분을 확인합니다.`],
+                [115, `리더일 때와 실무 담당자일 때 본인의 행동 방식은 어떻게 달라지나요?`, `리더일 때는 목표와 경계, 의사결정 구조를 만들고 팀이 스스로 판단하도록 정보와 책임을 배분합니다. 실무 담당자일 때는 주어진 목표 안에서 불확실성과 리스크를 빠르게 드러내고, 제 책임 범위의 결과를 끝까지 닫습니다. 두 역할 모두 투명한 상태 공유와 근거 있는 이견 제시는 같지만 최종 결정권과 정보 배분 방식이 다릅니다.`],
+                [116, `가장 크게 실패한 프로젝트와 다시 한다면 바꿀 점은 무엇인가요?`, `프로젝트 하나를 선택해 목표, 제가 믿었던 가정, 초기 경고 신호를 놓친 이유, 손실, 이후 바꾼 시스템을 솔직하게 말하겠습니다. 결과가 나빴다는 것보다 책임을 외부로 돌리지 않고 재발 방지 방식이 남았는지가 중요합니다. 다시 한다면 더 작은 검증 단위와 중단 기준, 사용자 관찰 시점을 앞당기겠습니다.`, `채용에 치명적인 기밀은 제외하되 실제 실패 하나를 수치와 함께 선택하세요.`]
+            ]
+        },
+        {
+            id: "case",
+            title: "현장형 제품 과제",
+            range: "Q117–Q126",
+            desc: "즉석 화이트보드 과제입니다. 문제 정의와 가정, 우선순위, 지표, 위험을 순서대로 말합니다.",
+            items: [
+                [117, `OVERDARE Studio의 신규 크리에이터 온보딩을 개선해 보세요.`, `먼저 신규 크리에이터를 게임 개발 경험 유무와 목표 장르로 나누고, 현재 퍼널의 프로젝트 생성부터 첫 모바일 플레이까지 이탈을 측정하겠습니다. 첫 MVP는 대표 장르 템플릿을 고른 뒤 한 가지 규칙을 수정하고 멀티플레이로 실행하는 15분 내 성공 경험입니다. 가이드 문서보다 Studio 안의 단계별 미션, 안전한 기본값, 즉시 실행 가능한 샘플을 우선합니다. 성공 지표는 첫 플레이 완료율과 시간, 오류 후 복구율, 7일 내 두 번째 편집입니다.`],
+                [118, `“AI로 Obby 게임을 만들어 줘”라는 요청을 처리하는 Agent 플로우를 설계해 보세요.`, `Agent가 바로 전체 게임을 생성하지 않고 목표 사용자, 플레이 시간, 난이도, 멀티플레이 인원과 아트 방향을 짧게 확인합니다. 그다음 코어 루프와 생성 범위를 계획으로 보여주고, 검증된 Obby 템플릿 위에 장애물·라운드·체크포인트를 작은 단계로 생성합니다. 각 단계마다 API와 에셋 권리, 도달 가능성, 서버·클라이언트 경계, 모바일 성능을 검사하고 사용자가 플레이 후 승인합니다. 최종 배포 전에는 변경 이력과 되돌리기 지점을 남깁니다.`],
+                [119, `Roblox 프로젝트를 OVERDARE로 옮기는 Migration Assistant를 기획해 보세요.`, `첫 버전은 자동 변환보다 호환성 진단 도구로 시작하겠습니다. 프로젝트를 읽어 객체·Luau API·좌표 단위·에셋·네트워크·데이터 저장·UI를 분류하고, 자동 변환 가능·대체 패턴 필요·지원 불가로 보고서를 만듭니다. 사용자가 우선 기능을 선택하면 작은 플레이 가능한 세로 조각부터 변환하고 diff와 테스트 결과를 제공합니다. 성공 지표는 진단 완료율, 첫 기능 이식 시간, 수동 수정량, 실제 배포율입니다.`],
+                [120, `AI가 생성한 코드가 서버·클라이언트 규칙을 위반하지 않게 만드는 방법을 설계해 보세요.`, `문서 지시만으로 막지 않고 API 메타데이터와 정적 검사, 템플릿, 런타임 샌드박스를 결합합니다. Agent가 계획 단계에서 데이터와 권한 경계를 선언하고, 생성된 코드는 클라이언트가 보상이나 판정을 확정하는 패턴, 금지 API, 잘못된 스크립트 위치를 자동 검사합니다. 멀티플레이 테스트에서는 악의적 요청과 중복 호출을 주입하고 결과를 diff와 함께 보여줍니다. 민감한 변경은 사람 승인 없이는 적용되지 않습니다.`],
+                [121, `AI 결과물 적용 전 미리보기·테스트·승인·되돌리기 흐름을 설계해 보세요.`, `요청을 계획으로 확인한 뒤 Agent는 격리된 작업 사본에서 변경합니다. 사용자는 파일과 Studio 객체 단위 diff, 새로 쓰는 API와 에셋, 위험도, 자동 테스트 결과를 확인하고 선택적으로 적용합니다. 적용 후에는 임시 체크포인트와 플레이 테스트를 거치며, 실패 시 코드뿐 아니라 객체·설정·에셋 참조를 한 단위로 되돌립니다. 공개 배포와 경제·데이터 변경은 별도 승인 단계로 분리합니다.`],
+                [122, `AI Agent 기능의 성공 지표를 세 가지로 정의해 주세요.`, `첫째, 목표 작업을 사람이 수정 가능한 상태로 완료한 성공률입니다. 둘째, 요청부터 검증된 첫 플레이까지 걸린 시간과 사람 개입 시간입니다. 셋째, 적용 후 되돌리기·재작업·결함 유출률입니다. 제안 수용률만 높이면 과도한 자동 적용을 유도할 수 있으므로 속도, 품질, 통제감 지표를 함께 보겠습니다.`],
+                [123, `크리에이터가 생성한 AI 에셋의 권리와 안전 문제를 제품에서 어떻게 처리하겠습니까?`, `입력 단계에서 권리 보유 확인과 금지 자료 안내를 하고, 생성 이력과 사용 모델·조건을 기록합니다. 출력에는 유사성·성인·혐오·개인정보·상표 검사를 적용하되 자동 통과를 최종 보증으로 표현하지 않습니다. 판매·공개 전 크리에이터의 검토 책임과 플랫폼 심사를 명확히 하고, 신고·삭제·수익 보류·이의 제기 흐름을 준비합니다. 미성년자 데이터와 학습 동의는 별도의 엄격한 기준이 필요합니다.`],
+                [124, `첫 30일 동안 OVERDARE Studio의 개선 과제를 찾는 계획을 세워 보세요.`, `1주차에는 제품 목표·지표·로드맵·지원 문의를 파악하고 직접 온보딩부터 모바일 배포까지 한 프로젝트를 만듭니다. 2주차에는 초보·Roblox 이주자·전문 개발자 각 5명 정도의 작업을 관찰하고 퍼널 데이터와 오류 로그를 연결합니다. 3주차에는 상위 마찰을 영향·빈도·해결 비용으로 정리하고 작은 개선 두 개를 실험합니다. 4주차에는 결과와 장기 과제를 공유해 다음 분기의 가설과 성공 지표를 합의하겠습니다.`],
+                [125, `제한된 개발 인력으로 초보자 UX와 전문가 기능 중 무엇을 먼저 개선하겠습니까?`, `현재 성장 병목과 전략적 콘텐츠 공급자가 누구인지 먼저 확인하겠습니다. Early Access에서 대표 콘텐츠 부족이 문제라면 전문 크리에이터의 디버깅·배포 차단 요소가 우선일 수 있고, 유입은 많지만 첫 제작 성공이 낮다면 초보 온보딩이 우선입니다. 공통 기반인 오류 가시성, 템플릿 품질, 저장·되돌리기처럼 두 집단 모두에 영향을 주는 과제를 먼저 찾는 것이 가장 효율적입니다.`],
+                [126, `서버 테스트 기능이 제한된 상황에서 멀티플레이 품질을 어떻게 확보하겠습니까?`, `단기적으로는 서버 권한 규칙과 네트워크 계약을 로컬 테스트 가능한 모듈로 분리하고, 기록된 시나리오와 악의적 요청을 자동 재생합니다. 실제 멀티플레이는 소규모 원격 테스트 환경과 기기 매트릭스, 관측 로그, 기능 플래그로 위험을 낮춥니다. 중기적으로는 크리에이터가 인원·지연·이탈·재접속·중복 요청을 재현하는 서버 테스트 하네스를 제품 기능으로 제공하겠습니다. 출시 기준에는 자동 검사와 실제 세션 검증을 모두 포함합니다.`]
+            ]
+        },
+        {
+            id: "system",
+            title: "시스템·API·문서화",
+            range: "Q046–Q060",
+            desc: "복잡한 아이디어를 상태·책임·예외·수용 기준으로 바꾸는 실무 능력을 확인합니다.",
+            items: [
+                [46, `복잡한 시스템을 단순화할 때 가장 먼저 무엇을 분리하나요?`, `먼저 사용자에게 보이는 목표와 내부 구현을 분리합니다. 그다음 시스템을 상태, 상태를 바꾸는 이벤트, 각 상태의 책임, 실패와 예외, 외부 의존성으로 나눕니다. 한 번에 모든 세부를 설명하지 않고 핵심 정상 흐름을 먼저 합의한 뒤 예외와 운영 정책을 붙입니다. 이렇게 하면 기획자는 사용자 흐름을, 개발자는 경계와 입력·출력을, QA는 검증 조건을 같은 구조에서 볼 수 있습니다.`],
+                [47, `라운드 시스템을 상태 머신으로 표현한다면 상태와 이벤트는 무엇인가요?`, `개념적으로는 대기, 참가자 확정, 준비, 플레이, 결과, 정리 상태로 나눌 수 있습니다. 이벤트는 최소 인원 충족, 카운트다운 종료, 플레이어 도착·탈락·이탈, 제한 시간 만료, 운영 중단입니다. 각 전이는 누가 발생시키고 서버가 무엇을 검증하며 실패 시 어디로 돌아가는지까지 정의해야 합니다. 실제 프로젝트의 명칭과 다른 경우에는 개념 모델과 구현 모델을 구분해 설명하겠습니다.`, `실제 Tower Flood Race 상태명과 이벤트를 코드 또는 문서에서 확인하세요.`],
+                [48, `서버와 클라이언트의 책임을 어떤 기준으로 나눴나요?`, `결과의 공정성과 영속성에 영향을 주는 판정은 서버가 갖고, 입력·카메라·UI·VFX처럼 사용자별 즉시성이 중요한 요소는 클라이언트가 갖습니다. 클라이언트가 보내는 것은 결과가 아니라 요청이며, 서버는 현재 상태·권한·범위·쿨다운을 다시 검증합니다. 네트워크 비용 때문에 시각 정보까지 모두 복제하지 않고, 필요한 상태만 전송해 클라이언트가 표현하도록 설계합니다.`],
+                [49, `보상 요청의 중복 처리나 네트워크 재시도를 어떻게 안전하게 만들었나요?`, `보상은 클라이언트 클릭 횟수가 아니라 서버가 확정한 이벤트를 기준으로 지급해야 합니다. 라운드·이벤트·사용자 조합의 식별자를 두고 이미 처리한 지급은 다시 적용하지 않는 멱등성을 확보합니다. 데이터 저장 실패나 재시도 시에는 지급 상태와 원장 로그가 일치해야 하고, 클라이언트에는 성공이 확정되기 전 보상 완료를 표시하지 않습니다. 실제 구현이 이 수준에 미치지 못했다면 당시 방식과 보완안을 구분해 말하겠습니다.`, `실제 보상 중복 방지 키, 저장 실패 처리, 지급 로그 구조를 확인하세요.`],
+                [50, `Roblox API 공통 모듈은 어떤 문제를 해결하기 위해 만들었나요?`, `게임마다 플랫폼 API 호출, 오류 처리, 재시도, 환경 설정을 다시 작성하면 기능보다 통합 코드가 더 많이 반복됩니다. 공통 모듈은 호출 방식과 반환 형태를 통일하고 플랫폼 세부사항을 서비스 코드에서 분리하기 위해 만들었습니다. 덕분에 게임 기능은 ‘무엇을 할지’에 집중하고, 인증·속도 제한·실패 처리는 한곳에서 개선할 수 있습니다. 어떤 API를 감쌌는지는 실제 목록을 기준으로 답하겠습니다.`, `공통 모듈이 감싼 Roblox API와 사용 프로젝트, 재시도·캐시·오류 규칙을 목록화하세요.`],
+                [51, `공통 모듈의 인터페이스와 오류 처리 방식은 어떻게 정의했나요?`, `호출자에게 플랫폼의 원시 응답을 그대로 노출하지 않고 제품에서 필요한 타입과 성공·실패 의미로 변환하는 것이 기본입니다. 입력 검증, 타임아웃, 재시도 가능한 오류와 즉시 실패할 오류, 속도 제한, 관측 로그를 공통 정책으로 둡니다. 오류를 숨겨 기본값으로 바꾸기보다 호출자가 대체 UX나 운영 대응을 선택할 수 있게 명시적으로 반환해야 합니다.`],
+                [52, `API 변경이나 플랫폼 정책 변경에 어떻게 대응하도록 설계했나요?`, `플랫폼 호출을 어댑터 경계에 모으고 내부 시스템은 안정된 인터페이스만 보도록 합니다. API 버전과 기능 가능 여부를 한곳에서 관리하고, 계약 테스트나 최소 통합 테스트로 변경을 조기에 발견합니다. 정책 변경은 코드 문제만이 아니므로 기능 플래그, 대체 흐름, 운영 공지와 데이터 마이그레이션까지 함께 계획합니다.`],
+                [53, `실행 하네스가 정확히 무엇을 실행하고 무엇을 검증하나요?`, `제가 말하는 실행 하네스는 Agent가 오픈소스 패키지와 프로젝트 명령을 일관된 순서로 설치·생성·검사할 수 있게 감싼 실행 환경입니다. 예를 들어 Wally 의존성 설치, 타입 생성, Rojo 소스맵, 정적 검사와 테스트처럼 사람이 매번 기억하던 절차를 재현 가능한 명령으로 만듭니다. 핵심은 명령 실행 자체보다 입력 환경, 성공 조건, 실패 로그를 표준화해 Agent 결과를 검증 가능하게 만드는 것입니다.`, `실제 하네스 파일명과 실행 명령, 자동 검증 범위를 확인하세요. 단순 스크립트를 과도하게 ‘플랫폼’이라고 부르지 마세요.`],
+                [54, `기획 문서에 반드시 포함하는 항목은 무엇인가요?`, `문서 종류에 따라 깊이는 달라도 사용자와 문제, 목표 지표, 범위와 비목표, 핵심 흐름, 상태와 예외, 정책, 의존성, 수용 기준은 포함하려고 합니다. 결정되지 않은 내용은 빈칸으로 감추지 않고 가정·미결정·담당자로 표시합니다. 문서의 목적은 정보를 많이 적는 것이 아니라 팀이 같은 완료 조건으로 움직이게 하는 것입니다.`],
+                [55, `PRD와 기술 명세는 어떻게 구분하나요?`, `PRD는 누구의 어떤 문제를 왜 풀고 무엇을 성공으로 볼지 정의합니다. 기술 명세는 합의된 요구를 어떤 경계·데이터·상태·API·실패 처리로 구현할지 설명합니다. 실제로는 왕복이 필요하지만, 기술적 제약이 제품 목표를 대신하거나 PRD가 클래스 구조까지 미리 고정하지 않도록 두 문서의 책임을 구분합니다.`],
+                [56, `요구사항과 수용 기준을 어떻게 연결하나요?`, `각 요구사항을 사용자가 관찰할 수 있는 결과와 시스템이 검증할 수 있는 조건으로 바꿉니다. 예를 들어 ‘큐가 잘 동작한다’가 아니라 8명이면 즉시 출발하고, 최대 대기 후 최소 인원이면 출발하며, Zone을 벗어나면 제외된다는 식으로 입력·조건·결과를 적습니다. 정상 흐름뿐 아니라 실패 메시지와 재시도 조건도 수용 기준에 포함합니다.`],
+                [57, `비목표(Non-goals)를 문서에 넣은 실제 사례가 있나요?`, `Slap Forge Battlegrounds PRD에서는 팀전, 복잡한 강화 UI, 낙사 중심 메타, 영구 성장 RPG를 MVP 비목표로 명시했습니다. 핵심인 파밍·자동 합성·Slap 전투·10분 내 수렴을 검증하기 전에 범위가 장르 전체로 퍼지는 것을 막기 위한 결정입니다. 비목표는 ‘영원히 안 한다’가 아니라 현재 검증 질문에 필요하지 않다는 뜻으로 사용했습니다.`],
+                [58, `구현 도중 요구사항이 바뀌면 문서를 어떻게 관리하나요?`, `먼저 변경 이유와 영향을 기록하고, 기존 요구를 조용히 덮어쓰지 않습니다. 사용자 가치가 바뀐 것인지 기술 제약으로 구현안만 바뀐 것인지 구분한 뒤 PRD·명세·수용 기준 중 영향받는 부분을 함께 갱신합니다. 이미 구현된 코드와 테스트, 데이터 마이그레이션, 일정 영향도 변경 결정에 포함합니다.`, `실제 요구 변경 사례 하나의 이전안·변경 이유·영향을 준비하세요.`],
+                [59, `개발자가 기획 의도와 다른 구현을 했을 때 어떻게 조율하나요?`, `먼저 사람의 실수로 규정하지 않고 문서와 커뮤니케이션에서 해석이 갈릴 지점을 찾습니다. 사용자 결과와 수용 기준을 다시 확인하고, 구현이 더 나은 대안이라면 기획을 수정할 수 있습니다. 의도를 지켜야 한다면 왜 필요한지 구체적인 사용자 시나리오로 설명하고, 재작업 범위와 일정을 함께 합의합니다.`, `본인이 개발자이자 의사결정자였던 사례보다 다른 담당자와 조율한 실제 장면을 준비하세요.`],
+                [60, `문서화가 오히려 개발 속도를 늦춘 사례와 그 해결 방법은 무엇인가요?`, `초기에 모든 세부를 완성하려 하면 의사결정이 바뀔 때 문서 유지비만 커집니다. 그래서 가역적인 UI 세부보다 상태·데이터·보상·권한처럼 변경 비용이 큰 결정부터 문서화하고, 나머지는 프로토타입과 수용 기준으로 확인합니다. 문서의 깊이를 위험도와 협업 인원에 맞추고, 코드에서 확인 가능한 사실을 중복해서 길게 적지 않는 것이 해결 방법입니다.`, `실제 과문서화 또는 문서 불일치 사례가 있으면 그 문서와 개선 방식을 준비하세요.`]
+            ]
+        },
+        {
+            id: "ux",
+            title: "툴 UX·프로덕트 사고",
+            range: "Q061–Q074",
+            desc: "크리에이터 툴을 기능 목록이 아니라 제작 여정과 지표로 분석하는지를 봅니다.",
+            items: [
+                [61, `크리에이터 툴의 UX를 평가하는 본인만의 기준은 무엇인가요?`, `아이디어에서 첫 플레이 가능한 결과까지의 시간, 사용자가 현재 상태와 다음 행동을 이해하는 정도, 오류에서 복구하는 비용, 반복 작업량, 결과에 대한 통제감으로 평가합니다. 초보자의 첫 성공과 전문가의 확장성도 따로 봅니다. 기능이 존재하는지만 보지 않고 발견·학습·실행·검증·배포·운영 전 흐름에서 어디가 끊기는지 관찰합니다.`],
+                [62, `기능이 많은 툴과 배우기 쉬운 툴 사이의 균형을 어떻게 잡아야 하나요?`, `한 화면에서 모든 기능을 노출하는 대신 사용자의 숙련도와 작업 맥락에 따라 복잡성을 점진적으로 공개해야 합니다. 템플릿과 안전한 기본값은 첫 성공을 돕고, 스크립트·API·외부 IDE는 전문가의 상한을 열어 줍니다. 중요한 것은 초보 모드와 전문가 모드를 완전히 분리해 이식 비용을 만드는 것이 아니라 같은 객체와 개념이 자연스럽게 깊어지도록 설계하는 것입니다.`],
+                [63, `초보 크리에이터와 전문 개발자의 요구가 충돌하면 누구를 우선하나요?`, `제품의 현재 목표 사용자와 병목에 따라 결정합니다. 초기 활성화가 문제라면 초보자의 첫 성공을 우선하지만, 전문가가 만드는 대표 콘텐츠가 생태계 성장을 이끈다면 확장성과 디버깅이 더 중요할 수 있습니다. 한쪽의 평균 의견보다 각 집단이 만드는 가치와 실패 비용을 지표로 비교하고, 공통 기반 위에 점진적 기능을 제공하는 방향을 찾겠습니다.`],
+                [64, `제작 과정에서 사용자가 중단하는 지점을 어떻게 발견하나요?`, `퍼널 데이터로 프로젝트 생성, 첫 객체 배치, 첫 스크립트 실행, 첫 플레이 테스트, 첫 저장, 첫 배포의 이탈을 봅니다. 화면 녹화와 인터뷰에서는 멈춤, 반복, 되돌리기, 문서 검색, 오류 후 포기를 관찰합니다. 정량 데이터로 어디를 찾고 정성 관찰로 왜 그런지 확인한 뒤, 작은 변경으로 다시 측정합니다.`],
+                [65, `정성 인터뷰와 행동 데이터 중 무엇을 먼저 보나요?`, `알려진 퍼널과 충분한 표본이 있으면 행동 데이터로 문제 구간을 먼저 찾고 인터뷰로 원인을 확인합니다. 초기 기능이나 새로운 AI 경험처럼 데이터가 적고 행동의 의미가 불명확하면 관찰 인터뷰를 먼저 합니다. 둘 중 하나를 우선하는 원칙보다 현재 불확실성이 ‘어디’인지 ‘왜’인지 구분하는 것이 중요합니다.`],
+                [66, `툴 UX 개선의 성공 지표는 무엇인가요?`, `대표적으로 첫 플레이 가능한 결과까지 걸린 시간, 핵심 작업 성공률, 오류 후 복구율, 반복 클릭이나 수동 단계 수, 첫 배포율을 봅니다. 장기적으로는 크리에이터 유지, 업데이트 빈도, 완성 콘텐츠 품질과 플레이어 반응도 연결해야 합니다. AI 기능이라면 제안 수용률만 아니라 되돌리기와 재작업, 오류 유출도 함께 봅니다.`],
+                [67, `Time-to-first-playable을 줄이려면 어떤 단계를 먼저 개선해야 하나요?`, `전체 여정을 측정해 가장 긴 단계보다 가장 많은 사용자가 멈추는 단계를 먼저 봅니다. 일반적으로 프로젝트 설정, 기본 멀티플레이 구조, 에셋 준비, 첫 스크립트 오류, 플레이 테스트 환경이 후보입니다. 템플릿·가이드·AI 생성 중 무엇을 쓸지는 원인이 지식 부족인지 반복 작업인지 환경 대기인지 확인한 뒤 결정합니다. 목표는 빨리 무언가를 생성하는 것이 아니라 사용자가 이해하고 수정할 수 있는 첫 결과를 만드는 것입니다.`],
+                [68, `외부 IDE와 Studio 내부 편집 경험은 어떻게 연결하는 것이 좋을까요?`, `파일과 객체의 단일한 원본, 양방향 동기화 상태, 충돌과 저장 시점을 사용자가 명확히 알아야 합니다. IDE에서 생성한 코드가 어떤 Studio 객체에 연결되는지, 변경 전후 diff와 오류 위치가 어디인지 바로 추적할 수 있어야 합니다. AI Agent를 연결할 때도 외부 파일 변경이 Studio에서 예고 없이 적용되지 않도록 미리보기·승인·되돌리기 경계를 두겠습니다.`],
+                [69, `모바일 결과물을 PC Studio에서 제작할 때 생기는 검증 문제를 어떻게 해결하겠습니까?`, `해상도만 바꾸는 에뮬레이션으로는 입력, 성능, 네트워크, 발열, 실제 UI 안전 영역을 완전히 검증할 수 없습니다. Studio에서는 빠른 기기 프로필과 자동 검사로 초기 문제를 줄이고, 실제 모바일 원격 테스트와 빌드 공유를 짧은 루프로 연결해야 합니다. 출시 기준에는 대표 기기군의 프레임·메모리·입력 성공률과 실제 플레이 테스트를 포함하겠습니다.`],
+                [70, `기존 Roblox 크리에이터가 OVERDARE로 이동할 때 가장 큰 장벽은 무엇일까요?`, `Luau와 유사한 인터페이스는 학습 비용을 줄이지만 객체 구조, 좌표와 단위, 서버·클라이언트·복제 방식, 지원 API, 에셋 경로와 배포가 다릅니다. 가장 큰 장벽은 문법이 아니라 기존의 성공 패턴과 자산이 얼마나 재사용되는지 예측하기 어렵다는 점이라고 봅니다. 호환성 보고서와 대체 패턴, 샘플 프로젝트, 단계별 마이그레이션 검증이 필요합니다.`],
+                [71, `기능이 부족한 초기 플랫폼에서 크리에이터 기대치를 어떻게 관리해야 하나요?`, `로드맵 약속보다 현재 가능한 것, 제한, 권장 우회, 업데이트 시 영향 범위를 정확히 공개해야 합니다. 대표 템플릿은 지원 범위 안에서 성공 가능한 장르를 보여 주고, 부족한 기능은 요청 수뿐 아니라 콘텐츠 차단 정도로 우선순위를 정합니다. 크리에이터가 실험에 투자할 수 있도록 데이터·프로젝트 호환성과 변경 공지를 안정적으로 제공하는 것이 신뢰의 핵심입니다.`],
+                [72, `크리에이터가 요청한 기능을 만들지 않기로 결정한 경험이 있나요?`, `요청의 빈도보다 해결하려는 문제와 대체 흐름을 먼저 확인합니다. 한 사용자의 작업을 줄이지만 전체 객체 모델이나 성능을 복잡하게 만드는 기능이라면 템플릿·문서·API 조합으로 해결할 수 있는지 검토합니다. 만들지 않기로 했다면 이유, 대안, 재검토 조건을 설명해 관계를 유지합니다. 실제 답변에서는 제가 거절하거나 미룬 기능 하나와 결과를 제시하겠습니다.`, `실제 거절·연기 사례와 요청자에게 설명한 방식을 준비하세요.`],
+                [73, `툴 기능의 우선순위를 정할 때 사용하는 기준을 설명해 주세요.`, `사용자 영향 규모, 제작 여정 차단 정도, 전략적 콘텐츠 가치, 구현·운영 비용, 안전과 기술 리스크, 학습 가능성을 함께 봅니다. 초기에는 큰 기능보다 핵심 퍼널을 막는 작은 마찰을 먼저 해결할 수 있습니다. 점수표는 결정을 대신하지 않지만 가정과 트레이드오프를 팀이 같은 언어로 논의하게 해 줍니다.`],
+                [74, `출시 속도와 안정성 중 하나를 선택해야 했던 사례가 있나요?`, `둘을 추상적으로 선택하기보다 실패했을 때 복구 가능한 범위를 기준으로 결정합니다. 가역적인 UI나 일부 사용자 대상 기능은 플래그와 관측을 전제로 빨리 출시할 수 있지만, 보상·데이터·결제·제재처럼 되돌리기 어려운 기능은 검증을 강화합니다. 실제 사례에서는 줄인 범위, 지키지 않은 것이 아니라 반드시 지킨 품질 기준, 출시 후 모니터링을 함께 설명하겠습니다.`]
+            ]
+        },
+        {
+            id: "ai",
+            title: "LLM Agent·Claude Code",
+            range: "Q075–Q094",
+            desc: "도구 사용 경험이 프롬프트 수준인지, 제품화 가능한 Agent 시스템 사고인지 깊게 검증합니다.",
+            items: [
+                [75, `일반적인 코드 생성과 AI Agent의 차이를 어떻게 정의하나요?`, `코드 생성은 한 번의 입력에 산출물을 반환하는 작업이고, Agent는 목표를 위해 컨텍스트를 읽고 계획하고 도구를 사용하며 결과를 검증하고 다음 행동을 선택하는 루프를 가집니다. 중요한 차이는 자율성의 양이 아니라 상태, 권한, 중단 조건, 검증 가능성입니다. 제품에서는 ‘Agent’라는 이름보다 사용자가 어떤 결정을 맡기고 언제 통제권을 되찾는지가 더 중요합니다.`],
+                [76, `사용한 Agent·Skills·Tool Orchestration 구조를 그림 없이 설명해 주세요.`, `프로젝트 공통 컨텍스트 위에 기능별 절차를 Skills로 올리고, 더 독립적인 작업은 전용 Agent에 맡기는 구조입니다. Agent는 파일 검색·수정, 패키지 설치, 타입 생성, 테스트와 Git diff 확인 같은 도구를 순서대로 사용합니다. 예를 들어 기능 추가 Skill은 Config, Server Service, Client Controller, Network Packet, 등록과 테스트의 체크리스트를 강제합니다. 사람은 계획 승인, 제품 선택, Studio 검증과 배포를 담당합니다.`],
+                [77, `기능별 전용 Agent를 나눈 기준은 무엇인가요?`, `필요한 컨텍스트와 도구, 품질 기준, 실패 비용이 반복적으로 다른 업무를 분리했습니다. UI, 전투, 프로젝트 초기화, 코드 리뷰는 읽어야 할 파일과 완료 조건이 다르기 때문에 같은 범용 프롬프트보다 전문 역할이 유리합니다. 다만 지나치게 세분화하면 전달 비용이 커지므로 독립적으로 검증 가능한 산출물이 있을 때만 별도 Agent나 Skill로 만듭니다.`],
+                [78, `Agent가 읽는 컨텍스트와 규칙 문서는 어떻게 구성했나요?`, `프로젝트 구조와 명령은 CLAUDE.md, 제품 목표와 범위는 PRD, 코딩·안전 규칙은 rules 문서, 반복 절차는 Skills에 둡니다. 모든 것을 한 프롬프트에 복사하지 않고 작업에 필요한 문서를 먼저 읽도록 라우팅합니다. 규칙에는 서버 권한, 타입 안전성, 최소 변경, 문서 갱신, 금지된 조작처럼 검증 가능한 행동을 적고 추상적인 ‘잘하라’는 지시는 줄입니다.`],
+                [79, `Agent가 사용할 수 있는 도구와 권한을 어떻게 제한했나요?`, `작업에 필요한 최소 도구와 경로만 허용하고, 파괴적 변경·배포·외부 공개는 사람 승인 없이 하지 않도록 합니다. 파일 시스템 기반 Roblox 프로젝트에서는 src와 문서를 수정할 수 있지만 Studio 내부 씬을 임의 생성했다고 가정하지 않도록 규칙을 뒀습니다. 실행 전 계획, 변경 diff, 테스트 결과가 승인 게이트가 되고 비밀정보와 운영 자격 증명은 컨텍스트에서 분리합니다.`],
+                [80, `Agent 결과물을 신뢰할 수 있는지 어떻게 검증했나요?`, `모델의 자신감이 아니라 독립된 검증 신호를 사용합니다. 문법·타입·테스트·패킷 계약·파일 참조를 자동 검사하고, diff로 변경 범위를 확인한 뒤 Roblox Studio에서 실제 플레이 흐름을 검증합니다. 제품 요구는 수용 기준과 대조하고, 자동 검사가 다루지 못하는 재미·연출·모바일 UX는 사람이 확인합니다. 실패가 잦은 영역은 규칙과 테스트를 추가해 다음 실행의 품질 기준으로 환류합니다.`],
+                [81, `생성된 코드의 테스트와 Roblox Studio 플레이 테스트는 어떻게 연결했나요?`, `로컬에서는 Luau 타입, 모듈 단위 테스트, 설정과 패킷 계약을 빠르게 검증하고 Rojo로 Studio와 동기화합니다. Studio에서는 실제 인스턴스·물리·네트워크·UI·DataStore와 결합된 흐름을 플레이 테스트합니다. 자동 테스트 통과를 완료로 보지 않고, 수용 기준별 체크리스트와 실제 환경 로그를 남겨 두 검증 층을 연결합니다.`],
+                [82, `Agent가 잘못된 방향으로 대규모 변경을 했던 사례가 있나요?`, `Agent가 문서에 적힌 이상 구조를 실제 구현 상태로 오인하거나, 한 문제를 해결하면서 공통 모듈까지 넓게 리팩터링하는 것이 대표적인 실패 유형이었습니다. 이후 현재 코드가 사실의 기준이라는 점, 변경 범위를 먼저 조사할 것, 계획 승인 후 최소 diff로 작업할 것을 규칙화했습니다. 실패를 단순 프롬프트 수정으로 끝내지 않고 재발을 잡는 테스트나 금지 조건으로 바꾸는 것이 중요했습니다.`, `실제 커밋 또는 작업 사례 하나를 선택해 피해 범위와 복구 시간을 정확히 준비하세요.`],
+                [83, `AI가 만든 코드를 사람이 리뷰할 때 가장 먼저 확인하는 것은 무엇인가요?`, `먼저 요구사항과 무관한 변경이 섞였는지, 권한과 데이터 경계를 깨지 않았는지 봅니다. 그다음 정상 흐름보다 실패·정리·중복 호출·플레이어 이탈 같은 예외를 확인합니다. 코드 스타일은 자동화할 수 있지만 제품 정책을 임의로 결정했거나 테스트가 통과하도록 의미를 바꾼 부분은 사람이 찾아야 합니다.`],
+                [84, `Agent가 프로젝트의 기존 아키텍처를 계속 준수하게 만든 방법은 무엇인가요?`, `아키텍처를 설명만 하지 않고 기능 추가 Skill의 파일 위치·상속 패턴·패킷 정의·등록 순서·테스트 체크리스트로 실행 절차화했습니다. BaseService·BaseController, Config 집중, ByteNet 패킷, 서버 권한 같은 규칙은 예제와 금지 조건을 함께 제공합니다. 검토 단계에서는 새 기능이 이 경계를 우회하지 않았는지 자동 검색과 diff 리뷰로 확인합니다.`],
+                [85, `여러 Agent가 동시에 작업하면 충돌을 어떻게 방지하나요?`, `작업을 파일이 아니라 독립된 책임과 산출물로 나누고, 공유 인터페이스를 먼저 합의합니다. 같은 파일이나 데이터 계약을 건드리는 작업은 병렬화하지 않거나 한 Agent가 통합 책임을 갖습니다. 각 작업은 별도 브랜치·worktree와 명확한 완료 조건을 사용하고, 병합 전 계약 테스트와 전체 회귀 검증을 수행합니다.`],
+                [86, `Skills를 단순 프롬프트와 구분하는 기준은 무엇인가요?`, `Skill은 반복해서 호출할 이름과 트리거, 단계, 필요한 입력, 도구 사용 규칙, 완료 조건이 있는 재사용 가능한 작업 계약입니다. 한 번의 요청 문구가 아니라 프로젝트 표준을 실행 가능한 절차로 보존합니다. 예를 들어 add-feature Skill은 기능마다 같은 아키텍처와 검증 순서를 적용해 사람의 기억에 의존하던 체크리스트를 시스템화합니다.`],
+                [87, `Claude Code를 선택한 이유와 한계는 무엇인가요?`, `코드베이스를 탐색하고 파일·터미널 도구를 사용하며 계획부터 검증까지 이어갈 수 있어 실제 프로젝트 작업에 적합했습니다. 특히 CLAUDE.md, Agent, Skills로 프로젝트 지식을 작업 흐름에 연결하기 쉬웠습니다. 한계는 Studio 내부 상태와 시각 결과를 자동으로 완전히 이해하지 못하고, 긴 작업에서 잘못된 가정을 확대할 수 있다는 점입니다. 그래서 파일 기반 자동화와 실제 Studio 검증 사이에 사람 게이트가 필요했습니다.`],
+                [88, `LangChain이나 별도 Agent 프레임워크를 사용하지 않은 이유는 무엇인가요?`, `목표가 독립된 AI 서비스를 운영하는 것이 아니라 로컬 코드베이스에서 제작 작업을 자동화하는 것이었기 때문에 Claude Code의 도구 루프와 규칙 구조로 충분했습니다. 프레임워크를 추가하면 상태 관리와 관측을 세밀하게 통제할 수 있지만 운영 복잡성도 커집니다. 필요가 생기면 모델 독립 실행, 장기 상태, 평가 파이프라인 같은 요구를 기준으로 도입하겠습니다.`, `LangChain 사용 경험이 없다면 분명히 말하고, 유사 경험으로 대체하려 하지 마세요.`],
+                [89, `모델이나 도구가 바뀌어도 유지되는 제작 시스템의 핵심은 무엇인가요?`, `프로젝트의 명시적 구조, 도구 계약, 수용 기준, 테스트와 승인 게이트는 모델과 독립적이어야 합니다. Agent에게 주는 역할을 특정 모델의 말투가 아니라 입력·출력·권한·실패 처리로 정의하면 교체가 가능합니다. 실제로 가치 있는 자산은 프롬프트 한 줄보다 PRD, 규칙, Skills, 공통 모듈, 테스트, 작업 로그입니다.`],
+                [90, `AI Agent의 생산성을 코드 작성량이 아닌 제품 성과로 어떻게 측정하나요?`, `기능 리드타임, 첫 플레이 가능한 결과까지 시간, 사람 개입 시간, 재작업률, 회귀 결함, 배포 빈도와 콘텐츠 성과를 계층적으로 봅니다. Agent가 코드를 많이 만들었어도 검토와 수정 시간이 늘면 생산성이 아닙니다. 제품팀에서는 크리에이터의 작업 성공률과 품질, 운영팀에서는 장애와 지원 비용까지 포함해야 합니다.`],
+                [91, `프롬프트 인젝션·비밀정보·위험한 명령 실행을 어떻게 방지하나요?`, `외부 콘텐츠와 시스템 지시를 분리하고, Agent가 읽는 자료가 명령 권한을 자동으로 갖지 않게 해야 합니다. 최소 권한, 경로 제한, 비밀정보 분리, 네트워크와 파괴적 명령의 승인, 실행 로그와 샌드박스를 기본으로 둡니다. UGC 제작 Agent라면 사용자가 업로드한 에셋과 문서도 잠재적으로 신뢰하지 않는 입력으로 처리해야 합니다.`, `실제 프로젝트에서 적용한 권한 통제와 향후 제품 설계를 구분해 말하세요.`],
+                [92, `AI 생성 코드·에셋의 저작권과 라이선스 문제를 어떻게 관리했나요?`, `입력 자료의 권리와 출력물 사용 조건을 확인하고, 라이선스가 불명확한 에셋을 학습 참고나 결과물로 바로 사용하지 않는 것이 기본입니다. 오픈소스 패키지는 라이선스와 고지 의무를 기록하고, 생성 결과는 유사성·상표·개인정보·금지 콘텐츠 검토를 거쳐야 합니다. 플랫폼 제품에서는 생성 이력, 원본 출처, 사용자 확인과 신고·제거 절차를 UX에 포함해야 합니다.`, `실제 에셋 생성 도구별 라이선스 확인 방식과 기록이 있었는지 준비하세요.`],
+                [93, `AI가 충분히 잘하는데도 사람에게 남겨야 하는 판단은 무엇인가요?`, `누구의 문제를 풀지, 어떤 재미와 위험을 허용할지, 공정성·안전·수익화의 경계, 출시 여부는 사람이 책임져야 합니다. Agent는 대안과 근거를 넓힐 수 있지만 데이터가 불완전한 상황의 가치 판단과 결과에 대한 책임을 대신할 수 없습니다. 특히 미성년 사용자가 있는 UGC 플랫폼에서는 제재와 권리, 경제에 영향을 주는 결정에 명확한 인간 책임자가 필요합니다.`],
+                [94, `OVERDARE의 대화형 제작 Agent를 설계한다면 적용 전 인간 확인 지점을 어디에 두겠습니까?`, `먼저 Agent가 요청을 계획과 변경 범위로 바꾼 뒤 사용자가 목표와 권한을 확인하게 합니다. 코드·에셋 생성 후에는 diff, 사용 API, 예상 비용과 위험, 테스트 결과를 보여 주고 적용 승인을 받습니다. 샌드박스 플레이 테스트를 거친 뒤에도 데이터·결제·제재·외부 공개가 포함되면 별도 승인을 둡니다. 모든 단계에 되돌리기와 생성 이력이 있어야 사용자가 속도와 통제감을 함께 가질 수 있습니다.`]
+            ]
+        },
+        {
+            id: "motivation",
+            title: "지원동기·경력 전환",
+            range: "Q021–Q030",
+            desc: "창업자·임원 경력에서 TPM으로 이동하는 이유와 장기적 몰입 가능성을 확인합니다.",
+            items: [
+                [21, `이번 이직에서 얻고 싶은 역할과 책임은 무엇인가요?`, `완성된 요구사항을 전달받아 관리하는 역할보다, 크리에이터 문제를 직접 관찰하고 제품 요구사항과 기술적 선택지로 바꾸는 책임을 원합니다. 기능의 성공 기준을 정하고 개발·디자인·QA와 범위를 조율한 뒤 출시 결과까지 확인하고 싶습니다. 특히 AI가 생성한 결과를 실제 게임 제작 흐름에 안전하게 연결하는 문제에 책임을 지고 싶습니다.`],
+                [22, `TPM을 본인은 어떤 직무라고 정의하나요?`, `TPM은 기술을 설명하는 PM이 아니라 사용자 문제와 기술 시스템 사이의 모호함을 제거하는 사람이라고 생각합니다. 문제를 사용자 흐름과 제약, 상태, 예외, 품질 기준으로 구체화하고 팀이 같은 완료 조건을 보도록 만드는 역할입니다. 구현 세부를 이해하되 기술 자체가 목적이 되지 않도록 제품 지표와 연결하는 것이 핵심입니다.`],
+                [23, `일반적인 게임 기획자·프로덕트 매니저·테크니컬 디렉터와 TPM은 무엇이 다르다고 생각하나요?`, `게임 기획자는 주로 플레이 경험과 규칙을, 프로덕트 매니저는 사용자 가치와 우선순위를, 테크니컬 디렉터는 기술 구조와 실행 품질을 깊게 책임집니다. TPM은 이 세 영역 사이에서 제작 툴과 API 같은 기술 제품의 사용자 문제를 요구사항으로 만들고 전달 비용을 줄이는 역할에 가깝습니다. 제 강점은 세 역할을 모두 경험해 각 언어를 번역할 수 있다는 점입니다.`],
+                [24, `본인의 개발 역량이 TPM 업무에 어떤 장점과 단점을 만든다고 생각하나요?`, `장점은 제약과 구현 비용을 초기에 발견하고 개발자와 구체적인 대화를 할 수 있다는 점입니다. 단점은 해결책을 너무 빨리 코드나 아키텍처로 좁힐 위험이 있다는 점입니다. 그래서 TPM으로서는 먼저 사용자 문제와 성공 지표를 합의하고, 최소 두 가지 대안을 비교한 뒤 구현안으로 내려가는 규칙을 두겠습니다.`],
+                [25, `직접 구현하는 것과 팀에 요구사항을 전달하는 것의 경계는 어디인가요?`, `프로토타입이나 기술 리스크를 빠르게 확인할 때는 직접 구현이 유효하지만, 제품 코드를 제가 대신 만드는 것이 기본 역할은 아닙니다. 팀의 소유권을 침해하지 않도록 구현 전 담당 엔지니어와 목적을 합의하고, 결과는 학습 자료나 검증 도구로 공유하겠습니다. 지속 가능한 구현과 운영 책임은 해당 팀이 가질 수 있도록 문서·테스트·인수 조건까지 넘기는 것이 경계입니다.`],
+                [26, `대표나 CTO가 아닌 조직 구성원으로 일할 때 의사결정 방식을 어떻게 바꿀 수 있나요?`, `대표일 때는 최종 결정을 직접 내렸지만, 조직에서는 의사결정권자와 책임 범위를 먼저 명확히 하겠습니다. 제 역할은 사실·가설·대안·트레이드오프를 정리해 좋은 결정을 돕고, 결정된 방향을 일관되게 실행하는 것입니다. 과거 우아한형제들과 SNOW에서도 기존 조직의 목표와 코드베이스 안에서 역할을 수행한 경험이 있어, 모든 결정을 직접 내려야만 성과를 내는 방식으로 일하지 않습니다.`],
+                [27, `본인이 설계하지 않은 로드맵과 프로세스 안에서도 일할 수 있다는 근거가 있나요?`, `우아한형제들에서는 AR 영상 플랫폼의 Unity 클라이언트와 WebRTC 기능을, SNOW에서는 기존 카메라 제품의 그래픽스·물리 엔진과 ZEPETO 아바타 애니메이션을 담당했습니다. 이미 정해진 제품 목표와 협업 방식 안에서 기술적 선택을 제안하고 품질을 높이는 경험이 있습니다. 합의된 로드맵에 따르되 리스크가 보이면 근거와 대안을 제시하는 방식으로 일합니다.`],
+                [28, `현재 회사와 프로젝트는 입사 시 어떻게 정리할 계획인가요?`, `이 질문에는 추상적으로 답하면 안 된다고 생각합니다. 합류 일정이 정해지면 대표직·실무·지분·계속 운영되는 서비스의 책임을 항목별로 공개하고, 인수인계 담당자와 종료 시점을 합의하겠습니다. OVERDARE 업무와 경쟁하거나 시간·정보 이해충돌을 만드는 활동은 회사 정책에 맞게 정리하겠습니다. 면접에서는 실제 가능한 일정과 남는 법적 책임을 정확하게 말씀드리겠습니다.`, `대표직 유지 여부, 법인 지분, 라이브 서비스 운영 주체, 겸업 가능성에 대한 실제 계획이 필요합니다.`],
+                [29, `OVERDARE에서 2~3년에 걸쳐 완성하고 싶은 것은 무엇인가요?`, `크리에이터가 아이디어를 설명하면 Agent가 바로 결과물을 던지는 기능보다, 계획·생성·검증·승인·배포가 연결된 신뢰 가능한 제작 루프를 만들고 싶습니다. 초보자는 첫 플레이 가능한 결과까지 빠르게 가고, 전문 개발자는 변경 내용과 API·성능·권한을 통제할 수 있어야 합니다. 2~3년 뒤에는 AI 사용 여부가 특별한 기능이 아니라 제작 시간과 품질 지표로 자연스럽게 증명되는 환경을 목표로 하고 싶습니다.`],
+                [30, `입사 후 기대했던 역할과 실제 역할이 다르면 어떻게 대응하겠습니까?`, `먼저 역할 차이가 일시적인 우선순위인지 구조적인 불일치인지 확인하겠습니다. 팀이 당장 해결해야 하는 문제에 기여하면서도, 채용 당시 기대와 제가 만들 수 있는 가치를 문서로 정리해 매니저와 조정하겠습니다. 역할 이름보다 사용자 문제와 결과에 책임질 수 있는지가 중요하지만, 장기간 책임과 권한이 분리된다면 솔직하게 재합의가 필요합니다.`]
+            ]
+        },
+        {
+            id: "ugc",
+            title: "Roblox·UGC 플랫폼 경험",
+            range: "Q031–Q045",
+            desc: "UGC를 실제로 플레이하고 제작·운영했다는 주장을 제품 지표와 구체적인 판단으로 검증합니다.",
+            items: [
+                [31, `Roblox를 플레이어·개발자·운영자 관점에서 각각 어떻게 평가하나요?`, `플레이어에게 Roblox는 친구와 빠르게 들어가 다양한 경험을 소비하는 발견 플랫폼입니다. 개발자에게는 Studio·Luau·에셋·배포·수익화가 한 생태계에 있는 대신 플랫폼 규칙과 발견 알고리즘 의존도가 큽니다. 운영자에게는 업데이트와 이벤트를 빠르게 반복할 수 있지만 데이터 가시성, 어뷰징, 커뮤니티, 경제 정책을 함께 관리해야 합니다. 세 관점을 분리해야 기능의 편리함과 제품 성과를 혼동하지 않을 수 있습니다.`],
+                [32, `Roblox 게임이 일반 모바일 게임과 다른 제품 설계 원칙은 무엇인가요?`, `첫 이해까지 걸리는 시간이 훨씬 짧아야 하고, 친구나 같은 서버의 다른 사용자가 만드는 사회적 맥락이 중요합니다. 설치와 계정 전환 부담은 작지만 다음 경험으로 이동하는 비용도 작기 때문에 첫 세션의 규칙 전달과 즉시 보상이 중요합니다. 동시에 모바일 입력, 저사양 기기, 짧은 세션, 아바타와 UGC 보상이 제품 설계에 직접 영향을 줍니다.`],
+                [33, `Roblox에서 신규 사용자가 게임을 발견하고 재방문하는 흐름을 설명해 주세요.`, `발견은 추천·검색·광고·커뮤니티·친구 합류에서 시작하고, 썸네일과 제목이 첫 기대를 만듭니다. 입장 후에는 로딩과 규칙 이해, 첫 성공 경험이 활성화를 결정하고, 세션 안에서는 목표·보상·다른 플레이어가 재시작을 유도합니다. 재방문은 즐겨찾기, 업데이트, 이벤트, 친구 관계와 연결됩니다. 각 단계마다 노출·입장·첫 행동·첫 완료·재시작·재방문 지표를 따로 봐야 합니다.`],
+                [34, `Tower Flood Race의 핵심 플레이 루프를 한 문장으로 설명해 주세요.`, `최대 50명의 플레이어가 매 라운드 달라지는 타워를 물이 차오르기 전에 오르고, 결과와 보상을 확인한 뒤 곧바로 새로운 타워에 다시 도전하는 짧은 경쟁 루프입니다. 이 한 문장에 경쟁 상대, 변화, 시간 압박, 성공 조건, 반복 이유가 모두 들어가야 합니다.`],
+                [35, `랜덤 타워 구조가 반복 플레이에 주는 장점과 단점은 무엇인가요?`, `장점은 경로 암기만으로 승부가 굳는 것을 줄이고, 같은 코어 조작으로도 매 라운드 새 판단을 요구할 수 있다는 점입니다. 단점은 난이도 편차와 불공정한 조합, 검증되지 않은 경로가 생길 수 있다는 점입니다. 따라서 완전 무작위보다 검증된 모듈과 제약 조건을 조합하고, 생성 결과의 난이도와 도달 가능성을 검사하는 방식이 적합합니다.`],
+                [36, `최대 50인 설계가 재미·성능·공정성에 어떤 영향을 줬나요?`, `많은 플레이어가 동시에 움직이면 경쟁과 구경의 재미가 커지고, 실패해도 혼자라는 느낌이 줄어듭니다. 반면 캐릭터·이펙트·충돌·네트워크 비용과 시작 위치의 공정성 문제가 커집니다. 서버는 승패와 보상을 권위 있게 처리하고, 클라이언트는 중요도가 낮은 시각 요소를 제한하며, 출발과 장애물에서는 다른 플레이어가 방해가 되지 않도록 정책을 설계해야 합니다. 실제 최적화 수치는 측정 결과로 설명하겠습니다.`],
+                [37, `즐겨찾기 51.6만이라는 지표를 어떻게 해석하나요?`, `즐겨찾기는 누적 방문보다 다시 찾고 싶은 의도를 더 직접적으로 보여주지만 실제 재방문과 같지는 않습니다. 방문 대비 즐겨찾기 비율, 획득 시점, 이벤트나 보상 유도가 있었는지, 이후 재방문과 연결되는지를 함께 봐야 합니다. 저는 강한 관심 신호로 사용하되 리텐션을 대신하는 지표로 과장하지 않겠습니다.`],
+                [38, `2.2K Peak CCU가 발생한 시점과 유입 경로는 무엇이었나요?`, `이 질문은 기억으로 답하지 않고 당시 대시보드와 업데이트 기록을 기준으로 답하겠습니다. 피크 발생일, 직전 업데이트·추천 노출·광고·커뮤니티 이벤트를 타임라인으로 놓고 가장 가능성 높은 원인과 확인되지 않은 부분을 나누겠습니다. 피크 자체보다 이후 기준 CCU와 유지 기간을 같이 제시해야 일시 노출인지 제품 성장인지 설명할 수 있습니다.`, `포트폴리오의 2.2K 수치 기준일, 유입 경로, 평시 CCU와 유지 기간을 확인하세요.`],
+                [39, `1,100만 방문 중 광고·추천·커뮤니티 유입 비중을 알고 있나요?`, `정확한 채널 비중을 확보했다면 수치로 답하고, 플랫폼이 제공하지 않은 범위는 모른다고 말하겠습니다. 대신 광고 집행 기간, 추천 노출 변화, 커뮤니티 이벤트, 자연 유입 시점의 전후 추이를 이용해 관측 가능한 근거를 제시할 수 있습니다. 추정치를 사실처럼 말하는 것보다 데이터 가시성의 한계를 밝히는 것이 TPM으로서 더 신뢰할 만한 답이라고 생각합니다.`, `실제 Roblox Analytics에서 확인 가능한 acquisition source와 광고 집행 내역을 준비하세요.`],
+                [40, `성과가 봇이나 일시적인 노출 때문이 아니라는 것을 어떻게 설명할 수 있나요?`, `누적 방문만으로는 설명할 수 없기 때문에 즐겨찾기, 동시접속, 세션, 재방문, 라운드 완료, 업데이트 이후 유지 같은 독립된 지표를 함께 봐야 합니다. 비정상 유입은 세션 길이·행동 분포·시간대·전환에서 일반 사용자와 다른 패턴을 보일 수 있습니다. 제가 보유한 데이터만 제시하고, 봇 여부를 완전히 증명할 데이터가 없다면 그 한계도 명확히 말씀드리겠습니다.`, `봇·광고 트래픽을 구분한 실제 분석이 있었는지 확인하세요. 없었다면 단정하지 마세요.`],
+                [41, `FREE UGC RNG는 ZEPETO의 구조를 Roblox로 어떻게 재설계한 사례인가요?`, `그대로 복제한 것이 아니라 RNG 플레이와 UGC 보상이 연결되는 핵심 동기만 가져왔습니다. Roblox의 아바타 아이템, Limited UGC 드랍, 세션 구조, 경제와 커뮤니티 흐름에 맞게 수집·장착·합성·교환 루프를 다시 설계했습니다. 플랫폼 이식에서는 화면과 API보다 사용자가 보상을 인식하고 다시 참여하는 맥락을 재설계하는 것이 핵심이었습니다.`],
+                [42, `Limited UGC 드랍은 리텐션과 경제 시스템에 어떤 영향을 줬나요?`, `정해진 시간의 드랍은 재방문 동기를 만들지만, 보상만 받고 떠나는 행동과 시간대 불공정, 어뷰징을 함께 만들 수 있습니다. 그래서 참여 조건, 지급 수량, 중복 획득, 재고 소진 안내, 게임 내 코인과 UGC 교환의 균형을 함께 봐야 합니다. 성과는 이벤트 시간의 CCU뿐 아니라 이벤트 이후 플레이 지속과 일반 루프 참여까지 확인해야 합니다.`],
+                [43, `Roblox·ZEPETO·UEFN·Meta Horizon의 제작 환경을 비교해 주세요.`, `Roblox는 Luau와 배포·라이브 운영이 촘촘히 연결되어 게임 시스템 반복에 강하고, ZEPETO는 아바타와 브랜드 월드·외부 서비스 연동 맥락이 강했습니다. UEFN은 UE5 품질과 Device·Verse 조합이 강점이지만 제작 구조와 검증 방식이 Roblox와 다릅니다. Meta Horizon은 VR 상호작용과 월드 제작 맥락이 중심입니다. 단순 기능표보다 아이디어에서 첫 플레이, 협업, 배포, 운영까지 걸리는 마찰로 비교하겠습니다.`],
+                [44, `각 플랫폼에서 가장 큰 제작 마찰 지점은 무엇이었나요?`, `플랫폼별로 실제 마찰 한 개씩만 구체적으로 답하겠습니다. 예를 들어 스크립팅과 외부 도구 연결, 에셋 검수와 업로드, 멀티플레이 테스트, 라이브 데이터 접근처럼 제작 단계별로 구분할 수 있습니다. 중요한 것은 ‘불편했다’가 아니라 작업이 어디서 멈췄고, 어떤 우회가 필요했고, 시간이나 오류에 어떤 영향을 줬는지 설명하는 것입니다.`, `UEFN·Horizon을 포함해 플랫폼별 실제 마찰 1개, 우회 방법, 결과를 작성하세요.`],
+                [45, `성공하지 못했거나 중단한 UGC 프로젝트에서 무엇을 배웠나요?`, `작은 지표의 프로젝트를 숨기지 않고, 무엇을 검증했고 왜 다음 투자를 줄였는지 설명하겠습니다. 예를 들어 코어 루프의 첫 이해나 재방문 신호가 약한데 콘텐츠 양으로 해결하려 하면 제작비만 늘어납니다. 중단 판단은 실패 인정이 아니라 다음 실험으로 자원을 옮기는 제품 결정입니다. 실제 프로젝트 하나의 가설·관측·중단 기준·재사용한 자산 순으로 답하겠습니다.`, `FREE UGC RNG 외 작은 프로젝트 중 실제 중단 또는 축소 사례 하나를 선정하세요.`]
+            ]
+        }
+    ];
+
+    const reviewRows = [
+        [1, `A-`, `채용 매니저·TPM 리드`, `경력의 중심축, 지원 직무와의 연결, 90초 안에 핵심만 구조화하는 능력을 봅니다.`, `14년 경력→UGC 1인 제작→플랫폼 TPM이라는 흐름과 1,100만 방문 근거가 선명합니다. 다만 연도별 경력 범위와 AI Agent의 실제 산출물을 후속 질문에도 일관되게 증명해야 A가 유지됩니다.`],
+        [2, `A-`, `채용 매니저·조직 리더`, `직급 하향이나 도피성 전환인지, TPM 역할을 오래 수행할 동기와 조직 적응력이 있는지 확인합니다.`, `TPM을 경력 단절이 아니라 기존 역할의 확장으로 설명해 설득력이 높습니다. 실제로 플랫폼 제약이 결과를 바꾼 사례 하나를 붙이면 지원 동기가 주장보다 경험으로 완성됩니다.`],
+        [3, `B+`, `채용 매니저·경영진`, `본인 회사보다 입사를 택한 이유, 이해충돌, 장기 재직 의지와 현실적인 정리 계획을 검증합니다.`, `AI 전환과 1인 Roblox 실험, 플랫폼 관심으로 이어지는 시간축은 좋습니다. 그러나 조직 정리 표현은 책임 회피로 오해될 수 있고 대표직·지분·서비스 운영 계획이 미확정이면 큰 감점이므로 실제 일정까지 답해야 합니다.`],
+        [4, `B+`, `제품 총괄·크리에이터 플랫폼 리드`, `OVERDARE의 제품 단계와 차별점을 실제로 이해했는지, 회사 이름만 바꿔도 되는 지원동기인지 봅니다.`, `UE5·Luau·모바일·AI의 교차점을 본인 경험과 잘 연결했습니다. 반면 기존 플랫폼은 바꾸기 어렵다는 단정과 OVERDARE 장점은 외부 관찰 수준이어서 Studio 실사용 근거가 없으면 얕게 들릴 수 있습니다.`],
+        [5, `A-`, `Developer Experience PM·툴 리드`, `콘텐츠 제작 경험이 왜 툴 제품 문제의식으로 전환됐는지, 실제 사용자 고통을 추상화할 수 있는지 확인합니다.`, `반복 구현과 플랫폼 API 차이를 공통 모듈·Agent 규칙으로 바꾼 인과가 명확합니다. 대표 마찰 한 건의 작업 시간이나 오류율 전후를 붙이면 강한 실무 근거가 됩니다.`],
+        [6, `A-`, `게임 시스템 리드·채용 매니저`, `성과에서 지원자가 실제 소유한 범위와 깊이, 1인 제작 주장에 과장이 없는지 검증합니다.`, `모든 Roblox 프로젝트를 혼자 기획·개발·출시·운영했다는 소유권이 분명하고 AI와 본인 판단의 경계도 좋습니다. 분야별 산출물과 실제 코드·화면을 바로 제시하지 못하면 범위가 넓은 만큼 역으로 신뢰가 떨어질 수 있습니다.`],
+        [7, `B-`, `라이브 게임 PM·데이터 분석가`, `1,100만 방문의 원인을 데이터로 분해하고 상관관계와 인과관계를 구별하는지 봅니다.`, `단일 원인으로 과장하지 않는 태도는 좋지만 현재는 가능한 원인을 나열한 수준입니다. 유입 채널, 업데이트 타임라인, D1·D7, 세션 지표가 없으면 성과 분석 답변으로는 약합니다.`],
+        [8, `B`, `게임 데이터 분석가·라이브옵스 PM`, `허영 지표와 건강성 지표를 구분하고 실제 운영 의사결정에 썼는지 확인합니다.`, `지표 체계와 오비 장르의 이탈 해석은 적절합니다. 그러나 본 지표와 봐야 할 지표가 섞여 있어 실제 대시보드 명칭·수치·결정 사례로 경계를 명확히 해야 합니다.`],
+        [9, `C`, `라이브 게임 디자이너·데이터 PM`, `데이터→가설→변경→결과의 폐쇄 루프를 실제로 수행했는지 확인합니다.`, `좋은 분석 절차를 설명하지만 장애물·텔레그래프·체크포인트 중 무엇을 바꿨는지도 정해지지 않은 답변입니다. 실무자는 즉시 가상 사례로 판단하므로 실제 한 건과 전후 수치로 전면 교체해야 합니다.`],
+        [10, `B+`, `게임 서버 엔지니어·시스템 디자이너`, `50인 라운드의 상태 모델, 서버 권한, 예외 전이를 논리적으로 설계했는지 봅니다.`, `상태·이벤트·서버 권한 분리가 간결하고 화이트보드 설명에 적합합니다. 실제 상태명, 전이 조건, 타임아웃과 대표 예외 한 건을 코드와 맞춰야 구현 경험으로 인정됩니다.`],
+        [11, `B-`, `게임 서버 엔지니어·QA 리드`, `정상 흐름 밖의 이탈·재접속·중복 지급을 제품 정책과 구현으로 닫았는지 확인합니다.`, `예외를 상태 전이 입력으로 보는 관점은 좋습니다. 다만 거의 모두 설계 원칙이며 실제 지원 여부가 비어 있어, 구현한 정책과 지금의 개선안을 분리하지 않으면 회피 답변으로 보입니다.`],
+        [12, `A`, `게임 아키텍트·AI 플랫폼 리드`, `용어를 정확히 정의하고 런타임 오케스트레이터와 LLM Agent의 책임을 혼동하지 않는지 봅니다.`, `실행 시점과 책임을 기준으로 두 Agent를 명확히 분리해 오해를 선제적으로 해소합니다. 실제 코드의 공식 명칭만 확인하면 면접 준비도가 높습니다.`],
+        [13, `C+`, `게임 보안·Trust & Safety 실무자`, `어뷰징 위협 모델, 탐지 신호, 임계값, 제재와 운영 추적성을 실제로 설계했는지 검증합니다.`, `서버 권한과 단계적 대응 원칙은 타당하지만 구현 규칙·임계값·오탐률·로그가 없습니다. 보안 실무자는 원론으로 평가하므로 실제 탐지 한 건을 입력→판정→조치로 제시해야 합니다.`],
+        [14, `C`, `Trust & Safety 리드·운영 정책 담당`, `오탐 비용을 이해하고 수동 검토·이의 제기·복구까지 운영 시스템으로 설계했는지 봅니다.`, `바람직한 정책 설계는 설명했지만 실제 프로젝트에서 운영한 것인지 전혀 드러나지 않습니다. 없었던 이의 제기 체계를 한 것처럼 말하지 말고 당시 구현과 플랫폼 수준 제안을 분리해야 합니다.`],
+        [15, `A-`, `AI 플랫폼 엔지니어·Developer Productivity 리드`, `Agent 시스템의 구성요소, 도구 루프, 검증 게이트와 인간 책임을 구조적으로 설명하는지 봅니다.`, `컨텍스트·역할·도구·검증의 4층 구조가 명료하고 실제 파일과 작업 패턴도 보입니다. Agent 실행 로그나 전후 diff 한 건을 제시하면 높은 기술 신뢰를 얻을 수 있습니다.`],
+        [16, `A`, `AI 제품 리드·엔지니어링 매니저`, `자동화 경계를 위험과 검증 가능성으로 나누는 판단력, 최종 책임 소재를 확인합니다.`, `규칙화 가능한 반복과 가치 판단을 분리하고 애매한 경우 승인 단계를 두는 기준이 명확합니다. 구체 예시도 있어 현재 답변만으로 강한 합격 신호입니다.`],
+        [17, `C+`, `Developer Productivity 리드·데이터 분석가`, `AI 도입 효과를 기준선과 반대 지표까지 포함해 정량 검증했는지 봅니다.`, `측정 프레임은 훌륭하지만 정작 도입 전후 수치가 없어 성과 질문에는 답하지 못했습니다. 비교 가능한 기능 두 개의 리드타임·재작업·사람 개입 시간을 반드시 채워야 합니다.`],
+        [18, `A-`, `TPM 리드·게임 시스템 엔지니어`, `아이디어를 PRD, 상태, 패킷, 수용 기준으로 내려 실제 구현을 이끈 경험을 검증합니다.`, `Slap Forge Battlegrounds라는 특정 문서와 로비→매치→복귀 흐름, 비목표·수용 기준을 연결해 구체적입니다. 문서 한 페이지와 실제 구현 추적 예시를 보여주면 매우 강합니다.`],
+        [19, `C`, `UEFN 테크니컬 디자이너·프로토타이핑 리드`, `프로토타입이 어떤 불확실성을 줄였고 결과가 다음 투자 결정에 어떻게 쓰였는지 봅니다.`, `검증 프레임만 있고 실제 마찰과 발견, 다음 결정이 없습니다. 프로토타입 경험을 증명하는 질문이므로 현재 답변은 미완성이며 실제 발견 2개와 결정 1개가 필요합니다.`],
+        [20, `C+`, `OVERDARE Studio PM·Creator UX 리드`, `제품을 실제 사용했는지, 관찰한 마찰을 우선순위와 개선안으로 연결하는지 확인합니다.`, `AI 적용·검증·되돌리기 관점은 직무와 잘 맞지만 직접 사용 결과가 없는 상태에서는 가설에 불과합니다. 작은 멀티플레이 기능을 만들어 시간·실패 로그와 함께 답해야 합니다.`],
+        [21, `B+`, `채용 매니저·TPM 리드`, `원하는 책임이 실제 채용 포지션과 맞는지, 권한보다 결과를 원하는 사람인지 확인합니다.`, `사용자 관찰부터 출시 결과까지 책임지고 싶다는 방향이 선명합니다. 입사 초기 맡을 수 있는 작은 범위와 본인 성과 지표까지 말하면 현실성이 높아집니다.`],
+        [22, `A-`, `TPM 리드·제품 총괄`, `TPM의 본질과 기술·제품 사이 경계를 본인 언어로 정의할 수 있는지 봅니다.`, `모호함 제거와 공통 완료 조건이라는 정의가 간결하고 직무 적합성이 높습니다. 회사별 역할 차이를 인정하면서 실제 산출물 예시를 붙이면 더 안전합니다.`],
+        [23, `B+`, `채용 매니저·조직 설계 리더`, `인접 직무의 책임 차이를 이해하고 본인의 중복 경력이 어떤 가치를 만드는지 봅니다.`, `세 역할의 언어를 번역한다는 포지셔닝은 좋습니다. 다만 역할 정의가 조직마다 다르므로 직함보다 실제 의사결정권·산출물·성공 지표 차이로 설명하면 더 정교합니다.`],
+        [24, `A-`, `엔지니어링 매니저·TPM 리드`, `개발자 출신 TPM의 강점뿐 아니라 솔루션 편향을 자각하고 제어하는지 확인합니다.`, `장단점이 대칭적이고 두 대안 비교라는 행동 규칙까지 있어 자기 인식이 강합니다. 실제로 구현 충동을 멈추고 사용자 문제를 재정의한 사례가 있으면 A 수준입니다.`],
+        [25, `B+`, `엔지니어링 매니저`, `TPM이 팀의 구현 소유권을 침해하거나 병목이 되지 않을지, 프로토타입의 인수 경계를 아는지 봅니다.`, `직접 구현의 목적과 인수 조건을 잘 구분했습니다. 실제 조직에서 프로토타입을 팀에 넘긴 사례가 없어 현재는 원칙 중심이라는 한계가 있습니다.`],
+        [26, `B`, `채용 매니저·조직 리더`, `대표·CTO 경력자가 최종 결정권 없이도 협업하고 결정에 커밋할 수 있는지 검증합니다.`, `의사결정권자를 존중하는 원칙과 과거 조직 경험을 제시해 방어력이 있습니다. 반대 의견을 냈지만 조직 결정을 실행한 실제 장면을 붙여야 우려가 완전히 해소됩니다.`],
+        [27, `A-`, `채용 매니저·프로그램 리드`, `남이 만든 로드맵·코드베이스·프로세스 안에서 성과 낸 객관적 근거를 찾습니다.`, `우아한형제들과 SNOW의 구체적 역할을 근거로 들어 설득력이 높습니다. 그 조직의 제약 안에서 바꾼 한 가지와 결과를 말하면 더 강합니다.`],
+        [28, `C`, `채용 매니저·HRBP·법무`, `대표직·지분·라이브 서비스·겸업으로 생길 이해충돌과 입사 가능 시점을 확인합니다.`, `답변 태도는 정직하지만 실제 계획이 하나도 확정되지 않아 심사자가 가장 우려하는 부분을 해소하지 못합니다. 날짜·운영 주체·남는 법적 책임을 확정한 사실 답변이 필요합니다.`],
+        [29, `B+`, `제품 총괄·AI Studio 리드`, `중장기 제품 비전이 회사 방향과 맞고 사용자 가치·신뢰 문제까지 보는지 확인합니다.`, `계획→생성→검증→배포의 신뢰 루프와 초보·전문가 양쪽을 포함한 비전이 좋습니다. 2~3년 비전을 첫 6개월의 측정 가능한 결과로 내려오면 실행력이 더 잘 보입니다.`],
+        [30, `B`, `채용 매니저`, `역할 모호성이나 우선순위 변화에 유연하면서도 수동적으로 머물지 않는지 봅니다.`, `일시적 차이와 구조적 불일치를 구분하는 태도가 성숙합니다. 과거 역할 변경에 적응한 실제 사례가 없어 면접에서는 일반론으로 들릴 수 있습니다.`],
+        [31, `B+`, `Creator Ecosystem PM·라이브옵스 리드`, `UGC 플랫폼을 소비·제작·운영의 다면적 시스템으로 이해하는지 확인합니다.`, `세 관점을 균형 있게 분리하고 발견 알고리즘·데이터·경제까지 짚었습니다. 본인 프로젝트에서 관점 충돌이 실제 제품 결정을 바꾼 한 건이 있으면 더 차별화됩니다.`],
+        [32, `B`, `Roblox 게임 PM·모바일 게임 디자이너`, `Roblox 고유의 발견·사회성·디바이스 제약을 제품 설계 원칙으로 전환하는지 봅니다.`, `첫 이해, 낮은 전환 비용, 사회적 맥락과 모바일 제약을 정확히 짚었습니다. Tower Flood Race의 온보딩이나 세션 데이터로 일반 모바일과 다른 결정을 증명하지 못해 아직 개념 답변에 가깝습니다.`],
+        [33, `B+`, `Growth PM·추천/데이터 담당`, `발견부터 재방문까지 퍼널을 구조화하고 각 단계의 지표와 레버를 연결하는지 봅니다.`, `채널→기대→활성화→재시작→재방문 흐름과 지표가 잘 연결됩니다. 실제 Roblox Analytics에서 본 채널과 관측 불가능한 영역을 구분하면 실무성이 높아집니다.`],
+        [34, `A`, `게임 디렉터·시스템 디자이너`, `핵심 루프를 짧게 정의해 대상·긴장·성공·반복 동기를 모두 전달할 수 있는지 봅니다.`, `한 문장 안에 50인 경쟁, 랜덤성, 시간 압박, 보상과 재도전이 모두 들어가 매우 좋습니다. 후속으로 각 요소가 어떤 지표에 영향을 주는지만 준비하면 됩니다.`],
+        [35, `A-`, `프로시저럴 콘텐츠 디자이너·게임플레이 엔지니어`, `랜덤성을 재미·공정성·검증 비용의 트레이드오프로 다루는지 확인합니다.`, `완전 무작위 대신 검증된 모듈과 제약을 조합한다는 해법이 논리적입니다. 실제 생성 규칙과 도달 가능성 검사 방법을 제시하면 구현 깊이까지 증명됩니다.`],
+        [36, `B`, `게임 서버·성능 엔지니어와 게임 디자이너`, `50인 규모 결정이 재미·성능·공정성에 미친 실제 영향과 최적화 근거를 봅니다.`, `세 축의 트레이드오프와 서버 권한 원칙은 적절합니다. 실제 프로파일링 수치, 네트워크 예산, 충돌 정책이 없어 ‘어떻게 했다’보다 ‘어떻게 해야 한다’에 머뭅니다.`],
+        [37, `B`, `게임 데이터 분석가·Growth PM`, `즐겨찾기를 리텐션으로 과장하지 않고 분모·획득 조건·후행 행동으로 해석하는지 봅니다.`, `허영 지표의 한계를 정확히 인정하고 필요한 비교축을 제시합니다. 방문 대비 비율과 즐겨찾기 획득 방식, 실제 재방문 연계 데이터를 채워야 본인 성과 분석이 됩니다.`],
+        [38, `C`, `라이브옵스 PM·데이터 분석가`, `피크 CCU의 원인과 지속성을 당시 기록으로 설명할 수 있는지 확인합니다.`, `기억 대신 타임라인으로 보겠다는 태도는 좋지만 질문의 핵심인 날짜·유입·유지 기간에 답하지 못했습니다. 면접 전 실제 값을 확보하지 못하면 포트폴리오 수치의 신뢰까지 흔들릴 수 있습니다.`],
+        [39, `C`, `Growth PM·마케팅 분석가`, `1,100만 방문의 획득 구조와 유료·자연 유입을 구분해 성장을 설명할 수 있는지 봅니다.`, `모르는 데이터를 추정하지 않겠다는 원칙은 바람직하지만 현재는 확인된 비중이나 대체 근거가 없습니다. Analytics와 광고 집행 기록을 토대로 최소한 관측 범위와 시점을 제시해야 합니다.`],
+        [40, `C+`, `데이터 사이언티스트·Trust & Safety 분석가`, `봇·일시 노출 가설을 독립 지표와 행동 분포로 반증할 수 있는지 봅니다.`, `분석 방법과 한계 인식은 좋지만 실제 비정상 트래픽 분석을 했다는 근거가 없습니다. ‘봇이 아니었다’고 결론 내리지 말고 보유 데이터가 지지하는 범위까지만 답해야 합니다.`],
+        [41, `B+`, `게임 시스템 PM·경제 디자이너`, `다른 플랫폼의 성공 구조를 표면 복제하지 않고 동기·경제·세션 맥락으로 재설계했는지 봅니다.`, `핵심 동기와 플랫폼별 보상 맥락을 분리해 이식 사고가 잘 드러납니다. 어떤 기능을 버리고 무엇을 바꿨으며 지표가 어떻게 달라졌는지 추가하면 강한 사례가 됩니다.`],
+        [42, `B`, `게임 경제 디자이너·라이브옵스 PM`, `Limited UGC가 리텐션·희소성·공정성·어뷰징에 만드는 2차 효과를 이해하는지 확인합니다.`, `이벤트 CCU만 보지 않고 이후 루프 참여까지 보겠다는 관점이 좋습니다. 실제 지급 수량, 참여 조건, 이벤트 전후 행동 데이터가 없어 운영 경험의 깊이는 추가 검증이 필요합니다.`],
+        [43, `B`, `Creator Tools PM·Developer Experience 리드`, `여러 UGC 도구를 기능표가 아니라 제작 전 과정의 마찰로 비교할 수 있는지 봅니다.`, `각 플랫폼의 중심 강점을 잘 요약했고 비교 프레임도 적절합니다. 플랫폼별 실제 동일 작업의 단계·시간·실패를 제시하지 않으면 폭은 넓지만 깊이는 얕게 평가될 수 있습니다.`],
+        [44, `C`, `Creator UX 연구원·툴 PM`, `실제 제작 중단 지점과 우회 비용을 플랫폼별 경험으로 구체화하는지 봅니다.`, `답변 방법만 제시하고 어느 플랫폼의 어떤 작업이 멈췄는지 말하지 않았습니다. 플랫폼별 마찰 1개, 우회 방법, 시간 또는 오류 영향으로 반드시 교체해야 합니다.`],
+        [45, `C`, `제품 총괄·게임 디렉터`, `실패를 숨기지 않고 가설·중단 기준·자산 회수까지 학습으로 바꿨는지 확인합니다.`, `좋은 실패 서술 구조만 있고 실제 프로젝트가 선택되지 않았습니다. 실무자는 실패 회피로 받아들일 수 있으므로 프로젝트명, 본인의 오판, 손실과 이후 변경을 구체적으로 말해야 합니다.`],
+        [46, `A-`, `게임 시스템 아키텍트·TPM 리드`, `복잡도를 줄이는 추상화 순서와 직군별로 같은 모델을 공유하게 만드는 능력을 봅니다.`, `사용자 목표와 구현을 분리한 뒤 상태·이벤트·책임·예외로 내리는 구조가 명료합니다. 실제 시스템 하나를 30초 정상 흐름과 60초 예외 흐름으로 시연하면 높은 평가를 받습니다.`],
+        [47, `B+`, `게임 서버 엔지니어·시스템 디자이너`, `상태와 이벤트를 빠짐없이 정의하고 전이 주체·검증·복구까지 닫는지 확인합니다.`, `개념 상태와 이벤트가 적절하고 서버 검증까지 언급했습니다. 실제 구현 명칭과 전이표가 빠져 있어 화이트보드에서 코드와 다른 답을 하면 깊이에 의문이 생길 수 있습니다.`],
+        [48, `A-`, `네트워크 게임플레이 엔지니어`, `공정성·영속성·반응성·대역폭을 기준으로 서버와 클라이언트 경계를 설계하는지 봅니다.`, `결과가 아닌 요청을 보내고 서버가 재검증한다는 설명이 정확합니다. Tower Flood Race의 보상 또는 도착 판정 패킷 하나로 입력·검증·복제 흐름을 보여주면 매우 강합니다.`],
+        [49, `B-`, `백엔드·데이터 신뢰성 엔지니어`, `중복 요청, 재시도, 부분 실패에서 보상을 정확히 한 번의 효과로 처리했는지 검증합니다.`, `멱등 키와 원장·확정 UX 개념은 맞지만 마지막 문장이 실제 구현 수준을 유보합니다. 사용한 식별자, 저장 순서, 재시도 시나리오를 말하지 못하면 이론 답변으로 평가됩니다.`],
+        [50, `B`, `Developer Platform 엔지니어·API PM`, `공통 모듈의 문제 정의, 소비자, 경계와 실제 재사용 효과를 확인합니다.`, `플랫폼 세부사항과 게임 기능을 분리한다는 목적은 명확합니다. 감싼 API 목록, 적용 프로젝트 수, 중복 코드나 장애 감소 근거가 없어 공통화의 실제 가치는 추가 검증이 필요합니다.`],
+        [51, `B`, `API 설계 리드·클라이언트 플랫폼 엔지니어`, `인터페이스 계약, 오류 분류, 관측성과 호출자의 복구 책임을 논리적으로 정의하는지 봅니다.`, `원시 응답을 제품 의미로 변환하고 오류를 숨기지 않는 원칙이 좋습니다. 실제 함수 시그니처와 오류 타입, 재시도 정책 한 건이 없어서 구현 경험보다 설계 지식으로 들릴 수 있습니다.`],
+        [52, `B+`, `플랫폼 아키텍트·릴리즈 매니저`, `외부 API와 정책 변화의 영향 범위를 격리하고 제품·운영 전환까지 계획하는지 확인합니다.`, `어댑터, 기능 플래그, 계약 테스트와 마이그레이션을 함께 보는 답변은 균형이 좋습니다. 실제 변경 대응 사례나 호환성 기간을 붙이면 경험 기반 답변이 됩니다.`],
+        [53, `A-`, `Developer Productivity 엔지니어·빌드 시스템 담당`, `실행 하네스를 막연한 자동화가 아니라 입력·명령·성공 조건·로그가 있는 재현 환경으로 설명하는지 봅니다.`, `Wally·Rojo·타입 생성·정적 검사라는 실제 도구와 검증 목적이 구체적입니다. 명령 하나의 실패 로그와 Agent가 중단하는 조건을 보여주면 강한 실무 증거가 됩니다.`],
+        [54, `A-`, `TPM 리드·제품 운영 리드`, `문서가 목표·범위·정책·예외·완료 조건을 빠짐없이 연결하는지 봅니다.`, `필수 항목과 미결정 사항의 표기 원칙이 실무적이며 문서의 목적도 정확합니다. 실제 문서에서 결정 한 건이 구현·QA로 추적되는 예를 준비하면 좋습니다.`],
+        [55, `A`, `TPM 리드·소프트웨어 아키텍트`, `제품의 why/what과 기술의 how를 구분하면서 왕복 관계를 이해하는지 확인합니다.`, `두 문서의 책임과 잘못된 경계까지 짧고 정확하게 설명합니다. 후속으로 동일 요구사항이 PRD와 기술 명세에 각각 어떻게 쓰였는지만 준비하면 됩니다.`],
+        [56, `A`, `QA 리드·게임 시스템 PM`, `모호한 요구를 관찰·검증 가능한 수용 기준으로 바꾸는 능력을 봅니다.`, `큐 예시가 입력·조건·결과와 실패 흐름까지 포함해 매우 구체적입니다. 현장형 명세 질문에서도 그대로 활용 가능한 높은 수준입니다.`],
+        [57, `A-`, `제품 매니저·게임 디렉터`, `범위 확장을 막기 위해 실제로 무엇을 버렸고 그 판단이 핵심 가설과 연결됐는지 확인합니다.`, `특정 PRD와 팀전·강화 UI·영구 성장 등 실제 비목표가 제시되어 강합니다. 비목표로 인해 줄어든 일정 또는 검증이 선명해진 결과를 덧붙이면 더 좋습니다.`],
+        [58, `B+`, `TPM·변경관리 리드`, `요구 변경의 이유·영향·결정을 추적하고 코드·테스트·일정까지 동기화하는지 봅니다.`, `조용한 덮어쓰기를 피하고 변경 유형과 파급을 구분하는 원칙이 좋습니다. 실제 변경 기록과 충돌을 닫은 사례가 없어 경험 깊이는 후속 질문으로 검증될 것입니다.`],
+        [59, `B`, `엔지니어링 매니저·제품 매니저`, `기획과 구현 불일치를 개인 탓이 아닌 명세·의사결정 문제로 풀고 더 나은 대안을 수용하는지 봅니다.`, `방어적이지 않고 수용 기준으로 돌아가는 태도는 좋습니다. 1인 Roblox가 아닌 이전 조직에서 실제 재작업 범위와 최종 결과를 말해야 협업 역량으로 인정됩니다.`],
+        [60, `C+`, `엔지니어링 매니저·TPM 리드`, `문서 비용을 실제로 겪고 위험도에 맞게 경량화한 경험이 있는지 확인합니다.`, `위험 기반 문서화 원칙은 타당하지만 질문이 요구한 ‘사례’가 없습니다. 어떤 문서가 얼마나 낡았고 무엇을 없애거나 자동화했는지 구체화해야 합니다.`],
+        [61, `A-`, `Creator UX 리드·Developer Experience PM`, `크리에이터 툴을 기능 수가 아니라 전체 작업 흐름과 통제감으로 평가하는지 봅니다.`, `첫 플레이 시간, 상태 이해, 복구 비용, 반복, 통제감이라는 기준이 탄탄하고 초보·전문가도 구분했습니다. 실제 도구 평가표나 관찰 기록 하나를 붙이면 매우 강합니다.`],
+        [62, `B+`, `제품 디자이너·Creator Tools PM`, `학습 용이성과 전문가 확장성을 같은 객체 모델 안에서 점진적으로 제공할 수 있는지 확인합니다.`, `점진적 공개와 안전한 기본값, 외부 IDE 확장을 균형 있게 다룹니다. 구체 UI나 기능 하나에 적용한 예가 없어 아직 좋은 원칙 수준입니다.`],
+        [63, `B`, `제품 총괄·생태계 전략 PM`, `서로 다른 사용자군의 가치를 사업 단계와 병목에 따라 우선순위화하는지 봅니다.`, `무조건 한쪽을 택하지 않고 목표·가치·실패 비용으로 판단하는 답은 성숙합니다. OVERDARE 현재 단계에 대한 가정과 선택을 명시하지 않으면 현장 질문에서는 결론 회피로 보일 수 있습니다.`],
+        [64, `A-`, `UX 리서처·제품 분석가`, `제작 퍼널의 중단 지점을 정량으로 찾고 관찰로 원인을 규명하는 방법을 아는지 봅니다.`, `이벤트 퍼널과 화면 관찰의 구체 행동 신호가 잘 연결돼 있습니다. 실제 계측 이벤트 이름과 한 번의 UX 수정 결과를 제시하면 실무 경험이 완성됩니다.`],
+        [65, `A-`, `UX 리서처·데이터 분석가`, `방법론을 선호가 아니라 현재 불확실성의 종류와 데이터 성숙도에 맞게 선택하는지 확인합니다.`, `‘어디’와 ‘왜’를 구분하고 초기 AI 경험의 예외까지 들어 논리적입니다. 짧고 직접적인 답변이라 면접 준비도가 높습니다.`],
+        [66, `A-`, `Creator Tools PM·제품 분석가`, `툴 UX 성과를 속도·성공·복구·유지와 품질까지 계층적으로 측정하는지 봅니다.`, `선행 작업 지표와 장기 생태계 결과, AI의 재작업 지표까지 균형이 좋습니다. 핵심 지표 하나와 가드레일 하나를 우선 선택하라는 후속 질문만 준비하면 됩니다.`],
+        [67, `B+`, `온보딩 PM·Developer Experience 리드`, `Time-to-first-playable을 맹목적으로 줄이지 않고 실제 병목과 이해 가능한 결과를 찾는지 봅니다.`, `가장 긴 단계보다 가장 많은 이탈 지점을 본다는 판단과 원인별 해법이 좋습니다. 본인 프로젝트나 Studio 사용에서 측정한 단계 시간이 없다는 점은 보완해야 합니다.`],
+        [68, `B+`, `IDE/Editor 제품 리드·개발도구 엔지니어`, `외부 파일과 Studio 객체의 소스 오브 트루스, 동기화·충돌·승인 UX를 설계할 수 있는지 봅니다.`, `단일 원본, 추적성, diff·승인·되돌리기 경계가 정확합니다. 충돌 해결 UI와 오프라인·부분 실패 정책까지 질문받으면 더 구체화해야 합니다.`],
+        [69, `B+`, `모바일 성능 QA·툴 PM`, `PC 제작 환경의 에뮬레이션 한계를 알고 실제 기기 검증 루프와 출시 기준을 설계하는지 봅니다.`, `해상도 외 입력·성능·발열·네트워크를 구분하고 원격 테스트를 연결한 점이 좋습니다. 대표 기기군과 수용 가능한 프레임·메모리 기준을 정하면 더 강합니다.`],
+        [70, `B+`, `마이그레이션 PM·플랫폼 아키텍트`, `Roblox 이주 장벽을 문법이 아닌 자산·실행 모델·성공 패턴의 불확실성으로 이해하는지 봅니다.`, `객체·복제·API·에셋·배포 차이를 짚고 호환성 보고서라는 해법까지 연결했습니다. 실제 Roblox 프로젝트 하나를 기준으로 이식 난이도를 분류하면 설득력이 커집니다.`],
+        [71, `B+`, `Early Access 제품 리드·Developer Relations`, `초기 플랫폼의 부족함을 과장 없이 공개하면서 크리에이터 투자 신뢰를 유지하는지 봅니다.`, `지원 범위·우회·변경 영향 공개와 콘텐츠 차단 기준이 현실적입니다. 기능 약속과 전략적 파트너 예외를 어떻게 관리할지까지 준비하면 좋습니다.`],
+        [72, `C+`, `제품 매니저·Developer Relations`, `고객 요청을 거절할 때 문제·대안·재검토 조건으로 관계를 유지한 실제 경험을 확인합니다.`, `거절 원칙은 좋지만 질문이 요구한 실제 기능과 결과가 없습니다. 이전 조직의 구체 사례를 선택하지 않으면 고객 중심성을 말로만 설명한 답이 됩니다.`],
+        [73, `B+`, `제품 총괄·TPM 리드`, `사용자 영향·전략·비용·위험·학습을 한 프레임에서 비교하고 결론을 낼 수 있는지 봅니다.`, `다차원 기준과 핵심 퍼널 우선 원칙이 타당합니다. 가중치가 충돌한 실제 기능 두 개를 비교해 최종 선택까지 말해야 의사결정력이 드러납니다.`],
+        [74, `C+`, `릴리즈 매니저·QA 리드`, `위험의 가역성에 따라 출시 기준을 다르게 적용한 실제 판단을 확인합니다.`, `기능 플래그와 데이터·결제의 높은 기준을 구분하는 프레임은 좋습니다. 그러나 줄인 범위와 지킨 품질을 보여주는 실제 출시 사례가 없어 질문에 직접 답하지 못했습니다.`],
+        [75, `A`, `AI Agent 제품 리드·ML 플랫폼 엔지니어`, `Agent를 마케팅 용어가 아니라 상태·도구·권한·중단·검증의 실행 루프로 정의하는지 봅니다.`, `코드 생성과 Agent의 차이를 자율성의 양이 아닌 통제 가능한 루프로 정의해 정확합니다. 제품 관점의 통제권까지 포함해 높은 수준입니다.`],
+        [76, `A-`, `AI 플랫폼 엔지니어·Developer Productivity 리드`, `실제 Agent·Skill·도구의 계층과 한 작업의 오케스트레이션을 구두로 명확히 설명하는지 봅니다.`, `공통 컨텍스트→Skill→전용 Agent→도구→사람 게이트 흐름과 add-feature 예시가 구체적입니다. 실행 하나의 입력·산출물·실패 시 중단 조건을 더하면 완성됩니다.`],
+        [77, `B+`, `Agent 아키텍트·엔지니어링 매니저`, `전용 Agent 분리가 컨텍스트·도구·품질·실패 비용이라는 책임 경계에 근거하는지 봅니다.`, `과도한 세분화의 비용까지 인정해 설계 판단이 균형적입니다. 실제 분리 전후 성공률이나 전달 비용 사례가 없어서 정량 근거는 약합니다.`],
+        [78, `A-`, `AI Developer Experience 엔지니어`, `컨텍스트를 목적별로 분리하고 필요한 정보만 라우팅해 규칙을 검증 가능하게 만드는지 봅니다.`, `CLAUDE.md·PRD·rules·Skills의 책임 구분과 금지 조건 중심 작성이 실무적입니다. 실제 디렉터리와 한 규칙이 실패를 막은 사례를 보여주면 강합니다.`],
+        [79, `B`, `AI 보안 엔지니어·플랫폼 엔지니어`, `최소 권한, 자격 증명 분리, 파괴적 작업 승인과 실제 도구 제한을 구현했는지 확인합니다.`, `필요한 통제 항목은 모두 짚었지만 규칙 문구와 실제 실행 권한이 어디까지 기술적으로 강제됐는지 불명확합니다. 선언적 금지와 샌드박스 강제를 구분해 답해야 합니다.`],
+        [80, `A-`, `AI 품질/Evaluation 엔지니어·QA 리드`, `모델의 자기평가가 아닌 독립 신호와 실제 환경 테스트로 결과를 검증하는지 봅니다.`, `정적 검사·계약·diff·Studio 플레이·수용 기준을 층별로 연결했고 환류까지 설명했습니다. 대표 실패가 어느 검사에서 잡혔는지 한 건을 준비하면 매우 강합니다.`],
+        [81, `A-`, `Roblox 빌드·QA 자동화 엔지니어`, `파일 기반 자동 검사와 Studio 런타임 검증의 간극을 이해하고 완료 기준으로 연결했는지 봅니다.`, `Luau·Rojo와 실제 물리·네트워크·DataStore 검증의 역할 구분이 구체적입니다. 멀티클라이언트 테스트 범위와 자동화되지 않은 부분을 솔직히 밝히면 신뢰가 높습니다.`],
+        [82, `B-`, `AI 엔지니어링 매니저·코드리뷰 리드`, `Agent 실패를 구체적으로 소유하고 재발 방지 장치로 전환했는지 확인합니다.`, `잘못된 이상 구조 가정과 과도한 리팩터링은 현실적인 실패 유형입니다. 어느 프로젝트에서 어떤 파일이 얼마나 바뀌었고 어떤 규칙·테스트를 추가했는지 없어 실제 사례인지 추가 검증이 필요합니다.`],
+        [83, `A-`, `시니어 소프트웨어 엔지니어·보안 리뷰어`, `AI 코드 리뷰에서 범위·권한·데이터·예외를 스타일보다 먼저 보는지 확인합니다.`, `제품 정책의 임의 변경과 테스트 의미 왜곡까지 짚어 우선순위가 좋습니다. 본인 코드 리뷰 diff 한 건을 예로 들면 높은 평가를 받을 답입니다.`],
+        [84, `A-`, `소프트웨어 아키텍트·Developer Productivity 리드`, `아키텍처를 문서가 아니라 생성 절차·예제·금지·검사로 강제하는지 봅니다.`, `BaseService·BaseController·Config·ByteNet 등 실제 구조가 들어 있어 경험의 진정성이 높습니다. 자동 검색 규칙과 예외 승인 방법을 준비하면 좋습니다.`],
+        [85, `B-`, `멀티에이전트 플랫폼 엔지니어·테크 리드`, `병렬 작업의 경계, 공유 계약, 격리와 통합 검증을 실제로 운영했는지 봅니다.`, `worktree·계약 우선·통합 책임이라는 방법은 맞습니다. 모든 Roblox 프로젝트가 1인 제작인 만큼 여러 Agent를 실제 병렬 운용한 범위와 사람 협업을 혼동하지 않게 명시해야 합니다.`],
+        [86, `A`, `AI 플랫폼 엔지니어·Agent 제품 리드`, `Skill을 재사용 가능한 작업 계약으로 정의하고 트리거·도구·완료 조건을 포함하는지 봅니다.`, `단순 프롬프트와의 차이가 명확하고 add-feature 예시도 구체적입니다. 우대요건인 Skills 경험을 가장 직접적으로 증명하는 강한 답변입니다.`],
+        [87, `A-`, `Developer Productivity 리드·AI 플랫폼 엔지니어`, `도구 선택이 유행이 아니라 작업 요구와 한계·보완 게이트에 근거하는지 확인합니다.`, `코드베이스 탐색과 도구 루프라는 선택 이유, Studio 시각 상태라는 한계를 균형 있게 말합니다. 다른 도구와의 짧은 비교 또는 실제 실패 한 건을 붙이면 더 강합니다.`],
+        [88, `B+`, `AI 플랫폼 아키텍트`, `프레임워크 미사용을 숨기지 않고 요구 복잡도에 맞춘 build-versus-buy 판단을 하는지 봅니다.`, `LangChain 미사용을 솔직히 밝히고 장기 상태·모델 독립·평가가 필요할 때의 도입 조건을 설명해 좋습니다. 실제 사용 경험으로 오해시키지 않는 것이 핵심입니다.`],
+        [89, `A`, `AI 플랫폼 아키텍트·Developer Productivity 리드`, `모델 종속 프롬프트와 장기 유지 자산을 구분해 교체 가능한 시스템을 설계하는지 봅니다.`, `구조·도구 계약·수용 기준·테스트·로그를 모델 독립 자산으로 보는 답이 정확하고 성숙합니다. 현재 상태로도 높은 합격 신호입니다.`],
+        [90, `A-`, `AI 제품 분석가·개발생산성 리드`, `AI 산출량이 아니라 리드타임·사람 비용·품질·제품 결과를 함께 측정하는지 봅니다.`, `속도와 재작업·결함·지원 비용을 계층적으로 연결해 Goodhart 위험을 피합니다. 실제 기준선 수치가 없다는 점은 Q017과 함께 반드시 보완해야 합니다.`],
+        [91, `B-`, `AI 보안 엔지니어·AppSec 리드`, `프롬프트 인젝션을 신뢰 경계·권한·실행 통제로 다루고 실제 방어를 구현했는지 봅니다.`, `외부 콘텐츠와 지시 분리, 최소 권한, 샌드박스 원칙은 정확합니다. 실제 프로젝트에서 기술적으로 강제한 통제와 향후 플랫폼 제안이 섞여 있어 구분이 필요합니다.`],
+        [92, `C+`, `AI 거버넌스·법무·콘텐츠 정책 담당`, `입력 권리, 오픈소스 의무, 생성물 출처와 신고·삭제를 실제 프로세스로 운영했는지 확인합니다.`, `필요한 체크리스트는 넓게 다루지만 법률 일반론에 가깝고 사용 도구별 실제 라이선스 기록이 없습니다. 법적 보증처럼 단정하지 말고 본인 운영 범위와 전문가 협업 지점을 명시해야 합니다.`],
+        [93, `A-`, `AI 제품 총괄·Trust & Safety 리드`, `자동화가 가능한 상황에서도 가치 판단과 결과 책임을 인간에게 남기는 기준을 확인합니다.`, `재미·공정성·안전·수익화·미성년자라는 고위험 결정을 명확히 분리했습니다. 제품 철학과 책임성 측면에서 강한 답변입니다.`],
+        [94, `A-`, `AI Studio PM·Human-in-the-loop UX 리드`, `Agent의 계획·적용·배포 단계별 승인과 위험 기반 추가 확인, 되돌리기를 설계하는지 봅니다.`, `목표 확인, diff·위험·테스트, 고위험 변경 별도 승인과 이력을 모두 포함해 완성도가 높습니다. 승인 피로를 줄일 위험 등급과 기본값을 후속으로 준비하면 좋습니다.`],
+        [95, `A`, `Unreal/UEFN 테크니컬 리드·채용 매니저`, `일반 UE5, UEFN, 과거 엔진 경험의 경계를 정확히 말하고 부족한 영역을 과장하지 않는지 봅니다.`, `증명 가능한 UEFN 범위와 일반 Unreal C++·Blueprint 경험을 명확히 분리해 신뢰도가 높습니다. 약점을 인정하면서 전이 가능한 기반을 설명한 좋은 답변입니다.`],
+        [96, `C`, `UEFN 게임플레이 엔지니어·테크니컬 디자이너`, `Water Colosseum에서 본인이 직접 만든 규칙·Device·Verse·레벨의 소유권과 깊이를 검증합니다.`, `무엇을 말해야 하는지는 설명하지만 실제 기능 이름이 하나도 없습니다. 프로젝트를 열어 직접 구현한 2~3개 기능과 화면·코드로 교체하기 전에는 답변으로 보기 어렵습니다.`],
+        [97, `C`, `Verse 엔지니어·UEFN 테크니컬 리드`, `Verse의 실제 사용 범위, 언어·실행 모델 이해와 독자적으로 디버깅 가능한 수준을 확인합니다.`, `숙련도를 과장하지 않는 태도는 좋지만 이벤트·상태 중 무엇을 작성했는지조차 비어 있습니다. 실제 Verse 파일, 코드 규모, 해결한 오류와 한계를 준비해야 합니다.`],
+        [98, `B`, `UEFN 테크니컬 디자이너`, `Device와 Verse의 선택을 속도·복잡성·디버깅·유지보수 트레이드오프로 판단하는지 봅니다.`, `검증된 Device 우선과 복잡한 정책의 Verse 확장 기준은 타당합니다. Water Colosseum의 동일 요구에서 실제 선택한 사례가 없어 이론 이해로만 평가될 가능성이 있습니다.`],
+        [99, `B-`, `프로토타이핑 리드·게임 PM`, `프로토타입 시작 전 가설과 판정 기준이 있었고 결과론으로 꾸미지 않는지 확인합니다.`, `핵심 루프 제작 가능성이라는 가설과 관찰 단계를 제시했지만 범위가 넓고 성공·실패 기준과 실제 결과가 없습니다. 시간 예산과 판정 지표를 붙여야 합니다.`],
+        [100, `C+`, `제품 총괄·프로덕션 리드`, `프로토타입 결과를 기술 가능성과 사업 투자 판단으로 분리하고 실제 중단 결정을 소유하는지 봅니다.`, `평가 기준은 균형적이지만 정식 출시를 왜 진행하지 않았는지 결론이 없습니다. 당시 발견한 제약과 기회비용, 누가 어떤 결정을 했는지를 직접 답해야 합니다.`],
+        [101, `B`, `Creator Tools 엔지니어·Developer Experience PM`, `두 툴을 직접 써 본 사람이 첫 멀티플레이·디버깅·배포의 실제 마찰을 비교하는지 봅니다.`, `스크립트 중심과 Device+Verse 조합의 차이는 정확합니다. 동일 기능을 만드는 단계 수·대기 시간·디버깅 사례가 없어 경험적 비교의 깊이는 제한적입니다.`],
+        [102, `A-`, `UE5 기반 툴 PM·엔진 UX 리드`, `UE5의 엔진 역량을 크리에이터 가치와 초보자 복잡성, 모바일 비용으로 동시에 해석하는지 봅니다.`, `장점과 부담을 균형 있게 짚고 안전한 타입·템플릿·점진적 공개라는 제품 해법까지 연결했습니다. 구체 기능에 적용하면 매우 강한 답변입니다.`],
+        [103, `A-`, `Unreal 엔지니어링 매니저·TPM 리드`, `엔진 전문가와 경쟁하지 않고 사용자·플랫폼 번역과 우선순위라는 독자적 기여를 명확히 하는지 봅니다.`, `권위의 경계를 인정하면서 Roblox·ZEPETO 개념을 UE5 요구사항으로 번역하는 가치를 잘 설명합니다. 협업 시 사용할 구체 산출물 한 가지를 준비하면 좋습니다.`],
+        [104, `A`, `채용 매니저·Unreal 테크니컬 리드`, `필수 역량 공백을 방어적으로 부정하지 않고 직무 관련 강점과 학습 계획으로 보완하는지 확인합니다.`, `부족함을 정확히 인정하고 직무가 엔진 프로그래머가 아니라는 점, UGC·시스템·AI의 교차 강점을 설득력 있게 제시합니다. 과장 위험을 낮춘 높은 수준의 답변입니다.`],
+        [105, `C`, `프로덕션 디렉터·아트/엔지니어링 리드`, `직군 충돌에서 공통 기준을 만들고 실제 결정·관계·결과를 이끈 협업 경험을 검증합니다.`, `1인 Roblox가 아닌 이전 조직 사례를 쓰겠다는 구분은 정확하지만 현재 사례는 가상 예시에 가깝습니다. 회사·상황·각 입장·측정 결과를 실제 한 건으로 교체해야 합니다.`],
+        [106, `C+`, `채용 매니저·엔지니어링 매니저`, `자기 제안이 거절됐을 때 자존심보다 조직 결정을 따르고 학습을 남기는지 봅니다.`, `거절을 분석하고 결정에 커밋하는 태도는 좋습니다. 실제 거절된 제안과 이후 본인의 행동·결과가 없어서 행동 면접 답변으로는 미완성입니다.`],
+        [107, `C`, `제품 총괄·테크 리드`, `기술적 가능성에 매몰되지 않고 가치·운영비·복구 가능성으로 중단한 실제 판단을 확인합니다.`, `만들지 말아야 할 기준은 적절하지만 사례가 전혀 없습니다. 어떤 기능을 어느 시점에 포기했고 절약한 비용이나 지킨 목표가 무엇인지 필요합니다.`],
+        [108, `C`, `채용 매니저·제품 리더`, `본인의 오판을 구체적으로 소유하고 경고 신호·손실·재발 방지 체계를 설명하는지 봅니다.`, `‘예를 들어’로 시작하는 가정형 답변이라 본인의 실패가 드러나지 않습니다. 실제 판단 하나를 선택해 불리한 수치와 책임까지 말해야 신뢰를 얻습니다.`],
+        [109, `C`, `라이브옵스 PM·게임 디자이너`, `의도와 다른 사용자 행동을 데이터로 발견하고 악용·창발적 재미를 구분해 대응했는지 봅니다.`, `분석 프레임은 좋지만 예상 행동과 실제 행동이 무엇이었는지 없습니다. Tower Flood Race 또는 이전 라이브 프로젝트의 구체 행동과 변경 결과가 필요합니다.`],
+        [110, `C+`, `프로덕션 리드·QA 리드`, `일정 압박 속에서 품질 바닥선, 축소 범위, 롤백과 관측을 실제로 결정했는지 봅니다.`, `안전·공정성과 장식 요소를 분리하는 기준은 타당합니다. 실제 출시명, 빠진 기능, 일정 효과, 출시 후 문제가 없어야 답변이 완성됩니다.`],
+        [111, `A`, `채용 매니저·프로젝트 운영 리드`, `1인 제작에서 역할 혼선을 막고 자기 확증·검증 공백을 어떤 시스템으로 보완했는지 확인합니다.`, `Roblox 전 프로젝트가 1인 제작임을 명확히 하고 산출물·체크리스트·데이터로 관점을 분리한 설명이 일관됩니다. AI를 팀원처럼 포장하지 않고 최종 책임을 본인에게 둔 점도 강합니다.`],
+        [112, `B-`, `피플 매니저·엔지니어링 매니저`, `낮은 성과를 기대·환경·역량·역할로 진단하고 피드백과 책임 조정을 수행한 경험을 봅니다.`, `사람을 탓하기 전 시스템 모호함을 제거하는 접근은 좋습니다. Roblox는 1인 제작이므로 반드시 이전 조직의 실제 구성원 사례와 개선 또는 역할 조정 결과를 붙여야 합니다.`],
+        [113, `B-`, `프로덕트 디자이너·비개발 직군 리드`, `기술 용어를 의사결정 가능한 사용자 흐름으로 바꿔 설명한 실제 커뮤니케이션 능력을 확인합니다.`, `보상 시스템을 자격·확정·복구로 번역하는 방식은 좋지만 누구에게 무엇을 설명해 어떤 결정이 났는지 없습니다. 이전 협업의 실제 문서나 상태도 사례가 필요합니다.`],
+        [114, `A-`, `시니어 엔지니어·엔지니어링 매니저`, `요구사항 전달에서 문제·정책·예외·비목표·결정권과 상호 이해를 확인하는지 봅니다.`, `해결책을 미리 고정하지 않고 역설명으로 해석 차이를 찾는 방식이 실무적입니다. 엔지니어 관점에서 함께 일하기 좋은 신호를 주는 답변입니다.`],
+        [115, `B`, `채용 매니저·조직 리더`, `과거 리더가 실무자 역할에서 권한과 책임을 구분하고 적절히 행동할 수 있는지 확인합니다.`, `최종 결정권과 정보 배분 차이를 잘 설명하지만 추상적입니다. 동일 경력에서 리더와 담당자였을 때 행동이 달랐던 실제 두 장면을 대비하면 우려가 줄어듭니다.`],
+        [116, `C`, `채용 매니저·제품 총괄`, `가장 큰 실패의 책임, 손실 규모, 놓친 신호와 이후 시스템 변화를 솔직하게 검증합니다.`, `답변 구조만 있고 프로젝트·오판·손실이 모두 비어 있습니다. 가장 공격적인 후속 질문이 이어질 문항이므로 실제 하나를 선택하기 전에는 실전 사용이 어렵습니다.`],
+        [117, `A-`, `온보딩 PM·Creator UX 리드`, `신규 사용자를 세분화하고 퍼널 진단→작은 성공 경험→지표로 개선안을 구성하는지 봅니다.`, `15분 내 규칙 수정과 멀티플레이 성공이라는 MVP, 완료율·복구율·두 번째 편집 지표가 구체적입니다. 현 제품 데이터가 없는 가정임을 먼저 밝히고 핵심 세그먼트 하나를 우선하면 더 좋습니다.`],
+        [118, `A-`, `AI Studio PM·Agent 아키텍트`, `모호한 생성 요청을 요구 확인·계획·단계 생성·자동 검사·사람 승인으로 구조화하는지 봅니다.`, `전체 게임 즉시 생성의 위험을 피하고 템플릿·도달 가능성·권리·성능·되돌리기를 연결했습니다. 질문 수를 최소화해 첫 가치까지 지연하지 않는 UX를 후속으로 설명하면 좋습니다.`],
+        [119, `A-`, `마이그레이션 제품 리드·플랫폼 아키텍트`, `완전 자동 변환의 위험을 이해하고 진단·분류·세로 조각·지표로 현실적인 MVP를 제시하는지 봅니다.`, `호환성 진단부터 시작하는 범위 설정과 자동·대체·불가 분류가 매우 실무적입니다. 데이터 저장·경제처럼 이전 위험이 큰 영역의 제외 기준까지 준비하면 완성도가 높습니다.`],
+        [120, `A`, `게임 보안 엔지니어·AI 코드 품질 리드`, `서버·클라이언트 규칙을 문서 지시가 아닌 메타데이터·정적·동적 검사·승인으로 강제하는지 봅니다.`, `계획 시 경계 선언부터 금지 패턴 검사, 악의적 요청 주입, 사람 승인까지 방어층이 완결돼 있습니다. 기술·제품 요구를 동시에 다룬 강한 현장 답변입니다.`],
+        [121, `A`, `AI 변경관리 UX 리드·Developer Tools 엔지니어`, `코드뿐 아니라 객체·설정·에셋까지 원자적으로 미리보기·적용·복구하는 흐름을 설계하는지 봅니다.`, `격리 사본, 선택적 diff, 위험 정보, 체크포인트, 고위험 배포 분리가 구체적입니다. 사용자의 통제감과 시스템 안전을 함께 만족하는 높은 수준의 답변입니다.`],
+        [122, `A`, `AI 제품 분석가·제품 총괄`, `성공률·속도·품질/통제의 균형 지표를 고르고 수용률 하나로 최적화하는 위험을 아는지 봅니다.`, `세 지표가 상호 보완적이고 ‘사람이 수정 가능한 상태’라는 품질 정의도 좋습니다. 각 지표의 분모와 목표값을 묻는 후속 질문만 준비하면 됩니다.`],
+        [123, `B+`, `AI 거버넌스·Trust & Safety·법무`, `생성 에셋의 입력 권리, 추적성, 안전 검사, 공개·판매 심사와 사후 구제를 제품 흐름으로 설계하는지 봅니다.`, `생성 이력부터 신고·수익 보류·이의 제기까지 생애주기가 잘 닫혀 있습니다. 유사성 검사의 한계와 관할별 법적 판단은 전문가 협업이 필요하므로 단정적 보증을 피해야 합니다.`],
+        [124, `A-`, `채용 매니저·Studio 제품 총괄`, `입사 초기에 학습만 하거나 성급히 해법을 내지 않고 사용·관찰·데이터·실험을 30일 안에 연결하는지 봅니다.`, `주차별 산출물과 사용자 세그먼트, 작은 실험까지 현실적인 계획입니다. 접근 가능한 데이터·사용자 수가 다를 수 있으므로 첫 주에 계획을 조정하는 조건을 밝히면 좋습니다.`],
+        [125, `A-`, `제품 총괄·생태계 전략 리드`, `거짓 양자택일을 피하면서도 현재 병목과 콘텐츠 공급 전략을 근거로 우선순위를 결정하는지 봅니다.`, `Early Access의 대표 콘텐츠 부족과 초보 활성화라는 서로 다른 조건을 명확히 나눴고 공통 기반도 찾았습니다. 현장에서는 가정을 하나 선언하고 실제로 한쪽을 먼저 선택해 결론력을 보여줘야 합니다.`],
+        [126, `A-`, `멀티플레이 QA 리드·게임 서버 엔지니어`, `제한된 테스트 환경에서 단위·계약·악성 시나리오·실세션·관측·롤백을 조합하는지 봅니다.`, `단기 완화와 중기 제품 하네스를 구분하고 이탈·재접속·중복 요청까지 포함해 실무적입니다. 최소 원격 테스트 인원과 출시 차단 기준을 수치화하면 더 강합니다.`],
+        // REVIEW_ROWS_END
+    ];
+    const reviews = Object.fromEntries(reviewRows.map(([number, grade, role, intent, assessment]) => [number, { grade, role, intent, assessment }]));
+
+    const tierA = new Set([
+        1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,
+        46,50,54,61,67,75,76,80,87,90,94,95,99,117,118,120,121,122,124
+    ]);
+    const tierC = new Set([30,37,42,57,60,62,63,65,68,71,86,88,91,92,98,102,106,112,115]);
+    const stateKey = "overdare-interview-study-v1";
+    const stored = (() => {
+        try { return JSON.parse(localStorage.getItem(stateKey)) || {}; }
+        catch { return {}; }
+    })();
+    const study = {
+        done: new Set(Array.isArray(stored.done) ? stored.done : []),
+        star: new Set(Array.isArray(stored.star) ? stored.star : [])
+    };
+
+    const root = document.getElementById("questionRoot");
+    const groupFilter = document.getElementById("groupFilter");
+    const tierFilter = document.getElementById("tierFilter");
+    const gradeFilter = document.getElementById("gradeFilter");
+    const studyFilter = document.getElementById("studyFilter");
+    const search = document.getElementById("search");
+    const emptyState = document.getElementById("emptyState");
+
+    groups.sort((a, b) => a.items[0][0] - b.items[0][0]);
+
+    function escapeHtml(value) {
+        return String(value)
+            .replaceAll("&", "&amp;")
+            .replaceAll("<", "&lt;")
+            .replaceAll(">", "&gt;")
+            .replaceAll('"', "&quot;")
+            .replaceAll("'", "&#039;");
+    }
+
+    function answerHtml(answer) {
+        return answer.split(/\n\s*\n/).map(part => `<p>${escapeHtml(part)}</p>`).join("");
+    }
+
+    function tierFor(number) {
+        if (tierA.has(number)) return "A";
+        if (tierC.has(number)) return "C";
+        return "B";
+    }
+
+    function saveStudy() {
+        localStorage.setItem(stateKey, JSON.stringify({
+            done: [...study.done].sort((a, b) => a - b),
+            star: [...study.star].sort((a, b) => a - b)
+        }));
+    }
+
+    function render() {
+        const fragment = document.createDocumentFragment();
+        groups.forEach(group => {
+            const section = document.createElement("section");
+            section.className = "group";
+            section.dataset.group = group.id;
+            section.innerHTML = `
+                <header class="group-head">
+                    <div>
+                        <p class="group-kicker">${escapeHtml(group.range)}</p>
+                        <h2>${escapeHtml(group.title)}</h2>
+                        <p class="group-desc">${escapeHtml(group.desc)}</p>
+                    </div>
+                    <span class="group-count">${group.items.length} questions</span>
+                </header>`;
+
+            group.items.forEach(([number, question, answer, verify]) => {
+                const tier = tierFor(number);
+                const review = reviews[number];
+                const details = document.createElement("details");
+                details.className = "qa-card";
+                details.id = `q${number}`;
+                details.dataset.number = number;
+                details.dataset.group = group.id;
+                details.dataset.tier = tier;
+                details.dataset.grade = review.grade[0];
+                details.dataset.verify = verify ? "true" : "false";
+                details.dataset.search = `${question} ${answer} ${verify || ""} ${review.role} ${review.intent} ${review.assessment}`.toLocaleLowerCase("ko");
+                details.innerHTML = `
+                    <summary>
+                        <span class="q-no">Q${String(number).padStart(3, "0")}</span>
+                        <span class="q-title">${escapeHtml(question)}</span>
+                        <span class="badges">
+                            <span class="badge tier-${tier.toLowerCase()}">${tier}</span>
+                            <span class="badge grade-${review.grade[0].toLowerCase()}">답변 ${escapeHtml(review.grade)}</span>
+                            ${verify ? '<span class="badge verify-badge">확인 필요</span>' : ""}
+                            <span class="chevron" aria-hidden="true">⌄</span>
+                        </span>
+                    </summary>
+                    <div class="qa-body">
+                        <p class="answer-label">답변 예시</p>
+                        <div class="answer">${answerHtml(answer)}</div>
+                        ${verify ? `<div class="verify"><strong>면접 전 사실 확인:</strong> ${escapeHtml(verify)}</div>` : ""}
+                        <aside class="review-panel" aria-label="심사자 관점 평가">
+                            <div class="review-head">
+                                <strong>INTERVIEWER REVIEW</strong>
+                                <span class="review-grade grade-${review.grade[0].toLowerCase()}">${escapeHtml(review.grade)}</span>
+                            </div>
+                            <div class="review-grid">
+                                <div class="review-item"><span class="review-label">예상 질문자</span><div class="review-value">${escapeHtml(review.role)}</div></div>
+                                <div class="review-item"><span class="review-label">질문 의도 · 확인 역량</span><div class="review-value">${escapeHtml(review.intent)}</div></div>
+                                <div class="review-item assessment"><span class="review-label">현재 답변에 대한 심사평</span><div class="review-value">${escapeHtml(review.assessment)}</div></div>
+                            </div>
+                        </aside>
+                        <div class="qa-actions">
+                            <button class="mini done" type="button" data-action="done">학습 완료</button>
+                            <button class="mini star" type="button" data-action="star">즐겨찾기</button>
+                            <button class="mini" type="button" data-action="copy">답변 복사</button>
+                        </div>
+                    </div>`;
+                section.appendChild(details);
+            });
+            fragment.appendChild(section);
+        });
+        root.appendChild(fragment);
+
+        groups.forEach(group => {
+            const option = document.createElement("option");
+            option.value = group.id;
+            option.textContent = `${group.range} · ${group.title}`;
+            groupFilter.appendChild(option);
+        });
+        refreshStudyClasses();
+        applyFilters();
+    }
+
+    function refreshStudyClasses() {
+        document.querySelectorAll(".qa-card").forEach(card => {
+            const number = Number(card.dataset.number);
+            const done = study.done.has(number);
+            const star = study.star.has(number);
+            card.classList.toggle("is-done", done);
+            card.classList.toggle("is-starred", star);
+            const doneButton = card.querySelector('[data-action="done"]');
+            const starButton = card.querySelector('[data-action="star"]');
+            doneButton.classList.toggle("is-active", done);
+            starButton.classList.toggle("is-active", star);
+            doneButton.textContent = done ? "완료 취소" : "학습 완료";
+            starButton.textContent = star ? "즐겨찾기 해제" : "즐겨찾기";
+        });
+        document.getElementById("doneCount").textContent = study.done.size;
+        document.getElementById("starCount").textContent = study.star.size;
+        document.getElementById("progressFill").style.width = `${Math.min(100, study.done.size / 126 * 100)}%`;
+    }
+
+    function applyFilters() {
+        const query = search.value.trim().toLocaleLowerCase("ko");
+        const selectedGroup = groupFilter.value;
+        const selectedTier = tierFilter.value;
+        const selectedGrade = gradeFilter.value;
+        const selectedStudy = studyFilter.value;
+        let visible = 0;
+
+        document.querySelectorAll(".group").forEach(section => {
+            let groupVisible = 0;
+            section.querySelectorAll(".qa-card").forEach(card => {
+                const number = Number(card.dataset.number);
+                const matches = (!query || card.dataset.search.includes(query))
+                    && (selectedGroup === "all" || card.dataset.group === selectedGroup)
+                    && (selectedTier === "all" || card.dataset.tier === selectedTier)
+                    && (selectedGrade === "all" || card.dataset.grade === selectedGrade)
+                    && (selectedStudy === "all"
+                        || (selectedStudy === "todo" && !study.done.has(number))
+                        || (selectedStudy === "done" && study.done.has(number))
+                        || (selectedStudy === "star" && study.star.has(number))
+                        || (selectedStudy === "verify" && card.dataset.verify === "true"));
+                card.hidden = !matches;
+                if (matches) { visible += 1; groupVisible += 1; }
+            });
+            section.hidden = groupVisible === 0;
+            const count = section.querySelector(".group-count");
+            if (count) count.textContent = `${groupVisible} questions`;
+        });
+
+        document.getElementById("visibleCount").textContent = visible;
+        document.getElementById("resultLine").textContent = `${visible}개 표시 중`;
+        emptyState.hidden = visible !== 0;
+    }
+
+    root.addEventListener("click", async event => {
+        const button = event.target.closest("[data-action]");
+        if (!button) return;
+        const card = button.closest(".qa-card");
+        const number = Number(card.dataset.number);
+        const action = button.dataset.action;
+        if (action === "done") {
+            study.done.has(number) ? study.done.delete(number) : study.done.add(number);
+            saveStudy();
+            refreshStudyClasses();
+            applyFilters();
+        } else if (action === "star") {
+            study.star.has(number) ? study.star.delete(number) : study.star.add(number);
+            saveStudy();
+            refreshStudyClasses();
+            applyFilters();
+        } else if (action === "copy") {
+            const question = card.querySelector(".q-title").textContent;
+            const answer = card.querySelector(".answer").innerText;
+            try {
+                await navigator.clipboard.writeText(`${question}\n\n${answer}`);
+                const before = button.textContent;
+                button.textContent = "복사됨";
+                setTimeout(() => { button.textContent = before; }, 1200);
+            } catch {
+                button.textContent = "복사 실패";
+            }
+        }
+    });
+
+    [search, groupFilter, tierFilter, gradeFilter, studyFilter].forEach(control => control.addEventListener("input", applyFilters));
+    document.getElementById("expandBtn").addEventListener("click", () => document.querySelectorAll(".qa-card:not([hidden])").forEach(card => { card.open = true; }));
+    document.getElementById("collapseBtn").addEventListener("click", () => document.querySelectorAll(".qa-card").forEach(card => { card.open = false; }));
+    document.getElementById("printBtn").addEventListener("click", () => window.print());
+    document.getElementById("randomBtn").addEventListener("click", () => {
+        const candidates = [...document.querySelectorAll(".qa-card:not([hidden])")];
+        if (!candidates.length) return;
+        document.querySelectorAll(".qa-card").forEach(card => { card.open = false; });
+        const target = candidates[Math.floor(Math.random() * candidates.length)];
+        target.open = true;
+        target.scrollIntoView({ behavior: "smooth", block: "center" });
+    });
+
+    function openHashQuestion() {
+        if (!location.hash) return;
+        const target = document.querySelector(location.hash);
+        if (!(target instanceof HTMLDetailsElement)) return;
+        target.open = true;
+        setTimeout(() => target.scrollIntoView({ block: "center" }), 0);
+    }
+
+    render();
+    openHashQuestion();
+    window.addEventListener("hashchange", openHashQuestion);
+    </script>
+</body>
+</html>

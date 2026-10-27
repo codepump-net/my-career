@@ -1,23 +1,11 @@
 /*
  * 자기소개서 — OVERDARE Technical Product Manager 지원용
  *
- * 주소: /coverletter/overdare/
- * 공고: cv/data/[OVERDARE] Technical Product Manager (TPM).txt
- * 검토: docs/applications/overdare-tpm.md  ← 요건 대조표, 세 가지 질문, 금지 사항
+ * 기준 이력서: /cv/overdare/
+ * 작성 기준: docs/applications/overdare-coverletter-hr-guide.md
  *
- * 문장은 본인이 쓴다. paragraphs 의 { guide: [...] } 를 { text: { ko, en } } 로 바꾼다.
- * 남은 안내 블록 수는 `node tools/check.js` 가 세어 준다.
- *
- * 전체 원칙
- *   · 강점 사례는 Tower Flood Race. 한 사례가 필수 2·3·4 와 우대 2·3·4 를 다 증명한다.
- *   · 숫자 먼저, 방법 나중. 11M 이 먼저, AI 가 뒤. 순서를 바꾸면 감점이다.
- *   · 모든 AI 문장에 "나는 무엇을 결정했다" 가 붙는다. 없으면 "AI 가 했고 나는 봤다" 로 읽힌다.
- *   · AI 가 전부가 아니다. 직무는 TPM 이다. 자기소개서의 절반 이상이 AI 이면 "AI 사람" 으로
- *     분류되고 TPM 채용에서는 그것이 불리하다.
- *   · A4 1.5장. 각 문단에 숫자나 고유명사. "배우겠다" 류 금지.
- *   · 사실은 cv/data.js 범위 안에서만. 지금 4개 플랫폼·AI 제작·11M 이 data.js 에 없다 —
- *     자기소개서보다 data.js 를 먼저 채운다. 이력서에 없는 사실을 여기서 처음 꺼내면
- *     면접에서 "이력서엔 왜 없죠" 가 된다.
+ * 개별 콘텐츠에서 플랫폼으로 넓어지는 경력 방향, OVERDARE를 선택한 이유,
+ * 제품의 전체 주기를 다룬 근거, 입사 후 만들고 싶은 성과를 네 문단으로 구성한다.
  */
 
 window.DOC_VERSION = {
@@ -32,7 +20,7 @@ window.DOC_VERSION = {
             en: 'Application for Technical Product Manager at OVERDARE'
         },
         contact: [
-            { text: { ko: '지원 직무 — Technical Product Manager', en: 'Role — Technical Product Manager' } },
+            { text: { ko: '지원 직무: Technical Product Manager', en: 'Role: Technical Product Manager' } },
             { text: window.DOC_DATA.head.name },
             { text: { ko: '2026.08', en: '2026.08' } }
         ]
@@ -41,108 +29,32 @@ window.DOC_VERSION = {
     sections: [
         {
             type: 'prose',
-            title: { ko: '지원 동기', en: 'Why this role' },
             paragraphs: [
                 {
-                    guide: [
-                        '첫 문단이 "이만큼 했는데 왜 TPM 인가" 에 답한다. 이력서의 실적 절을 본 순간 읽는 쪽은 "우리 TPM 보다 더 한 사람이 왜 오나" 를 묻는다. 여기서 답하지 않으면 나머지가 그 의문 위에서 읽힌다.',
-                        '피할 답 — "더 큰 조직에서 배우고 싶다", "안정적인 환경", 회사를 정리한다는 서사. 그리고 새로 피할 답 — "AI 시대의 플랫폼을 함께 만들고 싶다" 류의 큰 말. 실적이 있는 사람이 큰 말을 하면 실적이 작아 보인다.',
-                        '권장 구조, 네 문장 — ①ROBLOX·ZEPETO 에서 AI 기반 제작 시스템으로 라이브까지, UEFN·Meta Horizon 에서 검증 프로토타입까지 돌렸다 ②네 곳 모두 AI 가 설계에 없는 툴이라 우회를 만드는 데 시간의 절반이 갔다 ③그 천장은 우리 스튜디오의 역량이 아니라 플랫폼 툴이고, 플랫폼 쪽에서만 올릴 수 있다 ④OVERDARE 는 AI 를 처음부터 설계에 넣은 첫 플랫폼이다.',
-                        '③이 "왜 스튜디오를 키우지 않나" 의 답이다. 규모(3인)를 여기서 밝힌다 — 3인이 이만큼 했다는 것이 AI 생산성의 가장 믿을 만한 증거이고, 동시에 "내려온다" 는 인상을 없앤다.',
-                        '무엇을 하지 않을 것인지 한 문장 — 스튜디오를 경영하러 오는 게 아니라 툴을 설계하러 온다. 이것이 "지시를 받을 수 있나" 의 첫 답이다.'
-                    ]
+                    text: {
+                        ko: '저는 지난 6년간 로블록스와 제페토 플랫폼을 중심으로 게임을 비롯한 다양한 UGC 콘텐츠를 제작해 왔습니다. UGC 콘텐츠의 성과는 콘텐츠 자체의 완성도에서 시작하지만, 크리에이터가 정성껏 만든 콘텐츠가 많은 이용자에게 소개되고 계속 개선될 수 있는 환경도 그에 못지않게 중요하다는 것을 알게 되었습니다. 특히 오랜 기간 로블록스와 제페토 관계자들과 교류하면서, 개별 콘텐츠를 만들며 쌓은 기술과 경험을 크리에이터의 제작 환경을 개선하는 데 활용하는 업무에도 관심을 가지게 되었고, 이것이 이번 모집 공고에 지원하게 된 계기가 되었습니다.',
+                        en: 'For the past six years, I have created games and a wide range of other UGC content primarily on Roblox and ZEPETO. I learned that while the success of UGC begins with the quality of the content itself, it is equally important to have an environment where content that creators have worked hard to make can reach many users and continue to improve. In particular, through my long-standing interactions with people involved with Roblox and ZEPETO, I became interested in work that would apply the skills and experience I had gained from creating individual content to improving creator environments, which led me to apply for this opening.'
+                    }
                 },
                 {
-                    guide: [
-                        '두 번째 문단은 툴 사용자로서의 관찰. 필수요건 5(툴 사용자 관점 UX 분석)의 자리다. 4개 플랫폼 툴을 프로덕션에서 비교한 사람은 드물다 — 그 비교가 곧 분석이다.',
-                        '네 툴 중 둘을 골라 같은 작업에서 어떻게 달랐는지 한 장면. 특히 UEFN 을 넣는다 — 플랫폼 검증 프로토타입을 만들며 알아낸 것이 있고, OVERDARE 가 만드는 것과 같은 범주(UE5 기반 크리에이터 툴)라서 그 발견이 곧 OVERDARE 스튜디오가 다르게 할 수 있는 지점이다. "검증하려고 만들었다" 는 것을 한 번 말한다 — TPM 이 하는 일이다.',
-                        'AI 에이전트를 붙이는 관점에서의 마찰이면 더 좋다 — "이 툴은 X 를 사람이 손으로 해야 해서 에이전트가 끼어들 수 없었다" 같은 것. 공고 미션 ①(제작 환경 설계)과 ③(AI 협업)을 한 문장으로 잇는다.',
-                        '"OVERDARE 에서는 처음부터 피할 수 있다" 가 아니라 "이런 지점을 찾는 방법을 안다" 로. 전자는 오만, 후자는 방법론.',
-                        '쓰지 않는 것 — 크래프톤·PUBG·네이버제트 평가, UGC 시장 전망, C2E·NFT.'
-                    ]
-                }
-            ]
-        },
-
-        {
-            type: 'prose',
-            title: { ko: '강점과 문제 해결', en: 'Strengths and problem solving' },
-            paragraphs: [
-                {
-                    guide: [
-                        '사례는 Tower Flood Race. 1차 안내의 HomeDance 는 철회한다 — TFR 한 사례가 필수 2(복잡한 시스템 구조화)·3(툴 설계 문서화)·4(기획 문서)와 우대 2·3·4(LLM 에이전트, Claude Code, AI 생산성)를 동시에 증명한다. HomeDance 는 "AI 없이도 시스템을 설계할 줄 안다" 의 보조 한 문장.',
-                        '첫 문장은 숫자 — 2026년 1월 출시, 7개월 11M 방문, 3인 스튜디오. AI 는 이 문장에 없다. 읽는 쪽이 "어떻게?" 를 갖게 만든 뒤에 방법을 준다.',
-                        '둘째 문장부터 방법 — 단, "AI 로 만들었다" 가 아니라 "에이전트가 X 를 만들고 사람이 Y 를 결정하는 제작 시스템을 설계했다". X 와 Y 를 단계별로 — 게임 로직, 레벨(절차적 생성이 알고리즘인지 AI 인지 구분), 에셋, 라이브 콘텐츠. 검토 메모 2절 Q2 의 표를 먼저 채우고 그 표를 문장으로 옮긴다.',
-                        '"Procedural Level" 은 알고리즘이지 AI 가 아닐 수 있다. 둘을 섞으면 읽는 쪽이 나머지 주장도 의심한다. 정확히 나눈다.'
-                    ]
+                    text: {
+                        ko: 'OVERDARE에 관심을 갖게 된 가장 큰 이유는 플랫폼의 이용자와 콘텐츠 범위를 만들어 가는 초기 단계에 있다는 점입니다. 이미 성장한 UGC 플랫폼은 기존 이용자층의 기대와 서비스 운영 기준이 자리 잡아 새로운 타깃으로 확장할 때 생태계 전반을 함께 바꿔야 합니다. 반면 OVERDARE는 대표 콘텐츠와 크리에이터 생태계를 형성하는 단계여서, 특정 이용자층에 고정되기 전에 다양한 타깃과 장르를 고려한 제작 환경을 설계할 여지가 많습니다. 여러 UGC 플랫폼에서 콘텐츠를 만들고 운영한 경험을 OVERDARE의 제작 환경을 개선하는 데 활용할 수 있다고 판단해 지원하게 되었습니다.',
+                        en: 'What drew me most to OVERDARE is that it is still at an early stage of shaping the audiences and content the platform will serve. Mature UGC platforms already have established user expectations and operating standards, so expanding to new audiences requires changes across the broader ecosystem. OVERDARE, by contrast, is still forming its flagship content and creator ecosystem, leaving ample room to design a creator environment for a wider range of audiences and genres before it becomes tied to a particular user base. I applied because I believe my experience creating and operating content across UGC platforms can contribute to improving OVERDARE\'s creator environment.'
+                    }
                 },
                 {
-                    guide: [
-                        '구조 — 상황(3인, 라이브 여러 종, 왜 AI 없이는 안 됐나) → 파이프라인 설계(단계·역할 분담·검토 지점) → 문서(에이전트 지침 문서, 기획서 — 실물의 이름) → 결정(AI 에 맡기지 않기로 한 것과 이유) → 결과(11M, 그리고 리텐션이나 동시접속 하나 더).',
-                        '"결정" 이 이 문단의 핵심이다. "무엇을 AI 에 맡기지 않았는가" 는 TPM 면접관이 가장 듣고 싶은 문장이다 — 판단이 사람에게 남아 있음을 보이고, 우선순위를 정할 줄 안다는 것을 보이고, 미션 ③("AI 와 사람이 함께")의 "함께" 가 무엇인지를 보인다.',
-                        '"문서" 를 빠뜨리지 않는다. 필수 3·4 는 문서화를 묻는다. 에이전트 지침 문서와 기획서의 이름을 대고 포트폴리오의 발췌를 지목한다. 지침 문서는 "툴을 설계하고 문서화했다" 의 실물이다.',
-                        '11M 뒤에 숫자 하나 더 — 리텐션, 동시접속, 수익 중 하나. 방문 수만 있으면 "봇 아니냐" 가 나온다.',
-                        '마지막 문장으로 OVERDARE 에 잇는다 — "이 파이프라인을 네 플랫폼에서 돌렸고, 매번 플랫폼 툴이 어디서 막는지 목록이 생겼다. 그 목록이 OVERDARE 스튜디오에 처음부터 넣을 것의 목록이다." 이식성이 곧 다섯 번째 플랫폼을 설계할 수 있다는 근거다.'
-                    ]
-                }
-            ]
-        },
-
-        {
-            type: 'prose',
-            title: { ko: '협업과 성장', en: 'Collaboration and growth' },
-            paragraphs: [
-                {
-                    guide: [
-                        '이 절에서 읽는 쪽이 확인하려는 것은 하나 — "4개 플랫폼·AI 파이프라인·11M·대표 두 번인 사람이 남의 프로세스 안에서 일할 수 있는가." 실적이 클수록 이 의심도 크다. 리더십 사례는 의심을 키운다. 팔로워십 사례가 필요하다.',
-                        '경력 궤적(엔지니어 → CTO → 대표)을 쓰되 결론을 "리더가 됐다" 에 두지 않는다. "만드는 사람이 관리를 겪고 나서 만드는 자리로 돌아오려 한다" 에 둔다.',
-                        '우아한형제들·스노우 시절(2018–21)은 큰 조직의 시니어 IC 였다. 남의 로드맵 안에서, 남이 정한 스펙으로 일한 경험이 여기 있다. 이 시기의 장면 하나 — 본인이 동의하지 않은 결정을 실행해서 결과가 좋았던 경우가 가장 유효하다.'
-                    ]
+                    text: {
+                        ko: '제가 OVERDARE에 기여할 수 있는 부분은 크리에이터가 제작 과정에서 겪는 문제를 제품 요구 사항으로 바꾸고, 실제로 사용할 수 있는 기능으로 완성하는 일입니다. 여러 UGC 플랫폼의 제작 툴을 직접 사용해 왔기 때문에 툴을 기능 목록으로 평가하기보다, 크리에이터가 어느 단계에서 작업을 반복하거나 중단하는지를 사용자 관점에서 살필 수 있습니다. 발견한 문제는 사용자 흐름과 예외 조건, 품질 기준으로 나누어 문서화하고, 게임 시스템과 API를 직접 구현해 온 경험을 바탕으로 개발팀과 구현 범위를 조율할 수 있습니다. 또한 AI Agent를 실제 제작에 적용하며 반복 작업과 사람의 판단이 필요한 작업을 나눠 본 경험을 OVERDARE Studio의 AI 기능과 제작 흐름을 설계하고 개선하는 데 활용할 수 있습니다.',
+                        en: 'I can contribute to OVERDARE by turning problems creators encounter during production into product requirements and carrying them through to features they can use in practice. Having worked directly with creator tools across several UGC platforms, I can evaluate them not as lists of features, but from the creator\'s perspective: where work becomes repetitive and where the workflow breaks down. I can document those problems as user flows, edge cases, and quality criteria, then work with the development team to define a realistic implementation scope based on my experience building game systems and APIs myself. I can also apply what I learned from using AI agents in production—separating repeatable tasks from work that requires human judgment—to the design and improvement of AI features and creator workflows in OVERDARE Studio.'
+                    }
                 },
                 {
-                    guide: [
-                        '에이전트와의 협업도 협업이다 — 공고 미션 ③ 이 정확히 그것을 묻는다. 에이전트에게 무엇을 어떻게 지시하고, 결과를 어떻게 검토하고, 지침 문서를 어떻게 고쳐 나갔는지. "AI 를 잘 쓴다" 가 아니라 "AI 와 일하는 방식을 문서로 만들어 팀이 같은 방식으로 일하게 했다" 로.',
-                        '단, 이 문단이 사람과의 협업을 대체하면 안 된다. 사람 이야기가 먼저, 에이전트 이야기가 뒤. 둘을 잇는 문장이 있으면 좋다 — 에이전트를 지시하며 배운 것이 사람에게 스펙을 쓰는 방식을 어떻게 바꿨는지.',
-                        '실패에서 바꾼 습관 하나. 구체적으로 — "AI 산출물을 검토하지 않고 넘겼다가 X 가 났고, 그 뒤로 지침 문서에 검토 지점을 명시한다" 수준.',
-                        '분량이 넘치면 이 절부터 줄인다.'
-                    ]
+                    text: {
+                        ko: '저는 콘텐츠를 직접 제작하면서, 반복 작업을 구조화하고 제작 과정의 효율과 품질을 높이는 일을 지속해 왔습니다. OVERDARE의 Technical Product Manager 직무에서 특히 제 경험과 맞는 부분은 ‘AI와 사람이 함께 게임을 만드는 새로운 방식’을 탐구한다는 점입니다. 이러한 경험을 바탕으로 AI와 사람이 함께 더 나은 콘텐츠를 만들 수 있는 OVERDARE 플랫폼의 제작 환경을 발전시키는 데 기여해 보고 싶습니다.',
+                        en: 'Alongside creating content directly, I have continued to structure recurring work and improve the efficiency and quality of the production process. The aspect of OVERDARE\'s Technical Product Manager role that aligns most closely with my experience is its exploration of new ways for people and AI to build games together. Building on this experience, I hope to contribute to advancing OVERDARE\'s creator environment so that people and AI can create better content together.'
+                    }
                 }
             ]
-        },
-
-        {
-            type: 'prose',
-            title: { ko: '입사 후 계획', en: 'After joining' },
-            paragraphs: [
-                {
-                    guide: [
-                        '30일 / 90일 / 1년. 기간 없는 포부는 선언이다.',
-                        '30일 — OVERDARE 스튜디오에서 TFR 파이프라인을 그대로 돌려 본다. UEFN·Horizon 을 검증할 때 쓴 것과 같은 기준으로 — 이미 해 본 일이다. 네 플랫폼과 비교해 어디서 막히는지 목록화한다. 다섯 플랫폼을 같은 방법으로 검증한 사람은 없다 — 이것이 첫 30일의 산출물이다.',
-                        '지원 전에 실제로 스튜디오를 써 보고 쓴다. 써 봤다면 발견한 것 하나를 여기 미리 적는다. 그것이 이 절 전체의 신뢰를 만든다. 써 보지 않고 쓴 계획은 면접 첫 질문에 무너진다.'
-                    ]
-                },
-                {
-                    guide: [
-                        '90일 — 30일 목록에서 상위 3개를 PRD 로. "고른다" 는 기준을 말한다는 뜻 — 크리에이터가 손으로 해야 해서 에이전트가 못 끼어드는 지점인지, 제작 시간을 잡아먹는지, 이탈 지점인지. 기준을 말하면 PRD 를 써 본 사람으로 읽힌다(필수 4).',
-                        '1년 — 미션 ③ 으로 좁힌다. 지원자만 실증이 있는 미션이다. 제안은 하나 — "AI 가 대신할 단계 / 사람이 판단할 단계" 를 나누는 기준을 OVERDARE 스튜디오의 기능 설계에 넣겠다. 그 기준은 TFR 에서 실제로 쓴 기준이어야 한다(강점 절의 "결정" 과 같은 것).',
-                        '"만들겠다" 보다 "판단할 수 있게 만들겠다". 계획이 구현 목록이면 엔지니어로 읽힌다. "크리에이터가 AI 에 무엇을 맡길지 스스로 정할 수 있는 툴" 이 TPM 의 문장이다.',
-                        '겸손의 위치 — 공고는 미션 ③ 을 "탐구" 라고 썼고 지원자는 결과가 있다. "탐구가 아니라 이미 해 봤다" 고 쓰면 오만이고, 결과를 감추면 낭비다. "네 플랫폼에서 한 것을 다섯 번째에서 다시 검증하겠다" 가 그 사이의 문장이다.'
-                    ]
-                }
-            ]
-        },
-
-        {
-            type: 'closing',
-            paragraphs: [
-                {
-                    guide: [
-                        '두 문장. 첫 문장은 위치 — "AI 가 설계에 없던 네 플랫폼에서 AI 기반 제작을 했고, 이제 AI 가 설계에 있는 플랫폼의 툴을 만들고 싶다". 둘째 문장은 포트폴리오 링크 — TFR 파이프라인 케이스를 지목한다.',
-                        '"기회를 주시면 감사하겠습니다" 류 인사는 생략해도 된다.'
-                    ]
-                }
-            ],
-            sign: window.DOC_DATA.sign
         }
     ]
 };

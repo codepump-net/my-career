@@ -1,0 +1,69 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://example.local/schemas/agent-package-manifest.schema.json",
+  "title": "Agent Package Manifest",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["schema_version", "package_id", "package_version", "status", "updated_at", "control_plane", "owners", "defaults", "paths"],
+  "properties": {
+    "schema_version": { "type": "string", "pattern": "^1\\.[0-9]+$" },
+    "package_id": { "type": "string", "pattern": "^[a-z0-9]+(?:-[a-z0-9]+)*$" },
+    "package_version": { "type": "string", "pattern": "^[0-9]+\\.[0-9]+\\.[0-9]+$" },
+    "status": { "enum": ["active", "deprecated", "retired"] },
+    "updated_at": { "type": "string", "format": "date" },
+    "control_plane": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["provider_neutral", "source_of_truth", "runtime_artifacts_are_generated"],
+      "properties": {
+        "provider_neutral": { "const": true },
+        "source_of_truth": { "const": "agent-package" },
+        "runtime_artifacts_are_generated": { "const": true }
+      }
+    },
+    "owners": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["product", "technical", "approval"],
+      "properties": {
+        "product": { "type": "string", "minLength": 1 },
+        "technical": { "type": "string", "minLength": 1 },
+        "approval": { "type": "string", "minLength": 1 }
+      }
+    },
+    "defaults": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["write_policy", "network_policy", "high_risk_approval", "approval_failure_mode", "environment_policy", "session_budget_policy", "data_retention_policy", "raw_trace_repository", "secrets_in_repository"],
+      "properties": {
+        "write_policy": { "const": "read_only" },
+        "network_policy": { "const": "deny_unless_authorized" },
+        "high_risk_approval": { "const": "required" },
+        "approval_failure_mode": { "const": "fail_closed" },
+        "environment_policy": { "const": "version_and_hash_in_release" },
+        "session_budget_policy": { "const": "required" },
+        "data_retention_policy": { "const": "explicit_per_agent_and_environment" },
+        "raw_trace_repository": { "const": "external_or_gitignored" },
+        "secrets_in_repository": { "const": "forbidden" }
+      }
+    },
+    "paths": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["registry", "agents", "skills", "environments", "policies", "evals", "runs", "releases", "decisions", "changes", "adapters"],
+      "properties": {
+        "registry": { "type": "string", "minLength": 1 },
+        "agents": { "type": "string", "minLength": 1 },
+        "skills": { "type": "string", "minLength": 1 },
+        "environments": { "type": "string", "minLength": 1 },
+        "policies": { "type": "string", "minLength": 1 },
+        "evals": { "type": "string", "minLength": 1 },
+        "runs": { "type": "string", "minLength": 1 },
+        "releases": { "type": "string", "minLength": 1 },
+        "decisions": { "type": "string", "minLength": 1 },
+        "changes": { "type": "string", "minLength": 1 },
+        "adapters": { "type": "string", "minLength": 1 }
+      }
+    }
+  }
+}

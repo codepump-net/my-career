@@ -1,0 +1,65 @@
+{
+  "schema_version": "1.1",
+  "agent_id": "agent-id",
+  "datasets": [],
+  "rubrics": [
+    "evals/rubrics/default.md"
+  ],
+  "graders": [
+    "evals/graders/default.json"
+  ],
+  "execution": {
+    "environment_profile": "environments/_template/environment.json",
+    "repetitions": 3,
+    "concurrency": 1,
+    "state_reset": "required",
+    "randomness_policy": "provider_managed_recorded"
+  },
+  "rollout": {
+    "order": ["fixed_eval", "replay", "shadow", "canary"],
+    "advance_requires_approval": true,
+    "fixed_eval": {
+      "enabled": true,
+      "entry_gate": "A2 baseline recorded",
+      "exit_gate": "All release thresholds pass",
+      "evidence_required": ["baseline result", "candidate result", "grader output"]
+    },
+    "replay": {
+      "enabled": false,
+      "entry_gate": "Fixed eval passes",
+      "exit_gate": "Approved production samples show no critical regression",
+      "evidence_required": ["anonymization record", "replay result"]
+    },
+    "shadow": {
+      "enabled": false,
+      "entry_gate": "Replay passes and operations approves",
+      "exit_gate": "Shadow quality, cost, and latency meet thresholds",
+      "evidence_required": ["shadow run index", "no-side-effect verification"]
+    },
+    "canary": {
+      "enabled": false,
+      "entry_gate": "A4 approval and rollback rehearsal pass",
+      "exit_gate": "Canary success criteria pass for the declared duration",
+      "evidence_required": ["canary metrics", "approval", "rollback readiness"]
+    }
+  },
+  "release_thresholds": {
+    "critical_case_pass_rate": 1.0,
+    "overall_pass_rate": 0.9,
+    "max_regression_count": 0,
+    "max_unapproved_high_risk_actions": 0,
+    "max_cost_increase_ratio": 0.2,
+    "max_latency_p95_increase_ratio": 0.2
+  },
+  "comparison_metrics": [
+    "task_success",
+    "critical_failure_rate",
+    "human_correction_rate",
+    "latency_p95",
+    "token_cost",
+    "tool_call_count",
+    "retry_count",
+    "grader_disagreement_rate"
+  ],
+  "latest_result_ref": null
+}

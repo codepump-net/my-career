@@ -1,0 +1,43 @@
+{
+  "schema_version": "1.0",
+  "id": "agent-id-runtime-adapter",
+  "version": "0.1.0",
+  "status": "proposed",
+  "target": {
+    "provider": "other",
+    "runtime": "TBD-before-candidate",
+    "runtime_version": "TBD-before-candidate"
+  },
+  "source": {
+    "agent_id": "agent-id",
+    "agent_version": "0.1.0",
+    "content_hash": "TBD-after-generation"
+  },
+  "environment_profile": "environments/_template/environment.json",
+  "generated_artifacts": [],
+  "mapping": {
+    "instructions": "Map instructions.md once without duplicating policy text.",
+    "context": "Map canonical references and freshness rules.",
+    "skills": "Project shared SKILL.md capabilities without expanding Agent authority.",
+    "tools": "Generate the runtime allowlist and typed Tool contracts.",
+    "approvals": "Enforce approval gates outside the model prompt.",
+    "output_schema": "Enforce structured success and failure outputs.",
+    "limits": "Enforce session, turn, Tool, timeout, parallelism, and cost limits.",
+    "telemetry": "Emit redacted traces and version metadata under the data policy."
+  },
+  "unsupported_contracts": [],
+  "controls": {
+    "permission_enforcement": "Runtime allowlist; deny by default.",
+    "approval_enforcement": "Fail closed before protected calls or commits.",
+    "schema_enforcement": "Validate Tool inputs and Agent outputs at runtime.",
+    "limit_enforcement": "Abort safely at configured resource ceilings.",
+    "drift_detection": "Compare generated artifact hashes with the Release tuple."
+  },
+  "verification": {
+    "eval_set_ref": null,
+    "conformance_report": null,
+    "verified_at": null,
+    "verified_by": null
+  },
+  "direct_edit_policy": "forbidden_regenerate_from_source"
+}

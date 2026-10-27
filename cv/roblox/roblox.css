@@ -1,0 +1,64 @@
+/* OVERDARE 제출본과 같은 문서 레이아웃을 사용하는 로블록스 강사 평가용 이력서. */
+:root {
+    --margin-x: 42px;
+}
+
+body {
+    font-size: 13px;
+    line-height: 1.58;
+}
+
+.doc-head {
+    padding-bottom: 14px;
+}
+
+.doc-heading {
+    margin-top: 21px;
+}
+
+.doc-entry {
+    margin-top: 12px;
+}
+
+.doc-point {
+    margin-top: 3px;
+}
+
+.doc-sub {
+    margin-top: 2px;
+    font-size: 12px;
+}
+
+.doc-list {
+    margin-top: 10px;
+}
+
+.doc-list li {
+    padding: 4px 0;
+}
+
+.doc-text {
+    margin-top: 16px;
+    line-height: 1.95;
+}
+
+.doc-list--featured li {
+    padding: 10px 6px;
+}
+
+.doc-heading--page-one,
+.doc-heading--featured {
+    margin-top: 31px;
+}
+
+.doc-list--page-one {
+    margin-top: 16px;
+}
+
+.doc-list--page-one li {
+    padding: 11px 0;
+}
+
+@page {
+    margin: 18mm 11mm;
+}

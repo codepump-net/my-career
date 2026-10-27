@@ -1,0 +1,14 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://example.local/schemas/agent-tools.schema.json",
+  "title": "Agent Tool Set",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["schema_version", "agent_id", "default_policy", "tools"],
+  "properties": {
+    "schema_version": { "type": "string", "pattern": "^1\\.[0-9]+$" },
+    "agent_id": { "type": "string", "pattern": "^[a-z0-9]+(?:-[a-z0-9]+)*$" },
+    "default_policy": { "const": "deny" },
+    "tools": { "type": "array", "items": { "$ref": "tool.schema.json" } }
+  }
+}

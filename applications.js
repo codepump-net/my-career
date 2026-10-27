@@ -1,6 +1,17 @@
 /* 지원 목록. archived 항목은 접힌 아카이브에 표시한다. 기록일은 면접일이 아니다. */
 window.APPLICATIONS = [
     {
+        id: 'roblox',
+        label: { ko: '로블록스 · 강사 평가용', en: 'Roblox · Instructor Evaluation' },
+        role: { ko: '이력 소개 · 프로젝트 포트폴리오', en: 'Professional Profile · Project Portfolio' },
+        note: {
+            ko: 'UGC 게임 개발·운영 경력과 실적. 포트폴리오는 Roblox를 중심으로 구성하고 ZEPETO·기타 플랫폼을 보조 사례로 수록했습니다.',
+            en: 'UGC game development and operations experience. The portfolio focuses on Roblox, with ZEPETO and other platforms as supplementary examples.'
+        },
+        cv: 'roblox',
+        portfolio: 'roblox'
+    },
+    {
         "id": "default",
         "label": {
             "ko": "아주대학교 디지털미디어학과",

@@ -1,0 +1,356 @@
+<!DOCTYPE html>
+<html lang="ko">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+    <title>로블록스 포트폴리오 | 오현석</title>
+    <meta name="description" content="오현석 로블록스 게임·UGC 개발 포트폴리오. ZEPETO와 기타 플랫폼 경험은 보조 사례로 수록했습니다.">
+    <meta name="referrer" content="strict-origin-when-cross-origin">
+    <meta name="theme-color" content="#14171B">
+    <meta name="robots" content="noindex, nofollow">
+    <link rel="icon" href="../../assets/favicon.svg" type="image/svg+xml">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&family=Noto+Sans+KR:wght@400;600&display=swap"
+        rel="stylesheet">
+    <link rel="stylesheet" href="../../slides/shared/deck.css">
+    <link rel="stylesheet" href="../skeleton.css">
+    <link rel="stylesheet" href="roblox.css">
+</head>
+
+<body>
+    <div class="deck">
+        <div class="deck-rail" aria-hidden="true"><span class="deck-rail-fill" id="deckRail"></span></div>
+
+        <header class="deck-bar deck-bar-top">
+            <a class="deck-wordmark" href="../" data-deck-key-aria-label="ui_versions">HYUNSEOK OH</a>
+            <div class="deck-tools">
+                <div class="deck-langs" role="group" aria-label="언어 선택" data-deck-key-aria-label="ui_lang_group">
+                    <button type="button" class="deck-lang" data-lang="ko">KO</button>
+                    <span class="deck-lang-sep" aria-hidden="true">|</span>
+                    <button type="button" class="deck-lang" data-lang="en">EN</button>
+                </div>
+                <button type="button" class="deck-tool" id="deckPdf" aria-label="PDF로 저장">
+                    <svg class="deck-tool-icon" viewBox="0 0 24 24" aria-hidden="true">
+                        <path d="M6 9V3h12v6M6 18H4v-6h16v6h-2M8 14h8v7H8z" />
+                    </svg>
+                </button>
+                <button type="button" class="deck-tool" id="deckFull" aria-pressed="false" aria-label="전체화면">
+                    <svg class="deck-tool-icon" data-icon="enter" viewBox="0 0 24 24" aria-hidden="true">
+                        <path d="M4 9V4h5M20 9V4h-5M4 15v5h5M20 15v5h-5" />
+                    </svg>
+                    <svg class="deck-tool-icon" data-icon="exit" viewBox="0 0 24 24" aria-hidden="true">
+                        <path d="M9 4v5H4M15 4v5h5M9 20v-5H4M15 20v-5h5" />
+                    </svg>
+                </button>
+            </div>
+        </header>
+
+        <div class="deck-viewport" id="deckViewport">
+            <div class="deck-stage" id="deckStage" role="group" aria-label="포트폴리오 슬라이드"
+                data-deck-key-aria-label="ui_deck_label">
+                <section class="slide slide-skeleton portfolio-cover" data-slide="cover" role="region"
+                    aria-roledescription="slide" aria-label="Portfolio cover">
+                    <div class="cover-top">
+                        <p class="cover-name">HYUNSEOK OH</p>
+                    </div>
+                    <div class="cover-main">
+                        <h1 class="cover-title">PORTFOLIO</h1>
+                        <p class="cover-subtitle">ROBLOX GAMES &amp; UGC</p>
+                    </div>
+                    <div class="cover-details">
+                        <p class="cover-detail" data-deck-key="roblox_profile">로블록스 강사 평가용</p>
+                        <p class="cover-detail">TECHNICAL DIRECTOR · CO-FOUNDER</p>
+                        <p class="cover-detail"><a href="mailto:jeff.oh.hyunseok@gmail.com">jeff.oh.hyunseok@gmail.com</a></p>
+                    </div>
+                </section>
+
+                <!-- 지표 출처: nnn-games-website/shared/data/projects.json, 2026-10-27T03:35:58.621Z.
+                     Tower Flood Race: visits 11448820, favorites 527638.
+                     FREE UGC RNG: visits 381002, favorites 6196. 화면은 하한 축약값으로 표시. -->
+                <section class="slide slide-skeleton" data-slide="roblox-tower-flood-race" role="region"
+                    aria-roledescription="slide" aria-label="Roblox Tower Flood Race">
+                    <header class="project-head">
+                        <p class="project-category">[Roblox]</p>
+                        <h1 class="project-title">Tower Flood Race</h1>
+                        <p class="project-number">ROBLOX · 01 / 03</p>
+                    </header>
+                    <div class="project-body project-body-single">
+                        <figure class="project-hero">
+                            <img src="../assets/1p-tower-flood-race.png" width="1920" height="1080"
+                                alt="Tower Flood Race 게임 스크린샷">
+                        </figure>
+                        <aside class="project-summary" aria-label="Tower Flood Race 프로젝트 정보">
+                            <div class="project-status-row">
+                                <p class="project-status">LIVE SERVICE</p>
+                                <p class="project-release">2026.01 · RELEASED</p>
+                            </div>
+                            <div class="project-metrics" aria-label="핵심 지표">
+                                <p class="project-metric"><strong>11.44M+</strong><span>Total visits</span></p>
+                                <p class="project-metric"><strong>527.6K+</strong><span>Favorites</span></p>
+                            </div>
+                            <p class="project-info-label">NNN GAMES · 2026.10.27</p>
+                            <div class="project-features project-systems">
+                                <p class="project-info-label">SELECTED SYSTEMS · MY CONTRIBUTION</p>
+                                <ul class="project-system-list">
+                                    <li>
+                                        <span class="project-system-name">ROUND ORCHESTRATION</span>
+                                        <p>최대 50인 플레이의 상태·전이·예외를 구조화해 Round Agent 기반 진행 시스템 구현</p>
+                                    </li>
+                                    <li>
+                                        <span class="project-system-name">TRUST &amp; SAFETY</span>
+                                        <p>어뷰징 탐지 조건·제재 단계·운영 대응 플로우를 설계하고 자동 제재 시스템 구현</p>
+                                    </li>
+                                    <li>
+                                        <span class="project-system-name">AI &amp; TOOLING</span>
+                                        <p>기능별 전용 AI Agent, Roblox API 공통 모듈과 실행 하네스로 반복 개발·운영 작업 자동화</p>
+                                    </li>
+                                    <li>
+                                        <span class="project-system-name">DATA-DRIVEN LIVE OPS</span>
+                                        <p>플레이 데이터로 난이도·라이브 콘텐츠를 개선하고 시즌·Limited UGC 이벤트 운영</p>
+                                    </li>
+                                </ul>
+                            </div>
+                            <a class="project-link" href="https://www.roblox.com/games/77732766603333/Tower-Flood-Race"
+                                target="_blank" rel="noreferrer">PLAY ON ROBLOX <span aria-hidden="true">↗</span></a>
+                        </aside>
+                    </div>
+                </section>
+
+                <section class="slide slide-skeleton" data-slide="roblox-free-ugc-rng" role="region"
+                    aria-roledescription="slide" aria-label="Roblox FREE UGC RNG">
+                    <header class="project-head">
+                        <p class="project-category">[Roblox]</p>
+                        <h2 class="project-title">FREE UGC RNG</h2>
+                        <p class="project-number">ROBLOX · 02 / 03</p>
+                    </header>
+                    <div class="project-body project-body-single">
+                        <figure class="project-hero">
+                            <img src="../assets/2p-free-ugc-rng.jpg" width="1100" height="587"
+                                alt="FREE UGC RNG 게임 스크린샷">
+                        </figure>
+                        <aside class="project-summary" aria-label="FREE UGC RNG 프로젝트 정보">
+                            <div class="project-status-row">
+                                <p class="project-status">LIVE SERVICE</p>
+                                <p class="project-release">2026.07 · RELEASED</p>
+                            </div>
+                            <div class="project-metrics" aria-label="핵심 지표">
+                                <p class="project-metric"><strong>381K+</strong><span>Total visits</span></p>
+                                <p class="project-metric"><strong>6.19K+</strong><span>Favorites</span></p>
+                            </div>
+                            <p class="project-info-label">NNN GAMES · 2026.10.27</p>
+                            <div class="project-features project-systems">
+                                <p class="project-info-label">SELECTED SYSTEMS · MY CONTRIBUTION</p>
+                                <ul class="project-system-list">
+                                    <li>
+                                        <span class="project-system-name">CROSS-PLATFORM ADAPTATION</span>
+                                        <p>ZEPETO에서 시도한 RNG 플레이–UGC 보상 구조를 Roblox 환경에 맞게 재설계·구현</p>
+                                    </li>
+                                    <li>
+                                        <span class="project-system-name">LIVE UGC DROP</span>
+                                        <p>일 2회 Limited UGC 드랍 이벤트와 참여·보상 흐름을 기획·구현·운영</p>
+                                    </li>
+                                    <li>
+                                        <span class="project-system-name">COLLECTION &amp; ECONOMY</span>
+                                        <p>RNG 수집·장착·합성, 코인 경제와 UGC 교환을 반복 플레이 루프로 연결</p>
+                                    </li>
+                                </ul>
+                            </div>
+                            <a class="project-link" href="https://www.roblox.com/games/123520570013325/FREE-UGC-RNG"
+                                target="_blank" rel="noreferrer">PLAY ON ROBLOX <span aria-hidden="true">↗</span></a>
+                        </aside>
+                    </div>
+                </section>
+
+                <section class="slide slide-skeleton" data-slide="ugc-roblox" role="region"
+                    aria-roledescription="slide" aria-label="Roblox UGC">
+                    <header class="project-head">
+                        <p class="project-category">[UGC]</p>
+                        <h2 class="project-title">Roblox UGC</h2>
+                        <p class="project-number">ROBLOX · 03 / 03</p>
+                    </header>
+                    <div class="project-body project-body-ugc">
+                        <div class="project-ugc-gallery">
+                            <figure class="project-ugc-figure">
+                                <div class="project-ugc-media">
+                                    <img src="../assets/3p-ugc.jpg" width="1760" height="1082"
+                                        alt="Roblox UGC 아이템 목록">
+                                </div>
+                                <figcaption class="project-ugc-platform">Roblox</figcaption>
+                            </figure>
+                        </div>
+                        <div class="project-ugc-copy">
+                            <p class="project-info-label">MY CONTRIBUTION</p>
+                            <ul class="project-ugc-points">
+                                <li>Roblox용 아바타 UGC 애셋 직접 제작·판매</li>
+                                <li>착용 부위·애니메이션 제작에 생성형 AI 기술 활용</li>
+                                <li>플랫폼 체험 연계 UGC 보상 구조 설계·지급 운영</li>
+                            </ul>
+                        </div>
+                    </div>
+                </section>
+
+                <section class="slide slide-skeleton" data-slide="zepeto-get-train-nightmare-lab" role="region"
+                    aria-roledescription="slide" aria-label="ZEPETO Get Train and Nightmare Lab">
+                    <header class="project-head">
+                        <p class="project-category">[ZEPETO]</p>
+                        <h2 class="project-title">Get Train · Nightmare Lab</h2>
+                        <p class="project-number" data-deck-key="roblox_appendix_one">보조 사례 · 01 / 02</p>
+                    </header>
+                    <div class="project-body project-body-cards" data-count="2">
+                        <article class="project-card">
+                            <figure class="project-card-media">
+                                <img src="../assets/4p-get-train.jpg" width="760" height="428"
+                                    alt="Get Train 월드 스크린샷">
+                            </figure>
+                            <div class="project-card-content">
+                                <div class="project-card-head">
+                                    <h3 class="project-card-title">Get Train</h3>
+                                </div>
+                                <div class="project-metrics" aria-label="Get Train 핵심 지표">
+                                    <p class="project-metric"><strong>2.5M</strong><span>Total visits</span></p>
+                                    <p class="project-metric"><strong>2025.02</strong><span>Released</span></p>
+                                </div>
+                                <div class="project-features">
+                                    <p class="project-info-label">MY CONTRIBUTION</p>
+                                    <ul class="project-feature-list">
+                                        <li>RNG 게임 플레이와 UGC 보상을 연결한 루프 기획·개발·운영</li>
+                                        <li>ZEPETO 미지원 기능을 보완하는 부가 서비스 기획·구현</li>
+                                        <li>JRE WALLET과 게임·보상 시스템 간 연동 기획·개발·운영</li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </article>
+                        <article class="project-card">
+                            <figure class="project-card-media">
+                                <img src="../assets/4p-nightmare-lab.png" width="1280" height="720"
+                                    alt="Nightmare Lab 월드 스크린샷">
+                            </figure>
+                            <div class="project-card-content">
+                                <div class="project-card-head">
+                                    <h3 class="project-card-title">Nightmare Lab</h3>
+                                </div>
+                                <div class="project-metrics" aria-label="Nightmare Lab 프로젝트 정보">
+                                    <p class="project-metric"><strong>WINNER</strong><span>ZEPETO Global World Jam Fall 2023</span></p>
+                                    <p class="project-metric"><strong>2024.02</strong><span>Released</span></p>
+                                </div>
+                                <div class="project-features">
+                                    <p class="project-info-label">MY CONTRIBUTION</p>
+                                    <ul class="project-feature-list">
+                                        <li>ZEPETO Global World Jam Fall 2023 출품작 기획·개발</li>
+                                        <li>SF 연구소 콘셉트와 탐색 중심 공간 구성</li>
+                                        <li>월드 게임플레이·상호작용 요소 구현</li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </article>
+                    </div>
+                </section>
+
+                <section class="slide slide-skeleton" data-slide="etc-platforms" role="region"
+                    aria-roledescription="slide" aria-label="UEFN, Meta Horizon Worlds, and ifland">
+                    <header class="project-head">
+                        <p class="project-category">[ETC]</p>
+                        <h2 class="project-title">UEFN · Meta Horizon Worlds · ifland</h2>
+                        <p class="project-number" data-deck-key="roblox_appendix_two">보조 사례 · 02 / 02</p>
+                    </header>
+                    <div class="project-body project-body-cards" data-count="3">
+                        <article class="project-card">
+                            <figure class="project-card-media">
+                                <img src="../assets/5p-water_colosseum.jpg" width="1600" height="900"
+                                    alt="UEFN Water Colosseum 스크린샷">
+                            </figure>
+                            <div class="project-card-content">
+                                <div class="project-card-head">
+                                    <h3 class="project-card-title">Water Colosseum</h3>
+                                    <p class="project-status">PROTOTYPE</p>
+                                </div>
+                                <div class="project-metrics project-metrics-single" aria-label="Water Colosseum 검증 범위">
+                                    <p class="project-metric"><strong>UEFN</strong><span>Toolchain</span></p>
+                                </div>
+                                <div class="project-features">
+                                    <p class="project-info-label">MY CONTRIBUTION</p>
+                                    <ul class="project-feature-list">
+                                        <li>Water Colosseum 프로토타입 기획·제작</li>
+                                        <li>UEFN 에디터·디바이스·Verse 워크플로 검증</li>
+                                        <li>크리에이터 툴의 제작 과정과 제약 분석</li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </article>
+                        <article class="project-card">
+                            <figure class="project-card-media">
+                                <img src="../assets/5p-slime-sanctum-main.jpg" width="1600" height="900"
+                                    alt="Meta Horizon Worlds Slime Sanctum 스크린샷">
+                            </figure>
+                            <div class="project-card-content">
+                                <div class="project-card-head">
+                                    <h3 class="project-card-title">Slime Sanctum</h3>
+                                    <p class="project-status">PROTOTYPE</p>
+                                </div>
+                                <div class="project-metrics project-metrics-single" aria-label="Slime Sanctum 검증 범위">
+                                    <p class="project-metric"><strong>Meta Horizon</strong><span>Toolchain</span></p>
+                                </div>
+                                <div class="project-features">
+                                    <p class="project-info-label">MY CONTRIBUTION</p>
+                                    <ul class="project-feature-list">
+                                        <li>Slime Sanctum 프로토타입 기획·제작</li>
+                                        <li>Meta Horizon 에디터·제작 도구 워크플로 검증</li>
+                                        <li>크리에이터 툴의 제작 과정과 제약 분석</li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </article>
+                        <article class="project-card">
+                            <figure class="project-card-media">
+                                <img src="../assets/5p-1m.jpg" width="873" height="487"
+                                    alt="ifland 1MILLION Land 스크린샷">
+                            </figure>
+                            <div class="project-card-content">
+                                <div class="project-card-head">
+                                    <h3 class="project-card-title">1MILLION Land</h3>
+                                </div>
+                                <div class="project-metrics project-metrics-single" aria-label="1MILLION Land 제작 범위">
+                                    <p class="project-metric"><strong>ifland</strong><span>Platform</span></p>
+                                </div>
+                                <div class="project-features">
+                                    <p class="project-info-label">MY CONTRIBUTION</p>
+                                    <ul class="project-feature-list">
+                                        <li>메타버스 콘텐츠·시스템 개발 총괄</li>
+                                        <li>1MILLION IP 기반 참여형 공간·이벤트 구현</li>
+                                        <li>개발팀 구성 및 프로젝트 개발·출시 관리</li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </article>
+                    </div>
+                </section>
+            </div>
+        </div>
+
+        <footer class="deck-bar deck-bar-bottom">
+            <button type="button" class="deck-nav" id="deckPrev">
+                <span aria-hidden="true">←</span><span data-deck-key="ui_prev">이전</span>
+            </button>
+            <div class="deck-center">
+                <div class="deck-dots" id="deckDots"></div>
+                <p class="deck-counter">
+                    <b id="deckCurrent">01</b><span id="deckSep" aria-hidden="true"> / </span><span
+                        id="deckTotal">06</span>
+                </p>
+            </div>
+            <button type="button" class="deck-nav deck-nav-primary" id="deckNext">
+                <span id="deckNextLabel">다음</span><span aria-hidden="true">→</span>
+            </button>
+        </footer>
+
+        <p class="deck-sr" aria-live="polite" id="deckAnnounce"></p>
+    </div>
+
+    <script src="../data.js"></script>
+    <script src="version.js"></script>
+    <script src="../../slides/shared/deck.js"></script>
+</body>
+
+</html>

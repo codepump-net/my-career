@@ -1,13 +1,9 @@
-/*
- * 포트폴리오 덱 — 문구 정본 (KO/EN)
- *
- * 슬라이드 순서와 구성은 versions/*.js 가 정한다. 이 파일에는 문구만 둔다.
- * 마크업에는 텍스트를 직접 쓰지 않고 data-deck-key 로 연결한다.
- * en 이 비면 ko 로 대체된다. 셸 UI 문구는 slides/shared/deck.js 가 갖고 있다.
- */
-
+/* 포트폴리오 덱에서 공통으로 쓰는 문서 제목과 접근성 라벨만 둔다. */
 window.DECK_I18N = {
     ko: {
+        roblox_profile: '로블록스 강사 평가용',
+        roblox_appendix_one: '보조 사례 · 01 / 02',
+        roblox_appendix_two: '보조 사례 · 02 / 02',
         ui_page_title: '포트폴리오 | Hyunseok Oh',
         ui_deck_label: '포트폴리오 슬라이드',
 
@@ -52,8 +48,10 @@ window.DECK_I18N = {
         appendix_ph_title: "제출 전 보완 목록",
         appendix_ph_copy: "학력·강의 증빙 / 논문 원문과 저자 기여 / 대표 프로젝트 이미지·영상과 역할 / 강의계획 및 연구계획.\n기존 이력의 사실만 반영했습니다. 방문 수 등 미검증 지표, 미확정 연구비, 학생 지도 실적은 추가하지 않았습니다.",
     },
-
     en: {
+        roblox_profile: 'Roblox Instructor Evaluation',
+        roblox_appendix_one: 'SUPPLEMENT · 01 / 02',
+        roblox_appendix_two: 'SUPPLEMENT · 02 / 02',
         ui_page_title: 'Portfolio | Hyunseok Oh',
         ui_deck_label: 'Portfolio slides',
 
@@ -98,4 +96,4 @@ window.DECK_I18N = {
         appendix_ph_title: "Before submission",
         appendix_ph_copy: "Degree and teaching records / publication and author contribution / project images, demos, and roles / teaching and research plans.\nOnly existing career records are represented. Unverified traffic metrics, prospective funding, and undocumented student supervision are excluded.",
     }
-};;
+};

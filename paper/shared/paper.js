@@ -201,6 +201,9 @@
         var current = makeSheet();
 
         items.forEach(function (block) {
+            if (block.hasAttribute('data-doc-page-break') && current.children.length) {
+                current = makeSheet();
+            }
             current.appendChild(block);
             if (usedHeight(current) <= PAGE_CONTENT_H) return;
 

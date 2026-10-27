@@ -1,0 +1,792 @@
+<!doctype html>
+<html lang="ko">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="robots" content="noindex, nofollow">
+    <meta name="theme-color" content="#0b1020">
+    <title>LLM Agent 워크플로 설계·검증 학습 가이드 | OVERDARE TPM</title>
+    <style>
+        :root {
+            color-scheme: dark;
+            --bg: #090d16;
+            --surface: #121925;
+            --surface-2: #182231;
+            --surface-3: #202d3f;
+            --text: #edf3fa;
+            --muted: #9babbe;
+            --faint: #6d7e92;
+            --line: #29384b;
+            --accent: #8b7cff;
+            --accent-2: #58d6b2;
+            --accent-soft: rgba(139, 124, 255, .13);
+            --green-soft: rgba(88, 214, 178, .12);
+            --yellow: #f2c45f;
+            --yellow-soft: rgba(242, 196, 95, .12);
+            --red: #ff7d88;
+            --red-soft: rgba(255, 125, 136, .11);
+            --blue: #6eb4ff;
+            --blue-soft: rgba(110, 180, 255, .11);
+            --radius: 16px;
+            --shadow: 0 20px 55px rgba(0, 0, 0, .24);
+        }
+
+        * { box-sizing: border-box; }
+        html { scroll-behavior: smooth; scroll-padding-top: 90px; }
+        body {
+            margin: 0;
+            background:
+                radial-gradient(circle at 10% -8%, rgba(139, 124, 255, .17), transparent 31rem),
+                radial-gradient(circle at 92% 5%, rgba(88, 214, 178, .09), transparent 28rem),
+                var(--bg);
+            color: var(--text);
+            font-family: Inter, Pretendard, "Noto Sans KR", system-ui, -apple-system, "Segoe UI", sans-serif;
+            font-size: 16px;
+            line-height: 1.68;
+            -webkit-font-smoothing: antialiased;
+        }
+        button, input, select { font: inherit; }
+        a { color: var(--blue); }
+        code { color: #c8c1ff; font-family: "Cascadia Code", Consolas, monospace; }
+        :focus-visible { outline: 2px solid var(--accent-2); outline-offset: 3px; }
+        .wrap { width: min(1160px, calc(100% - 40px)); margin: 0 auto; }
+
+        .topbar { position: sticky; top: 0; z-index: 30; border-bottom: 1px solid rgba(41, 56, 75, .82); background: rgba(9, 13, 22, .88); backdrop-filter: blur(16px); }
+        .topbar-inner { min-height: 58px; display: flex; align-items: center; justify-content: space-between; gap: 20px; }
+        .back { color: var(--muted); font-size: .82rem; font-weight: 750; text-decoration: none; }
+        .back:hover { color: var(--text); }
+        .topnav { display: flex; align-items: center; gap: 16px; }
+        .topnav a { color: var(--faint); font-size: .75rem; font-weight: 700; text-decoration: none; }
+        .topnav a:hover { color: var(--text); }
+
+        .hero { padding: 76px 0 50px; }
+        .eyebrow { margin: 0; color: var(--accent-2); font-size: .72rem; font-weight: 900; letter-spacing: .16em; }
+        h1 { max-width: 940px; margin: 13px 0 0; font-size: clamp(2.5rem, 6vw, 5.2rem); line-height: 1.01; letter-spacing: -.055em; }
+        .hero-lead { max-width: 780px; margin: 22px 0 0; color: var(--muted); font-size: 1.08rem; }
+        .hero-lead strong { color: var(--text); }
+        .hero-meta { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 24px; }
+        .meta-chip { padding: 7px 10px; border: 1px solid var(--line); border-radius: 999px; background: rgba(18, 25, 37, .75); color: var(--muted); font-size: .72rem; font-weight: 750; }
+        .meta-chip.primary { border-color: rgba(139, 124, 255, .4); background: var(--accent-soft); color: #c8c1ff; }
+        .dashboard { display: grid; grid-template-columns: repeat(4, 1fr); gap: 10px; margin-top: 32px; }
+        .metric { padding: 17px; border: 1px solid var(--line); border-radius: 13px; background: rgba(18, 25, 37, .86); box-shadow: var(--shadow); }
+        .metric strong { display: block; font-size: 1.55rem; line-height: 1; }
+        .metric span { display: block; margin-top: 7px; color: var(--muted); font-size: .77rem; }
+        .progress-track { height: 5px; margin-top: 11px; overflow: hidden; border-radius: 999px; background: var(--surface-3); }
+        .progress-fill { width: 0; height: 100%; border-radius: inherit; background: linear-gradient(90deg, var(--accent), var(--accent-2)); transition: width .2s ease; }
+
+        main { padding-bottom: 100px; }
+        .section { margin-top: 72px; }
+        .section:first-child { margin-top: 20px; }
+        .section-head { display: flex; align-items: end; justify-content: space-between; gap: 24px; margin-bottom: 20px; }
+        .section-kicker { margin: 0; color: var(--accent-2); font-size: .68rem; font-weight: 900; letter-spacing: .14em; }
+        h2 { margin: 5px 0 0; font-size: clamp(1.55rem, 3vw, 2.1rem); line-height: 1.2; letter-spacing: -.035em; }
+        .section-desc { max-width: 700px; margin: 8px 0 0; color: var(--muted); font-size: .9rem; }
+        .section-aside { max-width: 340px; color: var(--faint); font-size: .76rem; text-align: right; }
+
+        .callout { padding: 20px 22px; border: 1px solid rgba(242, 196, 95, .34); border-radius: 14px; background: var(--yellow-soft); color: #eed99d; }
+        .callout strong { color: #ffe7a7; }
+        .callout p { margin: 0; }
+        .callout p + p { margin-top: 8px; }
+        .requirements { display: grid; grid-template-columns: repeat(2, 1fr); gap: 12px; margin-top: 14px; }
+        .requirement-card { padding: 22px; border: 1px solid var(--line); border-radius: var(--radius); background: var(--surface); }
+        .requirement-card h3 { margin: 0; font-size: 1rem; }
+        .requirement-card > p { margin: 8px 0 0; color: var(--muted); font-size: .84rem; }
+        .requirement-list { margin: 15px 0 0; padding: 0; list-style: none; }
+        .requirement-list li { position: relative; padding: 10px 0 10px 20px; border-top: 1px solid var(--line); color: #cfdae6; font-size: .83rem; }
+        .requirement-list li::before { content: ""; position: absolute; top: 18px; left: 2px; width: 7px; height: 7px; border-radius: 50%; background: var(--accent-2); }
+        .requirement-card.preferred .requirement-list li::before { background: var(--accent); }
+        .requirement-label { display: inline-block; margin-bottom: 8px; padding: 4px 7px; border-radius: 999px; background: var(--green-soft); color: var(--accent-2); font-size: .64rem; font-weight: 900; letter-spacing: .08em; }
+        .requirement-card.preferred .requirement-label { background: var(--accent-soft); color: #c8c1ff; }
+        .interview-thesis { margin-top: 12px; padding: 18px 20px; border-left: 3px solid var(--accent); border-radius: 10px; background: var(--surface-2); color: #dce5ef; }
+        .interview-thesis strong { color: #c8c1ff; }
+
+        .concept-stack { display: grid; gap: 10px; }
+        .compare-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; }
+        .compare-card { padding: 19px; border: 1px solid var(--line); border-radius: 13px; background: var(--surface); }
+        .compare-card .compare-no { color: var(--accent-2); font: 800 .7rem/1.2 "Cascadia Code", Consolas, monospace; }
+        .compare-card h3 { margin: 7px 0 0; font-size: .98rem; }
+        .compare-card p { margin: 8px 0 0; color: var(--muted); font-size: .82rem; }
+        .compare-card strong { color: var(--text); }
+
+        .workflow { padding: 22px; border: 1px solid var(--line); border-radius: var(--radius); background: var(--surface); }
+        .workflow-row { display: grid; grid-template-columns: repeat(6, minmax(0, 1fr)); gap: 8px; }
+        .workflow-node { position: relative; min-height: 116px; padding: 13px; border: 1px solid var(--line); border-radius: 11px; background: var(--surface-2); }
+        .workflow-node:not(:last-child)::after { content: "→"; position: absolute; z-index: 2; top: 50%; right: -13px; width: 18px; color: var(--accent); text-align: center; transform: translateY(-50%); }
+        .workflow-node .node-no { color: var(--faint); font: 800 .65rem/1 "Cascadia Code", Consolas, monospace; }
+        .workflow-node strong { display: block; margin-top: 8px; font-size: .82rem; }
+        .workflow-node span { display: block; margin-top: 5px; color: var(--muted); font-size: .7rem; line-height: 1.45; }
+        .workflow-node.control { border-color: rgba(242, 196, 95, .35); background: var(--yellow-soft); }
+        .workflow-node.evidence { border-color: rgba(88, 214, 178, .32); background: var(--green-soft); }
+        .workflow-loop { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; margin-top: 8px; }
+        .loop-note { padding: 11px 13px; border-radius: 9px; background: var(--surface-2); color: var(--muted); font-size: .75rem; }
+        .loop-note strong { color: var(--text); }
+
+        .learning-route { display: grid; grid-template-columns: repeat(4, 1fr); gap: 10px; }
+        .route-step { padding: 18px; border: 1px solid var(--line); border-radius: 13px; background: var(--surface); }
+        .route-step .route-time { color: var(--accent-2); font: 800 .68rem/1.2 "Cascadia Code", Consolas, monospace; }
+        .route-step h3 { margin: 9px 0 0; font-size: .92rem; }
+        .route-step p { margin: 7px 0 0; color: var(--muted); font-size: .78rem; }
+        .route-step .route-done { margin-top: 12px; color: #d8e2ed; font-size: .74rem; }
+        .route-step .route-done strong { color: var(--accent-2); }
+
+        .claude-summary { padding: 20px 22px; border: 1px solid rgba(139, 124, 255, .34); border-radius: 14px; background: var(--accent-soft); color: #d6d1ff; }
+        .claude-summary strong { color: #eeeaff; }
+        .claude-layers { display: grid; grid-template-columns: repeat(6, 1fr); gap: 8px; margin-top: 12px; }
+        .claude-layer { padding: 14px; border: 1px solid var(--line); border-radius: 11px; background: var(--surface); }
+        .claude-layer span { color: var(--accent-2); font: 800 .62rem/1.2 "Cascadia Code", Consolas, monospace; }
+        .claude-layer strong { display: block; margin-top: 7px; font-size: .8rem; }
+        .claude-layer p { margin: 5px 0 0; color: var(--muted); font-size: .69rem; line-height: 1.45; }
+        .comparison-shell { margin-top: 12px; overflow-x: auto; border: 1px solid var(--line); border-radius: 13px; background: var(--surface); }
+        .comparison-table { width: 100%; min-width: 850px; border-collapse: collapse; }
+        .comparison-table th, .comparison-table td { padding: 12px 14px; border-bottom: 1px solid var(--line); text-align: left; vertical-align: top; }
+        .comparison-table tr:last-child td { border-bottom: 0; }
+        .comparison-table th { background: var(--surface-2); color: var(--faint); font-size: .65rem; letter-spacing: .08em; }
+        .comparison-table td { color: var(--muted); font-size: .75rem; }
+        .comparison-table td:first-child { color: var(--text); font-weight: 750; }
+        .comparison-table code { font-size: .71rem; }
+        .difference-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 9px; margin-top: 12px; }
+        .difference-card { padding: 16px; border: 1px solid rgba(242, 196, 95, .25); border-radius: 11px; background: var(--yellow-soft); }
+        .difference-card strong { display: block; color: #ffe4a0; font-size: .8rem; }
+        .difference-card p { margin: 6px 0 0; color: #d9c58f; font-size: .73rem; }
+
+        .term-controls-shell { position: sticky; top: 58px; z-index: 20; margin: 0 -8px 18px; padding: 10px 8px; border-top: 1px solid transparent; border-bottom: 1px solid var(--line); background: rgba(9, 13, 22, .9); backdrop-filter: blur(15px); }
+        .term-controls { display: grid; grid-template-columns: minmax(230px, 1.8fr) repeat(3, minmax(140px, .7fr)); gap: 8px; }
+        .control, .action { min-height: 42px; border: 1px solid var(--line); border-radius: 9px; background: var(--surface); color: var(--text); }
+        .control { width: 100%; padding: 0 11px; }
+        .control::placeholder { color: var(--faint); }
+        .term-actions { display: flex; flex-wrap: wrap; gap: 7px; margin-top: 8px; }
+        .action { padding: 0 12px; cursor: pointer; color: var(--muted); font-size: .76rem; font-weight: 750; }
+        .action:hover { border-color: var(--accent); color: var(--text); background: var(--accent-soft); }
+        .result-line { margin-left: auto; align-self: center; color: var(--faint); font-size: .74rem; }
+        .term-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 9px; }
+        .term-card { border: 1px solid var(--line); border-radius: 12px; background: var(--surface); overflow: clip; }
+        .term-card.is-done { border-color: rgba(88, 214, 178, .5); }
+        .term-card[hidden] { display: none; }
+        .term-card summary { display: grid; grid-template-columns: auto 1fr auto; align-items: center; gap: 10px; min-height: 72px; padding: 14px 15px; cursor: pointer; list-style: none; }
+        .term-card summary::-webkit-details-marker { display: none; }
+        .term-card summary:hover { background: rgba(255, 255, 255, .018); }
+        .term-no { color: var(--accent); font: 800 .66rem/1 "Cascadia Code", Consolas, monospace; }
+        .term-title { min-width: 0; }
+        .term-title strong { display: block; font-size: .9rem; line-height: 1.35; }
+        .term-title span { display: block; margin-top: 3px; color: var(--muted); font-size: .72rem; }
+        .term-badges { display: flex; gap: 4px; }
+        .badge { padding: 3px 6px; border-radius: 999px; font-size: .6rem; font-weight: 900; letter-spacing: .04em; white-space: nowrap; }
+        .badge.p0 { background: var(--accent-soft); color: #c8c1ff; }
+        .badge.p1 { background: var(--blue-soft); color: #9fcbff; }
+        .badge.done { display: none; background: var(--green-soft); color: var(--accent-2); }
+        .term-card.is-done .badge.done { display: inline-block; }
+        .term-body { padding: 0 15px 15px; border-top: 1px solid var(--line); }
+        .term-definition { margin: 14px 0 0; color: #d7e0ea; font-size: .83rem; }
+        .term-detail { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; margin-top: 12px; }
+        .term-detail div { padding: 10px 11px; border-radius: 9px; background: var(--surface-2); color: var(--muted); font-size: .74rem; }
+        .term-detail strong { display: block; margin-bottom: 4px; color: var(--faint); font-size: .63rem; letter-spacing: .08em; }
+        .term-question { margin-top: 8px; padding: 10px 11px; border-left: 2px solid var(--accent); border-radius: 8px; background: var(--accent-soft); color: #cfc9ff; font-size: .74rem; }
+        .mini { margin-top: 11px; padding: 6px 9px; border: 1px solid var(--line); border-radius: 7px; background: var(--surface-2); color: var(--muted); cursor: pointer; font-size: .69rem; font-weight: 750; }
+        .mini:hover, .mini.is-active { border-color: var(--accent-2); color: var(--accent-2); }
+        .empty { padding: 60px 20px; text-align: center; color: var(--muted); }
+
+        .case-shell { display: grid; grid-template-columns: minmax(0, 1.4fr) minmax(300px, .8fr); gap: 12px; }
+        .case-main, .case-side { padding: 22px; border: 1px solid var(--line); border-radius: var(--radius); background: var(--surface); }
+        .case-main h3, .case-side h3 { margin: 0; font-size: 1rem; }
+        .case-prompt { margin-top: 12px; padding: 14px 15px; border-radius: 10px; background: var(--accent-soft); color: #d7d2ff; font-size: .86rem; }
+        .case-flow { margin: 18px 0 0; padding: 0; list-style: none; counter-reset: case-step; }
+        .case-flow li { position: relative; margin-left: 16px; padding: 0 0 18px 30px; border-left: 1px solid var(--line); color: var(--muted); font-size: .8rem; counter-increment: case-step; }
+        .case-flow li:last-child { padding-bottom: 0; border-left-color: transparent; }
+        .case-flow li::before { content: counter(case-step); position: absolute; top: -1px; left: -13px; width: 25px; height: 25px; display: grid; place-items: center; border: 1px solid var(--accent); border-radius: 50%; background: var(--surface); color: #c8c1ff; font: 800 .64rem/1 "Cascadia Code", Consolas, monospace; }
+        .case-flow strong { display: block; color: var(--text); }
+        .case-side ul { margin: 13px 0 0; padding-left: 18px; color: var(--muted); font-size: .79rem; }
+        .case-side li + li { margin-top: 8px; }
+        .case-side section + section { margin-top: 22px; padding-top: 18px; border-top: 1px solid var(--line); }
+        .metric-list { display: grid; gap: 7px; margin-top: 12px; }
+        .metric-row { display: flex; align-items: baseline; justify-content: space-between; gap: 15px; padding: 9px 10px; border-radius: 8px; background: var(--surface-2); }
+        .metric-row span { color: var(--muted); font-size: .72rem; }
+        .metric-row strong { color: var(--accent-2); font-size: .73rem; text-align: right; }
+
+        .evidence-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 10px; }
+        .evidence-card { padding: 18px; border: 1px solid var(--line); border-radius: 13px; background: var(--surface); }
+        .evidence-card .artifact { color: var(--yellow); font: 800 .66rem/1.2 "Cascadia Code", Consolas, monospace; }
+        .evidence-card h3 { margin: 8px 0 0; font-size: .9rem; }
+        .evidence-card p { margin: 7px 0 0; color: var(--muted); font-size: .76rem; }
+        .answer-frame { display: grid; grid-template-columns: repeat(5, 1fr); gap: 8px; margin-top: 12px; }
+        .answer-step { position: relative; padding: 13px; border: 1px solid var(--line); border-radius: 10px; background: var(--surface-2); }
+        .answer-step:not(:last-child)::after { content: "→"; position: absolute; z-index: 1; top: 50%; right: -13px; width: 18px; color: var(--accent-2); text-align: center; transform: translateY(-50%); }
+        .answer-step strong { display: block; color: var(--text); font-size: .77rem; }
+        .answer-step span { display: block; margin-top: 4px; color: var(--muted); font-size: .68rem; line-height: 1.45; }
+        .red-flags { display: grid; grid-template-columns: repeat(3, 1fr); gap: 9px; margin-top: 12px; }
+        .red-flag { padding: 14px; border: 1px solid rgba(255, 125, 136, .25); border-radius: 10px; background: var(--red-soft); color: #e7a8ae; font-size: .76rem; }
+        .red-flag strong { display: block; margin-bottom: 4px; color: #ff9aa3; }
+
+        .sources { display: grid; grid-template-columns: repeat(2, 1fr); gap: 8px; }
+        .source-group + .source-group { margin-top: 20px; }
+        .source-group h3 { margin: 0 0 10px; color: var(--muted); font-size: .78rem; letter-spacing: .04em; }
+        .source-link { display: block; padding: 13px 14px; border: 1px solid var(--line); border-radius: 9px; background: var(--surface); color: var(--muted); font-size: .75rem; text-decoration: none; }
+        .source-link:hover { border-color: var(--accent); color: var(--text); }
+        .source-link strong { display: block; color: var(--text); font-size: .79rem; }
+        .source-note { margin-top: 10px; color: var(--faint); font-size: .72rem; }
+
+        footer { padding: 30px 0 45px; border-top: 1px solid var(--line); color: var(--faint); font-size: .75rem; }
+        footer p { margin: 0; }
+
+        @media (max-width: 900px) {
+            .workflow-row { grid-template-columns: repeat(3, 1fr); }
+            .workflow-node:nth-child(3)::after { display: none; }
+            .claude-layers { grid-template-columns: repeat(3, 1fr); }
+            .learning-route, .evidence-grid { grid-template-columns: repeat(2, 1fr); }
+            .term-controls { grid-template-columns: 1fr 1fr; }
+            .term-controls .search { grid-column: 1 / -1; }
+            .answer-frame { grid-template-columns: repeat(3, 1fr); }
+            .answer-step:nth-child(3)::after { display: none; }
+        }
+        @media (max-width: 680px) {
+            .wrap { width: min(100% - 24px, 1160px); }
+            .topnav { display: none; }
+            .hero { padding-top: 48px; }
+            .dashboard, .requirements, .compare-grid, .term-grid, .case-shell, .sources, .red-flags { grid-template-columns: 1fr; }
+            .section { margin-top: 54px; }
+            .section-head { align-items: start; flex-direction: column; gap: 5px; }
+            .section-aside { text-align: left; }
+            .workflow-row, .workflow-loop, .claude-layers, .difference-grid, .learning-route, .evidence-grid, .answer-frame { grid-template-columns: 1fr; }
+            .workflow-node:not(:last-child)::after, .answer-step:not(:last-child)::after { content: "↓"; top: auto; right: 50%; bottom: -17px; transform: translateX(50%); }
+            .workflow-node:nth-child(3)::after, .answer-step:nth-child(3)::after { display: block; }
+            .term-controls-shell { position: static; margin-inline: 0; padding-inline: 0; }
+            .term-controls { grid-template-columns: 1fr; }
+            .term-controls .search { grid-column: auto; }
+            .result-line { width: 100%; margin-left: 0; }
+            .term-detail { grid-template-columns: 1fr; }
+            .term-card summary { grid-template-columns: auto 1fr; }
+            .term-badges { grid-column: 2; }
+        }
+        @media (prefers-reduced-motion: reduce) { * { scroll-behavior: auto !important; transition: none !important; } }
+        @media print {
+            :root { color-scheme: light; --bg: #fff; --surface: #fff; --surface-2: #f6f7f8; --surface-3: #eee; --text: #111; --muted: #444; --faint: #666; --line: #d6d8dc; }
+            body { background: #fff; color: #111; font-size: 10pt; }
+            .topbar, .dashboard, .term-controls-shell, .mini, footer { display: none !important; }
+            .wrap { width: 100%; }
+            .hero { padding: 18px 0; }
+            .section { margin-top: 26px; break-before: page; }
+            .section:first-child { break-before: auto; }
+            .term-card { break-inside: avoid; }
+            .term-card > .term-body { display: block !important; }
+            .term-definition { color: #222; }
+        }
+    </style>
+</head>
+<body>
+    <nav class="topbar" aria-label="페이지 이동">
+        <div class="wrap topbar-inner">
+            <a class="back" href="../">← OVERDARE TPM 면접 가이드</a>
+            <div class="topnav">
+                <a href="#requirements">요구 해석</a>
+                <a href="#mental-model">개념 지도</a>
+                <a href="#claude-model">Claude 대응</a>
+                <a href="#glossary">용어 사전</a>
+                <a href="#practice">설계 실습</a>
+                <a href="#evidence">면접 준비</a>
+            </div>
+        </div>
+    </nav>
+
+    <header class="hero">
+        <div class="wrap">
+            <p class="eyebrow">OVERDARE TPM · TECHNICAL FIT STUDY</p>
+            <h1>LLM Agent<br>Workflow Design &amp; Evaluation</h1>
+            <p class="hero-lead">Agent를 “프롬프트를 잘 쓰는 기술”로 설명하지 않기 위한 전용 학습 페이지입니다. <strong>목표·상태·도구·권한·검증이 연결된 실행 시스템</strong>으로 이해하고, OVERDARE의 크리에이터 제작 환경에 적용해 설명하는 것이 목표입니다.</p>
+            <div class="hero-meta">
+                <span class="meta-chip primary">공고 요구사항 기반</span>
+                <span class="meta-chip">41개 핵심 용어</span>
+                <span class="meta-chip">공통 원리 + Claude 구현</span>
+                <span class="meta-chip">OpenAI · Anthropic 공식 문서 확인</span>
+            </div>
+            <div class="dashboard" aria-label="학습 현황">
+                <div class="metric"><strong>41</strong><span>핵심 용어</span></div>
+                <div class="metric"><strong>4</strong><span>학습 단계</span></div>
+                <div class="metric"><strong id="doneCount">0</strong><span>학습 완료</span><div class="progress-track"><div class="progress-fill" id="progressFill"></div></div></div>
+                <div class="metric"><strong id="visibleCount">41</strong><span>현재 표시</span></div>
+            </div>
+        </div>
+    </header>
+
+    <main class="wrap">
+        <section class="section" id="requirements">
+            <header class="section-head">
+                <div>
+                    <p class="section-kicker">01 · JOB REQUIREMENT</p>
+                    <h2>공고에서 무엇을 검증하는가</h2>
+                    <p class="section-desc">LLM Agent 자체는 우대요건입니다. 그러나 이를 제품으로 설명하려면 공고의 필수요건인 시스템 구조화·툴/API 설계·문서화·UX 분석을 먼저 충족해야 합니다.</p>
+                </div>
+                <p class="section-aside">“Agent를 써 봤다”가 아니라 “왜 이 구조를 선택했고 어떻게 안전성과 효과를 검증했는가”가 실무 면접의 질문입니다.</p>
+            </header>
+
+            <div class="callout">
+                <p><strong>정확한 해석:</strong> 공고에는 LLM 경험을 필수라고 쓰지 않았습니다. 필수 역량은 제작 환경을 제품으로 정의하는 능력이고, LLM Agent 경험은 그 역량을 증폭하는 직접 우대 신호입니다.</p>
+            </div>
+
+            <div class="requirements">
+                <article class="requirement-card">
+                    <span class="requirement-label">필수 기반 · MUST</span>
+                    <h3>Agent보다 먼저 증명할 역량</h3>
+                    <p>AI가 없어도 성립해야 하는 TPM의 제품·기술 기본기입니다.</p>
+                    <ul class="requirement-list">
+                        <li>복잡한 시스템을 단순화해 설명하고 구조화</li>
+                        <li>게임 시스템·툴·API를 논리적으로 정의하고 문서화</li>
+                        <li>아이디어를 PRD·기능 명세·플로우 차트로 구체화</li>
+                        <li>툴 사용자 관점에서 UX 흐름과 개선점을 도출</li>
+                        <li>AI와 사람이 함께 만드는 방식을 제작 환경의 문제로 탐구</li>
+                    </ul>
+                </article>
+                <article class="requirement-card preferred">
+                    <span class="requirement-label">직접 우대 · PLUS</span>
+                    <h3>LLM Agent 관련 명시 항목</h3>
+                    <p>실제 프로젝트 적용과 결과를 확인하는 우대요건입니다.</p>
+                    <ul class="requirement-list">
+                        <li>LLM 기반 AI Agent 적용 — Agent·Skills·Tool Orchestration</li>
+                        <li>Agent 프레임워크 사용 — LangChain·Claude Code·OpenCode 등</li>
+                        <li>AI 콘텐츠 생성·자동화·개발 생산성 개선 프로젝트</li>
+                        <li>프레임워크 이름보다 적용 범위·실패·검증·사람의 책임을 증명</li>
+                    </ul>
+                </article>
+            </div>
+            <div class="interview-thesis"><strong>면접 핵심 명제:</strong> “Agent가 코드를 생성했습니다”에서 끝내지 않고, 입력을 계획으로 바꾸고 적절한 도구를 선택하며 결과를 검증하고 위험한 변경은 사람에게 승인을 요청하는 전체 루프를 설계했다고 설명해야 합니다.</div>
+        </section>
+
+        <section class="section" id="mental-model">
+            <header class="section-head">
+                <div>
+                    <p class="section-kicker">02 · MENTAL MODEL</p>
+                    <h2>LLM, Agent, Workflow를 구분한다</h2>
+                    <p class="section-desc">세 용어를 구분하지 못하면 Agent 경험이 단순 프롬프트 사용으로 축소됩니다. 먼저 실행 주체와 제어권이 어디에 있는지 나눕니다.</p>
+                </div>
+            </header>
+
+            <div class="concept-stack">
+                <div class="compare-grid">
+                    <article class="compare-card">
+                        <span class="compare-no">01 · MODEL</span>
+                        <h3>LLM 호출</h3>
+                        <p>입력 컨텍스트를 받아 다음 출력 토큰을 생성합니다. <strong>한 번의 생성만으로 외부 상태가 바뀌지는 않습니다.</strong></p>
+                    </article>
+                    <article class="compare-card">
+                        <span class="compare-no">02 · AGENT</span>
+                        <h3>Agent 실행 루프</h3>
+                        <p>모델이 목표와 현재 상태를 보고 다음 행동 또는 도구를 선택하고, 결과를 관찰해 종료 조건까지 반복합니다.</p>
+                    </article>
+                    <article class="compare-card">
+                        <span class="compare-no">03 · WORKFLOW</span>
+                        <h3>Agentic Workflow</h3>
+                        <p>Agent 루프와 결정적 코드, 도구, 승인, 재시도, 관측·평가를 묶은 <strong>제품 수준의 전체 실행 시스템</strong>입니다.</p>
+                    </article>
+                </div>
+
+                <div class="workflow" aria-label="Agent 워크플로 개념도">
+                    <div class="workflow-row">
+                        <div class="workflow-node"><span class="node-no">01</span><strong>Goal · Context</strong><span>사용자 목표, 제약, 프로젝트 상태를 읽습니다.</span></div>
+                        <div class="workflow-node control"><span class="node-no">02</span><strong>Input Guardrail</strong><span>범위·권한·위험한 입력을 먼저 검사합니다.</span></div>
+                        <div class="workflow-node"><span class="node-no">03</span><strong>Plan · Route</strong><span>작업을 나누고 다음 도구 또는 전문 역할을 고릅니다.</span></div>
+                        <div class="workflow-node"><span class="node-no">04</span><strong>Tool · Skill</strong><span>계약된 입력으로 외부 기능을 실행하고 결과를 돌려받습니다.</span></div>
+                        <div class="workflow-node control"><span class="node-no">05</span><strong>Validate · Approve</strong><span>자동 검사 후 부작용이 있으면 사람의 승인을 받습니다.</span></div>
+                        <div class="workflow-node evidence"><span class="node-no">06</span><strong>Trace · Evaluate</strong><span>결과와 전체 경로를 기록하고 기준에 따라 평가합니다.</span></div>
+                    </div>
+                    <div class="workflow-loop">
+                        <div class="loop-note"><strong>반복 루프:</strong> 도구 결과가 부족하면 03으로 돌아가되 최대 턴·시간·비용·재시도 한도를 둡니다.</div>
+                        <div class="loop-note"><strong>종료 루프:</strong> 수용 기준 통과, 사용자 승인, 명시적 실패 또는 예산 소진 중 하나로 끝납니다.</div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section class="section" id="claude-model">
+            <header class="section-head">
+                <div>
+                    <p class="section-kicker">03 · CLAUDE CODE MAPPING</p>
+                    <h2>공통 원리를 Claude Code 구현과 연결한다</h2>
+                    <p class="section-desc">Claude Code는 Agent 루프를 새로 설계하는 프레임워크라기보다, 파일·검색·실행 도구를 가진 코딩 Agent에 컨텍스트·절차·격리·자동화·권한 계층을 붙이는 실행 환경입니다.</p>
+                </div>
+                <p class="section-aside">공고가 Claude Code 사용 경험을 따로 적은 이유는 “채팅 사용”보다 이 확장 계층을 실제 프로젝트에 적용했는지 보기 위해서라고 해석할 수 있습니다.</p>
+            </header>
+
+            <div class="claude-summary"><strong>공통점:</strong> OpenAI와 Anthropic 문서 모두 Agent를 모델 단독이 아니라 지침, Tool, 컨텍스트·상태, 위임, 안전 통제, 평가가 결합된 워크플로로 설명합니다. 차이는 원리보다 제품에서 그 책임을 노출하는 이름과 실행 표면에 있습니다.</div>
+
+            <div class="claude-layers" aria-label="Claude Code 확장 계층">
+                <article class="claude-layer"><span>ALWAYS ON</span><strong>CLAUDE.md · Rules</strong><p>프로젝트 규칙과 아키텍처를 매 세션 컨텍스트에 제공합니다.</p></article>
+                <article class="claude-layer"><span>ON DEMAND</span><strong>Skills</strong><p>필요할 때만 로드되는 재사용 지식·절차·완료 기준입니다.</p></article>
+                <article class="claude-layer"><span>CAPABILITY</span><strong>Built-in Tools · MCP</strong><p>파일·명령 실행과 외부 서비스·데이터 연결을 제공합니다.</p></article>
+                <article class="claude-layer"><span>ISOLATION</span><strong>Subagents</strong><p>별도 컨텍스트·지침·도구로 작업하고 요약을 반환합니다.</p></article>
+                <article class="claude-layer"><span>ENFORCEMENT</span><strong>Hooks</strong><p>수명주기 이벤트에서 검사·포맷·차단을 자동 실행합니다.</p></article>
+                <article class="claude-layer"><span>BOUNDARY</span><strong>Permissions · Sandbox</strong><p>도구 접근 정책과 OS 수준 파일·네트워크 경계를 강제합니다.</p></article>
+            </div>
+
+            <div class="comparison-shell">
+                <table class="comparison-table">
+                    <thead><tr><th>공통 설계 개념</th><th>Claude Code 구현</th><th>같은 원리</th><th>Claude에서 강조할 차이</th></tr></thead>
+                    <tbody>
+                        <tr><td>Instructions · Context</td><td><code>CLAUDE.md</code> · <code>.claude/rules/</code> · Auto memory</td><td>현재 판단에 프로젝트 규칙과 지식을 공급</td><td>모두 컨텍스트이며 강제 설정이 아닙니다. 위반을 반드시 막으려면 Hook·권한이 필요합니다.</td></tr>
+                        <tr><td>Reusable Procedure</td><td><code>.claude/skills/&lt;name&gt;/SKILL.md</code></td><td>양쪽 모두 SKILL.md 기반의 모듈형 지식·절차 자산으로 반복 작업을 분리</td><td>Claude Code는 on-demand 본문 로딩, 직접·자동 호출 제어, Subagent 실행 같은 확장을 제공합니다.</td></tr>
+                        <tr><td>Tool · Integration</td><td>Built-in Tools · MCP</td><td>Agent가 외부 상태를 읽거나 변경하는 capability</td><td>MCP는 외부 서비스 연결이고 Skill은 기존 Tool을 어떻게 쓸지 알려주는 절차입니다.</td></tr>
+                        <tr><td>Specialist Agent</td><td>Subagent</td><td>전문 지침·도구·권한을 분리해 복잡성과 컨텍스트를 격리</td><td>일반적으로 메인 대화에 요약을 돌려주므로 사용자 대화를 넘기는 Handoff보다 Manager/Agent-as-Tool에 가깝습니다.</td></tr>
+                        <tr><td>Guardrail · Automation</td><td>PreToolUse · PostToolUse · Stop Hooks</td><td>입력·도구·결과 경계에서 검사하고 계속·수정·차단</td><td>Command Hook은 이벤트 발생이 결정적입니다. 판단이 필요할 때만 prompt·agent Hook을 씁니다.</td></tr>
+                        <tr><td>Least Privilege · HITL</td><td>Allow · Ask · Deny · Permission mode · Sandbox</td><td>부작용과 위험도에 따라 도구 권한·승인을 제한</td><td>권한은 Tool 정책, Sandbox는 Bash와 자식 프로세스의 OS 수준 파일·네트워크 경계로 상호 보완합니다.</td></tr>
+                        <tr><td>Packaging · Distribution</td><td>Plugin</td><td>팀이 검증한 Agent 구성 자산을 버전형으로 공유</td><td>Skill·Subagent·Hook·MCP를 묶는 배포 계층이며 Agent나 Workflow 자체는 아닙니다.</td></tr>
+                        <tr><td>Evaluation</td><td>테스트·Hook 결과·실행 기록 + Claude Platform eval</td><td>대표 사례와 명시적 기준으로 변경 전후 품질을 반복 측정</td><td>OpenAI는 trace grading으로 실행 경로를, Anthropic은 구체적·측정 가능한 성공 기준과 task-specific eval을 강조합니다.</td></tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <div class="difference-grid">
+                <article class="difference-card"><strong>CLAUDE.md ≠ Enforcement</strong><p>지침은 모델이 따르는 컨텍스트입니다. 반드시 지켜야 하는 규칙은 PreToolUse Hook, Deny 규칙, Sandbox로 강제합니다.</p></article>
+                <article class="difference-card"><strong>Skill ≠ Hook · MCP</strong><p>Skill은 추론이 필요한 지식·절차, Hook은 이벤트 기반 자동 실행, MCP는 새로운 외부 capability 연결입니다.</p></article>
+                <article class="difference-card"><strong>Subagent ≠ Handoff</strong><p>Claude Code Subagent는 격리된 작업 결과를 메인 세션에 반환합니다. 최종 사용자 응답 소유권은 대체로 메인 Agent에 남습니다.</p></article>
+            </div>
+        </section>
+
+        <section class="section" id="route">
+            <header class="section-head">
+                <div>
+                    <p class="section-kicker">04 · STUDY ROUTE</p>
+                    <h2>네 단계로 학습한다</h2>
+                    <p class="section-desc">용어 암기보다 각 단계의 산출물을 직접 만드는 방식으로 준비합니다.</p>
+                </div>
+            </header>
+            <div class="learning-route">
+                <article class="route-step"><span class="route-time">STEP 1 · 90 MIN</span><h3>기본 단위 구분</h3><p>LLM·Agent·Tool·Skill·MCP·Workflow와 Claude 확장 계층의 책임을 자신의 말로 설명합니다.</p><p class="route-done"><strong>완료:</strong> P0 용어를 각 30초에 설명</p></article>
+                <article class="route-step"><span class="route-time">STEP 2 · 120 MIN</span><h3>실행 루프 설계</h3><p>목표에서 도구 호출, 검증, 승인, 종료까지 한 장의 흐름도로 연결합니다.</p><p class="route-done"><strong>완료:</strong> 5분 화이트보드 무자료 설명</p></article>
+                <article class="route-step"><span class="route-time">STEP 3 · 120 MIN</span><h3>실패와 검증 설계</h3><p>권한 오류·잘못된 도구·환각·부분 실패·비용 초과의 탐지와 복구를 정의합니다.</p><p class="route-done"><strong>완료:</strong> trace 1건과 eval 표 1건</p></article>
+                <article class="route-step"><span class="route-time">STEP 4 · 90 MIN</span><h3>실제 경험에 연결</h3><p>Claude Code 적용 사례를 구조·사람의 판단·실패·수치로 다시 작성하고 소리 내어 답합니다.</p><p class="route-done"><strong>완료:</strong> 90초 답변 + 후속 질문 3개</p></article>
+            </div>
+        </section>
+
+        <section class="section" id="glossary">
+            <header class="section-head">
+                <div>
+                    <p class="section-kicker">05 · CORE GLOSSARY</p>
+                    <h2>핵심 용어 41</h2>
+                    <p class="section-desc">정의, 혼동하기 쉬운 경계, OVERDARE형 예시, 예상 질문을 함께 학습합니다. P0부터 완료하세요.</p>
+                </div>
+                <p class="section-aside">Skills·MCP 같은 구현 형식은 제품마다 다를 수 있습니다. 면접에서는 특정 제품 문법과 일반 설계 개념을 구분해 말합니다.</p>
+            </header>
+
+            <div class="term-controls-shell">
+                <div class="term-controls">
+                    <input class="control search" id="termSearch" type="search" placeholder="용어·정의 검색 (예: guardrail, 상태, 평가)" aria-label="용어 검색">
+                    <select class="control" id="categoryFilter" aria-label="분류 필터">
+                        <option value="all">모든 분류</option>
+                        <option value="foundation">기초</option>
+                        <option value="agent">Agent</option>
+                        <option value="tool">Tool·Context</option>
+                        <option value="workflow">Orchestration</option>
+                        <option value="safety">Safety</option>
+                        <option value="evaluation">Evaluation</option>
+                        <option value="product">Product</option>
+                        <option value="claude">Claude Code</option>
+                    </select>
+                    <select class="control" id="priorityFilter" aria-label="우선순위 필터"><option value="all">모든 우선순위</option><option value="P0">P0 · 반드시</option><option value="P1">P1 · 확장</option></select>
+                    <select class="control" id="studyFilter" aria-label="학습 상태 필터"><option value="all">모든 학습 상태</option><option value="todo">미완료</option><option value="done">완료</option></select>
+                </div>
+                <div class="term-actions">
+                    <button class="action" id="randomTerm" type="button">랜덤 용어</button>
+                    <button class="action" id="expandTerms" type="button">표시 용어 펼치기</button>
+                    <button class="action" id="collapseTerms" type="button">모두 접기</button>
+                    <span class="result-line" id="resultLine" aria-live="polite">41개 표시 중</span>
+                </div>
+            </div>
+            <div class="term-grid" id="termRoot"></div>
+            <div class="empty" id="emptyState" hidden>조건에 맞는 용어가 없습니다.</div>
+        </section>
+
+        <section class="section" id="practice">
+            <header class="section-head">
+                <div>
+                    <p class="section-kicker">06 · DESIGN PRACTICE</p>
+                    <h2>OVERDARE형 Agent를 설계해 본다</h2>
+                    <p class="section-desc">면접 현장 과제로 나올 수 있는 “AI로 Obby 게임을 만들어 줘” 요청을 제품 수준의 워크플로로 바꾸는 연습입니다.</p>
+                </div>
+            </header>
+            <div class="case-shell">
+                <article class="case-main">
+                    <h3>실습 · Obby 제작 Agent</h3>
+                    <div class="case-prompt">사용자 요청: “친구 8명이 모바일에서 10분 동안 즐길 수 있는 물 테마 Obby를 만들어 줘.”</div>
+                    <ol class="case-flow">
+                        <li><strong>요구 최소 확인</strong>대상 숙련도·플레이 시간·협동/경쟁·아트 방향만 묻고, 나머지는 가정으로 명시합니다.</li>
+                        <li><strong>계획과 변경 범위 제시</strong>코어 루프, 체크포인트 수, 생성할 객체·스크립트·에셋, 비목표를 사용자에게 보여줍니다.</li>
+                        <li><strong>검증된 템플릿에서 생성</strong>프로젝트 스키마·API 문서·에셋 카탈로그를 조회하고 작은 플레이 가능한 세로 조각부터 만듭니다.</li>
+                        <li><strong>자동 검증</strong>API 유효성, 서버/클라이언트 권한, 도달 가능성, 8인 동시성, 모바일 성능, 에셋 권리를 검사합니다.</li>
+                        <li><strong>Diff와 사람 승인</strong>코드뿐 아니라 객체·설정·에셋 변경을 미리 보여주고 적용할 항목을 선택하게 합니다.</li>
+                        <li><strong>샌드박스 플레이 테스트</strong>봇과 실제 세션에서 이탈·재접속·중복 보상·타임아웃을 시험하고 실패하면 체크포인트로 되돌립니다.</li>
+                        <li><strong>배포 전 별도 승인</strong>외부 공개·결제·데이터 변경은 다시 승인받고, 버전·생성 이력·롤백 지점을 남깁니다.</li>
+                    </ol>
+                </article>
+                <aside class="case-side">
+                    <section>
+                        <h3>필요한 Tool 계약</h3>
+                        <ul>
+                            <li><code>inspect_project</code> — 현재 객체·스크립트·의존성 읽기</li>
+                            <li><code>search_api_docs</code> — 허용 API와 예제 조회</li>
+                            <li><code>generate_patch</code> — 격리된 변경안 생성</li>
+                            <li><code>validate_project</code> — 정적·성능·권한 검사</li>
+                            <li><code>run_playtest</code> — 멀티플레이 시나리오 실행</li>
+                            <li><code>apply_or_rollback</code> — 승인된 변경 적용·복구</li>
+                        </ul>
+                    </section>
+                    <section>
+                        <h3>평가 지표</h3>
+                        <div class="metric-list">
+                            <div class="metric-row"><span>첫 가치</span><strong>첫 플레이 가능 결과 시간</strong></div>
+                            <div class="metric-row"><span>작업 성공</span><strong>수용 기준 통과율</strong></div>
+                            <div class="metric-row"><span>도구 판단</span><strong>Tool 선택 정확도</strong></div>
+                            <div class="metric-row"><span>사람 비용</span><strong>수동 수정·승인 시간</strong></div>
+                            <div class="metric-row"><span>안전</span><strong>위험 변경 차단·복구율</strong></div>
+                            <div class="metric-row"><span>효율</span><strong>턴·지연·토큰·비용</strong></div>
+                        </div>
+                    </section>
+                </aside>
+            </div>
+        </section>
+
+        <section class="section" id="evidence">
+            <header class="section-head">
+                <div>
+                    <p class="section-kicker">07 · INTERVIEW READY</p>
+                    <h2>네 개의 실물이 있어야 준비 완료다</h2>
+                    <p class="section-desc">용어를 아는 것과 적용 경험을 증명하는 것은 다릅니다. 아래 네 산출물이 실제 프로젝트 근거와 맞아야 합니다.</p>
+                </div>
+            </header>
+            <div class="evidence-grid">
+                <article class="evidence-card"><span class="artifact">ARTIFACT 01</span><h3>워크플로 구조도</h3><p>입력·컨텍스트·역할·도구·검증·사람 승인·종료 조건을 한 장에 표시합니다.</p></article>
+                <article class="evidence-card"><span class="artifact">ARTIFACT 02</span><h3>Context·Skill·Tool 계약표</h3><p>CLAUDE.md·Skill·Tool·Hook의 책임과 입력·출력, 부작용, 권한, 오류, 성공 기준을 실제 예로 작성합니다.</p></article>
+                <article class="evidence-card"><span class="artifact">ARTIFACT 03</span><h3>Trace와 실패 회고</h3><p>실행 로그·diff 한 건과 실패 원인, 추가한 규칙·검사, 재발 여부를 연결합니다.</p></article>
+                <article class="evidence-card"><span class="artifact">ARTIFACT 04</span><h3>생산성 비교표</h3><p>도입 전후 리드타임·재작업·결함·사람 개입 시간과 제품 결과를 함께 비교합니다.</p></article>
+            </div>
+
+            <div class="answer-frame" aria-label="면접 답변 구조">
+                <div class="answer-step"><strong>1 · 문제</strong><span>누가 어디서 막혔는가</span></div>
+                <div class="answer-step"><strong>2 · 구조</strong><span>왜 Agent가 필요한가</span></div>
+                <div class="answer-step"><strong>3 · 경계</strong><span>AI·도구·사람의 책임</span></div>
+                <div class="answer-step"><strong>4 · 검증</strong><span>실패·안전·평가 방법</span></div>
+                <div class="answer-step"><strong>5 · 결과</strong><span>속도·품질·제품 지표</span></div>
+            </div>
+
+            <div class="red-flags">
+                <div class="red-flag"><strong>“AI가 전부 만들었습니다”</strong>사람의 제품 판단과 품질 책임이 사라집니다.</div>
+                <div class="red-flag"><strong>“Agent를 여러 개 두었습니다”</strong>분리 이유·소유권·비용이 없으면 복잡성만 늘린 설계입니다.</div>
+                <div class="red-flag"><strong>“생산성이 크게 올랐습니다”</strong>기준선과 품질·재작업 지표가 없으면 검증되지 않은 주장입니다.</div>
+            </div>
+        </section>
+
+        <section class="section" id="sources">
+            <header class="section-head">
+                <div>
+                    <p class="section-kicker">08 · PRIMARY SOURCES</p>
+                    <h2>개념 확인 자료</h2>
+                    <p class="section-desc">공통 개념은 OpenAI의 Agent 설계 문서와 Anthropic의 Claude Code·평가 문서를 함께 대조했습니다. 특정 제품 문법과 프레임워크 독립 원리를 구분해 학습하세요.</p>
+                </div>
+            </header>
+            <div class="source-group">
+                <h3>OpenAI · 공통 Agent 설계</h3>
+                <div class="sources">
+                    <a class="source-link" href="https://developers.openai.com/api/docs/guides/agents/define-agents" target="_blank" rel="noreferrer"><strong>Agent definitions</strong>모델·지침·도구·가드레일·handoff·structured output의 책임</a>
+                    <a class="source-link" href="https://developers.openai.com/api/docs/guides/agents/orchestration" target="_blank" rel="noreferrer"><strong>Orchestration and handoffs</strong>handoff와 manager/agents-as-tools 패턴의 차이</a>
+                    <a class="source-link" href="https://developers.openai.com/api/docs/guides/agents/guardrails-approvals" target="_blank" rel="noreferrer"><strong>Guardrails and human review</strong>입력·출력·도구 검증과 사람 승인 경계</a>
+                    <a class="source-link" href="https://developers.openai.com/api/docs/guides/agent-evals" target="_blank" rel="noreferrer"><strong>Evaluate agent workflows</strong>trace·grader·dataset·eval run을 이용한 반복 검증</a>
+                    <a class="source-link" href="https://developers.openai.com/api/docs/guides/tools-skills" target="_blank" rel="noreferrer"><strong>Skills</strong>재사용 가능한 버전형 지침·파일 번들 개념</a>
+                    <a class="source-link" href="https://developers.openai.com/api/docs/guides/agents/quickstart" target="_blank" rel="noreferrer"><strong>Agents SDK quickstart</strong>단일 Agent에서 Tool·전문 역할로 확장하는 기본 흐름</a>
+                </div>
+            </div>
+            <div class="source-group">
+                <h3>Anthropic · Claude Code 구현과 평가</h3>
+                <div class="sources">
+                    <a class="source-link" href="https://code.claude.com/docs/en/features-overview" target="_blank" rel="noreferrer"><strong>Extend Claude Code</strong>CLAUDE.md·Skills·Subagents·Hooks·MCP·Plugins 선택 기준</a>
+                    <a class="source-link" href="https://code.claude.com/docs/en/memory" target="_blank" rel="noreferrer"><strong>How Claude remembers your project</strong>CLAUDE.md·Rules·Auto memory의 범위와 한계</a>
+                    <a class="source-link" href="https://code.claude.com/docs/en/slash-commands" target="_blank" rel="noreferrer"><strong>Extend Claude with skills</strong>SKILL.md, on-demand 로딩, 호출 제어와 지원 파일</a>
+                    <a class="source-link" href="https://code.claude.com/docs/en/sub-agents" target="_blank" rel="noreferrer"><strong>Create custom subagents</strong>격리 컨텍스트·전문 지침·도구·권한과 요약 반환</a>
+                    <a class="source-link" href="https://code.claude.com/docs/en/hooks-guide" target="_blank" rel="noreferrer"><strong>Automate actions with hooks</strong>수명주기 이벤트 기반의 결정적 검사와 자동화</a>
+                    <a class="source-link" href="https://code.claude.com/docs/en/permissions" target="_blank" rel="noreferrer"><strong>Configure permissions</strong>도구별 승인 정책과 Sandbox의 상호 보완</a>
+                    <a class="source-link" href="https://platform.claude.com/docs/en/test-and-evaluate/develop-tests" target="_blank" rel="noreferrer"><strong>Define success and build evaluations</strong>구체적·측정 가능한 성공 기준과 task-specific eval</a>
+                </div>
+            </div>
+            <p class="source-note">공고 근거: 저장소의 <code>cv/data/[OVERDARE] Technical Product Manager (TPM).txt</code>. OpenAI·Anthropic 공식 문서 확인일 2026-08-30.</p>
+        </section>
+    </main>
+
+    <footer>
+        <div class="wrap"><p>OVERDARE TPM Technical Fit Interview · LLM Agent Workflow Study Guide</p></div>
+    </footer>
+
+    <script>
+    const terms = [
+        { id: 1, term: "Large Language Model", ko: "대규모 언어 모델 · LLM", category: "foundation", priority: "P0", definition: "대량의 텍스트·코드 패턴을 학습해 주어진 컨텍스트 다음의 출력을 생성하는 모델입니다. Agent의 추론·선택 엔진이 될 수 있지만, 모델 호출 하나가 곧 Agent는 아닙니다.", boundary: "LLM은 생성 엔진이고 Agent는 목표·상태·도구·종료 조건을 가진 실행 시스템입니다.", example: "사용자 요구를 기능 계획이나 Luau 초안으로 변환하되 외부 상태 변경은 Tool 계층이 맡습니다.", question: "LLM 호출과 AI Agent의 차이를 실행 관점에서 설명해 보세요." },
+        { id: 2, term: "Prompt & Instructions", ko: "프롬프트와 지침", category: "foundation", priority: "P0", definition: "모델에 목표·역할·제약·출력 형식·판단 기준을 제공하는 입력입니다. 장기 규칙과 작업별 요청을 구분하고 충돌 우선순위를 관리해야 합니다.", boundary: "프롬프트는 행동을 유도하지만 권한 통제나 결과 검증을 대신하지 않습니다.", example: "서버 권한 판정 금지, 기존 API 우선 사용, 변경 후 검증 명령 실행을 지침으로 둡니다.", question: "프롬프트 규칙과 코드 기반 강제 장치를 어떻게 구분합니까?" },
+        { id: 3, term: "Token & Context Window", ko: "토큰과 컨텍스트 창", category: "foundation", priority: "P0", definition: "토큰은 모델이 처리하는 입력·출력의 기본 단위이고, 컨텍스트 창은 한 실행에서 참조 가능한 정보량의 한계입니다. 중요한 정보의 선택·순서·압축이 품질과 비용에 영향을 줍니다.", boundary: "컨텍스트가 길수록 항상 좋은 것이 아니며 관련 없는 정보는 판단을 흐리고 비용을 높입니다.", example: "전체 저장소 대신 현재 기능의 PRD·인터페이스·관련 파일·실패 로그만 제공합니다.", question: "큰 게임 프로젝트의 컨텍스트를 Agent에 어떻게 공급하겠습니까?" },
+        { id: 4, term: "Structured Outputs", ko: "구조화 출력", category: "foundation", priority: "P0", definition: "자유 형식 문장 대신 미리 정한 스키마에 맞는 타입 있는 결과를 반환하게 하는 방식입니다. 후속 코드가 결과를 안정적으로 검증·처리하도록 합니다.", boundary: "형식 유효성이 내용의 사실성이나 제품 적합성까지 보장하지는 않습니다.", example: "기능 계획을 files, risks, acceptanceCriteria, approvals 필드로 반환합니다.", question: "Agent의 계획을 자유 텍스트가 아니라 구조화해야 하는 이유는 무엇입니까?" },
+        { id: 5, term: "Deterministic vs. Stochastic", ko: "결정적 로직과 확률적 생성", category: "foundation", priority: "P1", definition: "같은 입력에 같은 결과를 내야 하는 규칙은 일반 코드로, 불완전한 정보의 해석·분류·초안 생성은 모델로 처리하는 경계입니다.", boundary: "모델이 할 수 있다는 이유만으로 보상 계산·권한 판정 같은 결정적 업무를 맡기지 않습니다.", example: "난이도 제안은 모델이 하되 아이템 지급과 가격 계산은 검증 가능한 코드가 처리합니다.", question: "어떤 작업은 Agent가 아니라 일반 자동화로 구현해야 합니까?" },
+        { id: 6, term: "AI Agent", ko: "AI Agent", category: "agent", priority: "P0", definition: "모델과 지침을 중심으로 목표를 해석하고, 상태를 바탕으로 도구 또는 다음 행동을 선택하며, 결과를 관찰해 종료 조건까지 실행하는 단위입니다.", boundary: "자율성의 크기보다 통제 가능한 실행 루프와 책임 경계가 핵심입니다.", example: "기능 요구를 읽고 관련 문서·코드를 찾고 변경안을 만든 뒤 검사 결과에 따라 수정 또는 승인 요청을 합니다.", question: "Agent를 코드 생성 기능과 구분해 정의해 보세요." },
+        { id: 7, term: "Agent Loop", ko: "Agent 실행 루프", category: "agent", priority: "P0", definition: "관찰 → 판단·계획 → 행동·도구 호출 → 결과 관찰을 목표 달성 또는 중단까지 반복하는 구조입니다.", boundary: "무한 반복을 막기 위해 턴·시간·비용·재시도 한도와 명시적 종료 조건이 필요합니다.", example: "정적 검사 실패를 관찰하면 허용 횟수 안에서 수정하고, 반복 실패 시 사람에게 넘깁니다.", question: "Agent가 언제 계속하고 언제 중단해야 합니까?" },
+        { id: 8, term: "Planning", ko: "계획", category: "agent", priority: "P0", definition: "목표를 단계·의존성·도구·검증·위험으로 분해하는 과정입니다. 복잡한 작업에서 실행 전 변경 범위를 드러내고 승인 가능하게 만듭니다.", boundary: "계획을 길게 만드는 것이 목적이 아니라 실패 비용이 큰 선택을 실행 전에 드러내는 것이 목적입니다.", example: "코어 루프, 데이터 모델, 서버·클라이언트 변경, 테스트, 배포 순서를 먼저 제안합니다.", question: "계획 단계를 언제 생략하고 언제 반드시 두겠습니까?" },
+        { id: 9, term: "State & Memory", ko: "상태와 메모리", category: "agent", priority: "P0", definition: "상태는 현재 실행의 입력·도구 결과·승인·진행 위치이고, 메모리는 실행을 넘어 재사용할 사용자·프로젝트 지식입니다.", boundary: "대화 기록 전체를 메모리라고 부르지 않으며 저장 범위·유효기간·개인정보·갱신 기준이 필요합니다.", example: "현재 patch와 테스트 결과는 상태, 프로젝트 코딩 규칙과 선호 템플릿은 관리되는 장기 지식입니다.", question: "Agent 상태와 장기 메모리를 어떤 기준으로 나눕니까?" },
+        { id: 10, term: "Context Engineering", ko: "컨텍스트 엔지니어링", category: "agent", priority: "P0", definition: "Agent가 각 판단 시점에 필요한 지침·문서·도구 결과·상태를 선택하고 배치·압축하는 설계입니다.", boundary: "프롬프트 문장만 다듬는 것보다 무엇을 언제 보여줄지 설계하는 범위가 넓습니다.", example: "PRD는 계획 때, 실제 API 시그니처는 구현 때, 테스트 로그는 수정 판단 때 제공합니다.", question: "컨텍스트가 커질수록 생기는 품질 문제를 어떻게 줄입니까?" },
+        { id: 11, term: "Tool / Function Calling", ko: "도구·함수 호출", category: "tool", priority: "P0", definition: "모델이 정의된 이름과 입력으로 외부 기능을 요청하고 애플리케이션이 실행 결과를 다시 모델에 돌려주는 방식입니다.", boundary: "모델은 호출을 제안하고 실제 권한·검증·실행은 애플리케이션이 책임집니다.", example: "문서 검색, 프로젝트 검사, patch 생성, 플레이 테스트를 각각 제한된 Tool로 노출합니다.", question: "Tool calling에서 모델과 실행 호스트의 책임을 나눠 보세요." },
+        { id: 12, term: "Tool Schema & Contract", ko: "도구 스키마와 계약", category: "tool", priority: "P0", definition: "도구의 이름, 목적, 입력·출력 타입, 오류, 부작용, 권한, 재시도 가능성을 정의한 인터페이스입니다.", boundary: "좋은 설명만으로 충분하지 않고 서버 측 입력 검증과 오류 모델이 필요합니다.", example: "apply_patch는 대상 파일·diff·승인 ID를 받고 적용 결과·검사 결과·rollback ID를 반환합니다.", question: "Agent가 안정적으로 사용할 Tool API 명세에는 무엇이 들어갑니까?" },
+        { id: 13, term: "Tool Orchestration", ko: "도구 오케스트레이션", category: "tool", priority: "P0", definition: "작업 목표에 맞게 어떤 도구를 어떤 순서·조건·병렬성·재시도·승인 정책으로 호출할지 조정하는 설계입니다.", boundary: "도구가 많다는 뜻이 아니라 데이터 의존성과 부작용을 통제하는 실행 흐름입니다.", example: "문서와 코드를 병렬 조회한 뒤 계획 승인, patch 생성, 정적 검사, 플레이 테스트 순으로 진행합니다.", question: "도구 세 개 이상이 필요한 작업의 호출 순서와 실패 처리를 설계해 보세요." },
+        { id: 14, term: "Skill", ko: "스킬", category: "tool", priority: "P0", definition: "반복 작업의 트리거·지침·참고 자료·도구 사용법·완료 기준을 재사용 가능한 작업 계약으로 묶은 단위입니다. 구현 형식은 제품마다 다를 수 있습니다.", boundary: "단발성 프롬프트가 아니라 버전 관리와 재사용, 명확한 적용 조건을 가진 절차 자산입니다.", example: "새 Roblox 서비스를 추가할 때 구조 탐색, 파일 생성, 등록, 검사, 문서 갱신을 하나의 Skill로 만듭니다.", question: "Skill과 일반 프롬프트 템플릿은 무엇이 다릅니까?" },
+        { id: 15, term: "Model Context Protocol", ko: "MCP", category: "tool", priority: "P1", definition: "모델 기반 애플리케이션이 외부 도구와 데이터 소스를 표준화된 방식으로 발견하고 호출하도록 연결하는 프로토콜입니다.", boundary: "MCP는 Agent 자체나 업무 절차가 아니라 capability 연결 규약입니다.", example: "프로젝트 문서·이슈·에셋 카탈로그를 각각 맞춤 통합하지 않고 일관된 Tool surface로 연결합니다.", question: "MCP와 Tool, Skill, Agent의 관계를 각각 한 문장으로 설명해 보세요." },
+        { id: 16, term: "RAG & Grounding", ko: "검색 증강과 근거화", category: "tool", priority: "P0", definition: "필요한 외부 지식을 검색해 현재 응답의 컨텍스트에 넣고, 결과가 승인된 문서·데이터에 근거하도록 만드는 방식입니다.", boundary: "검색 결과를 넣는 것만으로 정확성이 보장되지 않으며 출처 선택·최신성·충돌 처리와 인용이 필요합니다.", example: "현재 OVERDARE API 문서와 프로젝트 스키마를 조회한 뒤 존재하는 API만 사용하게 합니다.", question: "환각 API 생성을 RAG만으로 막을 수 있습니까?" },
+        { id: 17, term: "Tool Search", ko: "도구 검색", category: "tool", priority: "P1", definition: "큰 도구 목록을 항상 컨텍스트에 넣지 않고 현재 작업에 필요한 도구 정의만 찾아 노출하는 패턴입니다.", boundary: "실행 도구 선택 전의 discovery 단계이며 실제 권한 부여와는 별개입니다.", example: "에셋 편집 요청에서 결제·운영 도구는 숨기고 에셋·검증 도구만 찾아 제공합니다.", question: "도구가 수백 개일 때 선택 정확도와 컨텍스트 비용을 어떻게 관리합니까?" },
+        { id: 18, term: "Router / Triage", ko: "라우터·트리아지", category: "workflow", priority: "P0", definition: "입력 의도·위험·전문 영역을 분류해 적절한 워크플로, Agent 또는 사람에게 보내는 첫 의사결정 계층입니다.", boundary: "모든 요청을 여러 Agent에게 보내는 것이 아니라 필요한 경로 하나를 좁히는 역할입니다.", example: "코드 생성, 에셋 생성, 계정·결제, 안전 신고 요청을 서로 다른 권한 정책으로 라우팅합니다.", question: "라우팅 오류를 어떻게 측정하고 복구합니까?" },
+        { id: 19, term: "Handoff", ko: "핸드오프", category: "workflow", priority: "P0", definition: "현재 Agent가 다음 전문 Agent에게 대화와 작업의 소유권을 넘기는 오케스트레이션 패턴입니다.", boundary: "전문 Agent를 도구처럼 잠깐 호출하는 것과 달리 다음 응답의 책임 주체가 바뀝니다.", example: "일반 제작 도우미가 계정 제재 이슈를 안전 정책 Agent에게 넘기고 그 Agent가 사용자 응답을 맡습니다.", question: "Handoff가 agent-as-tool보다 적합한 경우는 언제입니까?" },
+        { id: 20, term: "Manager / Agents as Tools", ko: "매니저와 Agent-as-Tool", category: "workflow", priority: "P0", definition: "중앙 Manager가 최종 응답 소유권을 유지하며 전문 Agent를 제한된 기능처럼 호출해 결과를 종합하는 패턴입니다.", boundary: "전문가가 사용자 대화를 인계받지 않고 Manager에게 bounded result를 반환합니다.", example: "기획 Agent가 시스템·UX·안전 검토 Agent의 결과를 받아 하나의 제작 계획으로 합칩니다.", question: "중앙 Manager 패턴의 장점과 병목은 무엇입니까?" },
+        { id: 21, term: "Multi-agent", ko: "멀티 Agent", category: "workflow", priority: "P1", definition: "책임·도구·정책이 다른 여러 Agent가 라우팅, handoff 또는 manager 패턴으로 협력하는 구조입니다.", boundary: "복잡한 작업이라고 무조건 필요하지 않으며 단일 Agent로 시작해 분리 근거가 있을 때 확장합니다.", example: "코드 생성과 안전 검토가 서로 다른 권한·모델·승인 정책을 요구할 때 분리합니다.", question: "하나의 Agent를 여러 개로 나눌 판단 기준은 무엇입니까?" },
+        { id: 22, term: "Checkpoint & Rollback", ko: "체크포인트와 롤백", category: "workflow", priority: "P0", definition: "부작용이 있는 변경 전 복구 가능한 상태를 저장하고 실패·거부 시 이전 상태로 되돌리는 장치입니다.", boundary: "대화 내용을 되돌리는 것뿐 아니라 코드·객체·설정·데이터의 원자적 복구가 필요합니다.", example: "Studio 프로젝트 사본에서 patch를 적용하고 승인된 버전 ID로만 병합하며 즉시 되돌릴 수 있게 합니다.", question: "AI 생성 변경을 안전하게 preview·apply·rollback하는 UX를 설계해 보세요." },
+        { id: 23, term: "Guardrail", ko: "가드레일", category: "safety", priority: "P0", definition: "입력, 출력 또는 Tool 호출 전후의 정책·형식·안전 조건을 자동으로 검사해 계속·수정·차단을 결정하는 통제 장치입니다.", boundary: "프롬프트 지침보다 강한 실행 경계이며 사람 승인이 필요한 판단과는 구분합니다.", example: "클라이언트 보상 확정 코드, 금지 API, 권리 불명 에셋, 민감 데이터 출력을 자동 차단합니다.", question: "입력·출력·Tool guardrail을 각각 어디에 두겠습니까?" },
+        { id: 24, term: "Human in the Loop", ko: "사람 검토·승인 · HITL", category: "safety", priority: "P0", definition: "모델이나 자동 규칙만으로 책임지기 어려운 의사결정에서 실행을 멈추고 사람이 승인·거부·수정하는 제어 방식입니다.", boundary: "모든 단계에 승인을 두면 속도와 통제감이 무너지므로 위험 기반으로 배치합니다.", example: "코드 초안은 자동 생성하되 결제·데이터 삭제·외부 공개·배포는 별도 승인합니다.", question: "어디에 사람 승인을 두고 승인 피로를 어떻게 줄입니까?" },
+        { id: 25, term: "Least Privilege & Sandbox", ko: "최소 권한과 샌드박스", category: "safety", priority: "P0", definition: "작업에 꼭 필요한 데이터·도구·파일·네트워크 권한만 주고, 격리된 환경에서 먼저 실행해 피해 범위를 제한하는 원칙입니다.", boundary: "모델의 선의를 신뢰하는 방식이 아니라 실행 환경이 권한을 강제해야 합니다.", example: "검토 Agent는 읽기만 가능하고 patch Agent도 격리 브랜치에만 쓰며 배포 권한은 갖지 않습니다.", question: "UGC 제작 Agent의 권한 모델을 설계해 보세요." },
+        { id: 26, term: "Prompt Injection", ko: "프롬프트 인젝션", category: "safety", priority: "P0", definition: "사용자 입력이나 검색 문서·에셋 메타데이터에 숨은 지시가 Agent의 원래 정책을 무시하게 유도하는 공격·오류 유형입니다.", boundary: "텍스트 필터 하나로 해결되지 않으며 신뢰 경계·도구 권한·출처 표시·승인이 함께 필요합니다.", example: "업로드된 README가 비밀정보 전송을 지시해도 데이터와 네트워크 권한이 분리되어 실행되지 않게 합니다.", question: "외부 문서를 읽는 Agent의 prompt injection을 어떻게 방어합니까?" },
+        { id: 27, term: "Retry, Timeout & Idempotency", ko: "재시도·시간 제한·멱등성", category: "safety", priority: "P0", definition: "일시 오류는 제한적으로 재시도하고, 실행 시간 상한을 두며, 같은 요청이 반복돼도 효과가 중복되지 않게 만드는 신뢰성 원칙입니다.", boundary: "모든 오류를 재시도하면 비용과 중복 부작용이 커지므로 오류 분류와 멱등 키가 필요합니다.", example: "아이템 지급은 요청 ID로 중복을 막고, 실패 유형에 따라 재시도·보상 트랜잭션·사람 확인을 나눕니다.", question: "Tool 호출이 중간에 실패했을 때 안전하게 복구하는 방법은 무엇입니까?" },
+        { id: 28, term: "Trace, Span & Observability", ko: "트레이스·스팬·관측성", category: "evaluation", priority: "P0", definition: "한 실행의 모델 호출, Tool 호출, handoff, guardrail, 지연·비용·오류를 연결된 기록으로 남겨 내부 경로를 관찰하는 체계입니다.", boundary: "최종 답만 저장하는 로그와 달리 왜 그 결과가 나왔는지 단계별로 추적합니다.", example: "잘못된 patch가 어떤 검색 결과와 도구 선택에서 시작됐는지 trace로 재현합니다.", question: "Agent 디버깅을 위해 trace에 어떤 필드를 남기겠습니까?" },
+        { id: 29, term: "Evaluation / Eval", ko: "평가 · Eval", category: "evaluation", priority: "P0", definition: "대표 입력과 명시적 기준을 이용해 Agent 결과와 실행 경로의 품질·안전·효율을 반복 측정하는 과정입니다.", boundary: "데모 한 번의 성공이 아니라 변경 전후를 같은 데이터셋으로 비교할 수 있어야 합니다.", example: "실제 기능 요청 50건에서 수용 기준 통과, 올바른 Tool 선택, 위험 변경 차단, 비용을 비교합니다.", question: "Agent 품질을 어떤 데이터와 기준으로 회귀 테스트합니까?" },
+        { id: 30, term: "Grader", ko: "채점기 · Grader", category: "evaluation", priority: "P0", definition: "Agent 결과나 trace를 정해진 기준으로 점수화하는 규칙·코드·모델 기반 평가자입니다.", boundary: "모델 채점기도 오류가 있으므로 결정적 검사·사람 검토와 조합하고 채점 기준 자체를 검증합니다.", example: "코드는 테스트로, API 존재 여부는 정적 검사로, 기획 완성도는 rubric 기반 모델과 사람이 평가합니다.", question: "어떤 항목을 코드 grader와 모델 grader로 나누겠습니까?" },
+        { id: 31, term: "Dataset / Golden Set", ko: "평가 데이터셋·골든 세트", category: "evaluation", priority: "P0", definition: "정상·경계·적대·실패 사례와 기대 결과를 모아 반복 평가에 쓰는 대표 입력 집합입니다.", boundary: "쉬운 성공 사례만 모으면 실제 회귀와 안전 문제를 찾지 못합니다.", example: "새 기능, 모호한 요청, 금지 API, 재접속, 권리 불명 에셋, prompt injection 사례를 함께 넣습니다.", question: "UGC 제작 Agent의 평가 데이터셋을 어떻게 구성하겠습니까?" },
+        { id: 32, term: "Failure Taxonomy", ko: "실패 분류 체계", category: "evaluation", priority: "P1", definition: "실패를 환각, 잘못된 라우팅, Tool 인자 오류, 권한 위반, 검증 누락, 부분 실패, UX 실패처럼 재발 방지 가능한 유형으로 나누는 체계입니다.", boundary: "성공률 하나만 보면 어떤 장치를 고쳐야 하는지 알 수 없습니다.", example: "코드 오류와 제품 요구 오해를 분리해 각각 Tool schema와 요구 확인 UX를 개선합니다.", question: "Agent 실패를 어떻게 분류해야 제품 개선으로 이어집니까?" },
+        { id: 33, term: "Latency · Cost · Quality", ko: "지연·비용·품질 트레이드오프", category: "product", priority: "P0", definition: "더 많은 추론·검색·검증은 품질을 높일 수 있지만 응답 시간과 비용을 늘립니다. 사용자 가치와 위험에 맞는 예산을 설계해야 합니다.", boundary: "최고 성능 모델과 최대 반복이 항상 최적의 제품 경험은 아닙니다.", example: "아이디어 초안은 빠르게, 배포 전 검증은 더 깊게 실행하고 단계별 예산을 다르게 둡니다.", question: "Agent 품질과 첫 가치 도달 시간의 균형을 어떻게 정합니까?" },
+        { id: 34, term: "Productivity Metrics", ko: "생산성 지표", category: "product", priority: "P0", definition: "AI 산출량이 아니라 요구 확정부터 플레이 가능한 결과까지의 리드타임, 사람 개입, 재작업, 결함, 문서 누락과 실제 제품 결과를 함께 측정합니다.", boundary: "코드 줄 수나 생성 횟수는 가치와 품질을 대표하지 못합니다.", example: "동일 유형 기능의 전후 리드타임·수정 반복·회귀 결함·사람 작업 시간을 비교합니다.", question: "AI Agent 도입 효과를 어떤 기준선과 지표로 증명합니까?" },
+        { id: 35, term: "Success & Stop Criteria", ko: "성공·중단 기준", category: "product", priority: "P0", definition: "워크플로가 완료되었다고 인정할 수용 기준과, 더 진행하지 않고 실패·승인 요청·fallback으로 전환할 조건입니다.", boundary: "최종 답을 생성했다는 사실이 작업 성공을 의미하지 않습니다.", example: "정적 검사·8인 테스트·성능 예산·사용자 승인을 통과하면 완료하고, 같은 오류가 두 번 나면 사람에게 넘깁니다.", question: "Agent 실행의 완료와 실패를 어떤 조건으로 정의합니까?" },
+        { id: 36, term: "CLAUDE.md & Rules", ko: "CLAUDE.md와 프로젝트 규칙", category: "claude", priority: "P0", definition: "Claude Code가 세션마다 읽는 프로젝트·사용자·조직 수준의 지속 지침입니다. 빌드 명령, 아키텍처, 코딩 규칙처럼 매번 알아야 하는 사실을 컨텍스트로 제공합니다.", boundary: "모델이 읽는 컨텍스트이지 강제 정책이 아닙니다. 반드시 차단할 규칙은 Hook·Permission·Sandbox로 옮깁니다.", example: "서비스 등록 순서, 서버 권한 원칙, 검사 명령과 금지된 아키텍처 우회를 짧게 기록합니다.", question: "CLAUDE.md에 둘 내용과 Skill·Hook으로 분리할 내용을 어떻게 판단합니까?" },
+        { id: 37, term: "Claude Auto Memory", ko: "Claude Code Auto memory", category: "claude", priority: "P1", definition: "Claude가 사용자의 교정과 작업 중 발견한 빌드·디버깅 패턴을 저장해 이후 세션에 참고하는 자동 메모리입니다.", boundary: "사람이 관리하는 CLAUDE.md와 달리 모델이 작성하는 학습 노트이며, 감사·수정·삭제 가능한 컨텍스트일 뿐 보안 정책 저장소가 아닙니다.", example: "반복해서 발견한 테스트 사전조건이나 디버깅 힌트를 기억하되 팀 공통 규칙은 CLAUDE.md로 승격합니다.", question: "Auto memory와 팀이 버전 관리하는 프로젝트 지침의 경계를 어떻게 정합니까?" },
+        { id: 38, term: "Claude Code Hooks", ko: "Claude Code Hooks", category: "claude", priority: "P0", definition: "Claude Code의 PreToolUse, PostToolUse, Stop 같은 수명주기 이벤트에서 명령·HTTP 요청·MCP 호출·모델 판단을 자동 실행하는 확장 계층입니다.", boundary: "Command Hook은 이벤트 발생이 결정적이지만 prompt·agent Hook의 판단은 확률적입니다. 추론형 작업 절차인 Skill과도 다릅니다.", example: "파일 수정 후 formatter와 정적 검사를 실행하고, 위험한 Bash 호출은 PreToolUse에서 차단합니다.", question: "Skill 지침 대신 Hook으로 강제해야 하는 규칙은 무엇입니까?" },
+        { id: 39, term: "Claude Permission Rules & Modes", ko: "Claude 권한 규칙과 모드", category: "claude", priority: "P0", definition: "Tool·명령·경로·도메인별 접근을 Allow, Ask, Deny 규칙과 실행 모드로 통제하는 Claude Code의 승인 계층입니다.", boundary: "권한은 Agent가 어떤 Tool을 시도할 수 있는지 통제하고, Sandbox는 Bash와 자식 프로세스의 파일·네트워크 접근을 OS 수준에서 제한합니다.", example: "읽기는 허용하고 프로젝트 밖 쓰기와 배포는 거부하며, 특정 검사 명령만 재승인 없이 실행하게 합니다.", question: "Permission과 Sandbox를 함께 써야 하는 이유를 설명해 보세요." },
+        { id: 40, term: "Claude Code Subagent", ko: "Claude Code Subagent", category: "claude", priority: "P0", definition: "자체 컨텍스트 창, 전문 지침, 제한된 Tool·권한으로 위임된 작업을 수행하고 결과 요약을 메인 세션에 반환하는 격리 작업자입니다.", boundary: "사용자 대화 소유권을 넘기는 Handoff보다 메인 Agent가 최종 답을 유지하는 Manager/Agent-as-Tool 패턴에 가깝습니다.", example: "Explore Subagent가 많은 파일과 로그를 읽어 핵심 구조만 반환하고, 메인 Agent가 그 근거로 변경 계획을 결정합니다.", question: "Subagent를 쓰면 좋은 작업과 메인 컨텍스트에 남겨야 할 작업을 나눠 보세요." },
+        { id: 41, term: "Claude Code Plugin", ko: "Claude Code Plugin", category: "claude", priority: "P1", definition: "Skills, Subagents, Hooks, MCP 서버와 관련 설정을 하나의 설치 가능한 단위로 묶어 프로젝트·팀·마켓플레이스에 배포하는 패키징 계층입니다.", boundary: "Plugin 자체가 Agent나 Workflow는 아니며 검증된 구성요소를 버전형으로 유통하는 컨테이너입니다.", example: "스튜디오 팀의 기능 추가 Skill, 리뷰 Subagent, 검사 Hook, 문서 MCP를 하나의 내부 Plugin으로 배포합니다.", question: "프로젝트 전용 설정을 언제 Plugin으로 승격하겠습니까?" }
+    ];
+
+    const categoryNames = {
+        foundation: "기초",
+        agent: "Agent",
+        tool: "Tool·Context",
+        workflow: "Orchestration",
+        safety: "Safety",
+        evaluation: "Evaluation",
+        product: "Product",
+        claude: "Claude Code"
+    };
+    const stateKey = "overdare-llm-agent-study-v1";
+    const stored = (() => {
+        try { return JSON.parse(localStorage.getItem(stateKey)) || {}; }
+        catch { return {}; }
+    })();
+    const done = new Set(Array.isArray(stored.done) ? stored.done : []);
+
+    const root = document.getElementById("termRoot");
+    const search = document.getElementById("termSearch");
+    const categoryFilter = document.getElementById("categoryFilter");
+    const priorityFilter = document.getElementById("priorityFilter");
+    const studyFilter = document.getElementById("studyFilter");
+    const emptyState = document.getElementById("emptyState");
+
+    function escapeHtml(value) {
+        return String(value)
+            .replaceAll("&", "&amp;")
+            .replaceAll("<", "&lt;")
+            .replaceAll(">", "&gt;")
+            .replaceAll('"', "&quot;")
+            .replaceAll("'", "&#039;");
+    }
+
+    function saveStudy() {
+        localStorage.setItem(stateKey, JSON.stringify({ done: [...done].sort((a, b) => a - b) }));
+    }
+
+    function renderTerms() {
+        const fragment = document.createDocumentFragment();
+        terms.forEach(item => {
+            const details = document.createElement("details");
+            details.className = "term-card";
+            details.id = `term-${item.id}`;
+            details.dataset.id = item.id;
+            details.dataset.category = item.category;
+            details.dataset.priority = item.priority;
+            details.dataset.search = `${item.term} ${item.ko} ${item.definition} ${item.boundary} ${item.example} ${item.question}`.toLocaleLowerCase("ko");
+            details.innerHTML = `
+                <summary>
+                    <span class="term-no">${String(item.id).padStart(2, "0")}</span>
+                    <span class="term-title"><strong>${escapeHtml(item.ko)}</strong><span>${escapeHtml(item.term)} · ${escapeHtml(categoryNames[item.category])}</span></span>
+                    <span class="term-badges"><span class="badge ${item.priority.toLowerCase()}">${item.priority}</span><span class="badge done">완료</span></span>
+                </summary>
+                <div class="term-body">
+                    <p class="term-definition">${escapeHtml(item.definition)}</p>
+                    <div class="term-detail">
+                        <div><strong>구분 포인트</strong>${escapeHtml(item.boundary)}</div>
+                        <div><strong>OVERDARE형 예시</strong>${escapeHtml(item.example)}</div>
+                    </div>
+                    <div class="term-question"><strong>예상 질문:</strong> ${escapeHtml(item.question)}</div>
+                    <button class="mini" type="button" data-action="done">학습 완료</button>
+                </div>`;
+            fragment.appendChild(details);
+        });
+        root.appendChild(fragment);
+        refreshStudy();
+        applyFilters();
+    }
+
+    function refreshStudy() {
+        document.querySelectorAll(".term-card").forEach(card => {
+            const id = Number(card.dataset.id);
+            const isDone = done.has(id);
+            card.classList.toggle("is-done", isDone);
+            const button = card.querySelector('[data-action="done"]');
+            button.classList.toggle("is-active", isDone);
+            button.textContent = isDone ? "완료 취소" : "학습 완료";
+        });
+        document.getElementById("doneCount").textContent = done.size;
+        document.getElementById("progressFill").style.width = `${Math.min(100, done.size / terms.length * 100)}%`;
+    }
+
+    function applyFilters() {
+        const query = search.value.trim().toLocaleLowerCase("ko");
+        const category = categoryFilter.value;
+        const priority = priorityFilter.value;
+        const study = studyFilter.value;
+        let visible = 0;
+        document.querySelectorAll(".term-card").forEach(card => {
+            const id = Number(card.dataset.id);
+            const matches = (!query || card.dataset.search.includes(query))
+                && (category === "all" || card.dataset.category === category)
+                && (priority === "all" || card.dataset.priority === priority)
+                && (study === "all" || (study === "done" && done.has(id)) || (study === "todo" && !done.has(id)));
+            card.hidden = !matches;
+            if (matches) visible += 1;
+        });
+        document.getElementById("visibleCount").textContent = visible;
+        document.getElementById("resultLine").textContent = `${visible}개 표시 중`;
+        emptyState.hidden = visible !== 0;
+    }
+
+    [search, categoryFilter, priorityFilter, studyFilter].forEach(control => control.addEventListener("input", applyFilters));
+
+    root.addEventListener("click", event => {
+        const button = event.target.closest('[data-action="done"]');
+        if (!button) return;
+        event.preventDefault();
+        const card = button.closest(".term-card");
+        const id = Number(card.dataset.id);
+        if (done.has(id)) done.delete(id); else done.add(id);
+        saveStudy();
+        refreshStudy();
+        applyFilters();
+    });
+
+    document.getElementById("randomTerm").addEventListener("click", () => {
+        const visible = [...document.querySelectorAll(".term-card:not([hidden])")];
+        if (!visible.length) return;
+        const card = visible[Math.floor(Math.random() * visible.length)];
+        document.querySelectorAll(".term-card").forEach(item => { item.open = false; });
+        card.open = true;
+        card.scrollIntoView({ behavior: "smooth", block: "center" });
+    });
+    document.getElementById("expandTerms").addEventListener("click", () => {
+        document.querySelectorAll(".term-card:not([hidden])").forEach(card => { card.open = true; });
+    });
+    document.getElementById("collapseTerms").addEventListener("click", () => {
+        document.querySelectorAll(".term-card").forEach(card => { card.open = false; });
+    });
+
+    renderTerms();
+    </script>
+</body>
+</html>

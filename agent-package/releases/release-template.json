@@ -1,0 +1,49 @@
+{
+  "schema_version": "1.0",
+  "release_id": "RELEASE-AGENT-ID-0-1-0",
+  "agent_id": "agent-id",
+  "agent_version": "0.1.0",
+  "change_id": "CHG-YYYYMMDD-NN",
+  "status": "candidate",
+  "release_date": "2026-08-31",
+  "owner": "TBD-before-release",
+  "approver": "TBD-before-release",
+  "version_tuple": {
+    "agent": "agent-id@0.1.0",
+    "instructions_hash": "TBD",
+    "context_hash": "TBD",
+    "skills_hash": "TBD",
+    "model": "provider/pinned-version",
+    "tools_hash": "TBD",
+    "orchestration_hash": "TBD",
+    "adapter": "adapter-id@version#hash",
+    "environment": "environment-id@version#hash",
+    "policy_hash": "TBD",
+    "eval_set_hash": "TBD"
+  },
+  "gate_evidence": {
+    "A1": { "verdict": "NOT_REVIEWED", "evidence": [], "approver": "TBD", "timestamp": "2026-08-31T00:00:00Z" },
+    "A2": { "verdict": "NOT_REVIEWED", "evidence": [], "approver": "TBD", "timestamp": "2026-08-31T00:00:00Z" },
+    "A3": { "verdict": "NOT_REVIEWED", "evidence": [], "approver": "TBD", "timestamp": "2026-08-31T00:00:00Z" },
+    "A4": { "verdict": "NOT_REVIEWED", "evidence": [], "approver": "TBD", "timestamp": "2026-08-31T00:00:00Z" }
+  },
+  "eval_result_ref": "evals/results/agent-id/0.1.0.json",
+  "rollout": {
+    "stage": "fixed_eval",
+    "scope": "No production traffic before approval.",
+    "duration": "TBD-before-release",
+    "success_criteria": ["All declared release thresholds pass."],
+    "monitoring_ref": "TBD-before-release"
+  },
+  "rollback": {
+    "last_known_good_release": "TBD-before-release",
+    "triggers": ["Critical safety or contract threshold failure."],
+    "procedure_ref": "agents/agent-id/runbook.md#rollback",
+    "rehearsal_evidence": "TBD-before-release"
+  },
+  "decision": {
+    "verdict": "reject",
+    "rationale": "Template is not an approval.",
+    "decided_at": "2026-08-31T00:00:00Z"
+  }
+}

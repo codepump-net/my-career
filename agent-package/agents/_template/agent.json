@@ -1,0 +1,97 @@
+{
+  "schema_version": "1.1",
+  "id": "agent-id",
+  "display_name": "Agent Name",
+  "version": "0.1.0",
+  "status": "proposed",
+  "updated_at": "2026-08-31",
+  "owners": {
+    "product": "Product Owner",
+    "technical": "Agent Maintainer",
+    "operations": "Operations Owner",
+    "security": "Security or Risk Owner"
+  },
+  "purpose": "Describe one user or system outcome this agent owns.",
+  "non_goals": [
+    "Describe work that must remain outside this agent."
+  ],
+  "runtime": {
+    "provider": "unbound",
+    "model": "TBD",
+    "model_version_policy": "pin_before_candidate",
+    "reasoning_policy": "set_by_eval",
+    "environment_profile": "environments/_template/environment.json",
+    "max_turns": 12,
+    "max_tool_calls": 20,
+    "max_parallel_tasks": 1,
+    "timeout_seconds": 300,
+    "session_cost_limit": 0
+  },
+  "contracts": {
+    "input_schema": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["request"],
+      "properties": {
+        "request": { "type": "string", "minLength": 1 }
+      }
+    },
+    "output_schema": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["status", "result", "evidence"],
+      "properties": {
+        "status": { "enum": ["completed", "blocked", "failed"] },
+        "result": { "type": ["object", "null"] },
+        "evidence": { "type": "array", "items": { "type": "string" } }
+      }
+    },
+    "failure_schema": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["code", "message", "safe_next_action"],
+      "properties": {
+        "code": { "type": "string" },
+        "message": { "type": "string" },
+        "safe_next_action": { "type": ["string", "null"] }
+      }
+    },
+    "completion_evidence_required": true
+  },
+  "risk": {
+    "level": "low",
+    "autonomy_level": "observe",
+    "default_write_policy": "read_only",
+    "approval_policy": "policies/approval-policy-template.md",
+    "human_approval": "required_for_high_risk_actions",
+    "can_decide": [
+      "How to analyze approved read-only inputs within the declared scope."
+    ],
+    "requires_approval": [
+      "Any action that creates an external or shared side effect."
+    ],
+    "must_refuse": [
+      "Requests outside the declared purpose, authority, or data policy."
+    ]
+  },
+  "data": {
+    "governance_policy": "policies/data-governance-template.md",
+    "allowed_classifications": ["public", "internal"],
+    "prohibited_data": ["credentials", "unapproved personal data"],
+    "retention_policy": "Retain non-sensitive run metadata only for the approved period.",
+    "raw_trace_policy": "Store only in an approved external or gitignored location."
+  },
+  "capabilities": {
+    "skills": [],
+    "delegation": {
+      "enabled": false,
+      "allowed_agent_ids": [],
+      "max_depth": 0
+    }
+  },
+  "links": {
+    "feature_ids": [],
+    "change_ids": [],
+    "runtime_adapters": []
+  }
+}

@@ -1,0 +1,14 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://example.local/schemas/agent-release-gate.schema.json",
+  "title": "Agent Release Gate Evidence",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["verdict", "evidence", "approver", "timestamp"],
+  "properties": {
+    "verdict": { "enum": ["PASS", "CONDITIONAL", "FAIL", "NOT_REVIEWED"] },
+    "evidence": { "type": "array", "items": { "type": "string" } },
+    "approver": { "type": "string", "minLength": 1 },
+    "timestamp": { "type": "string", "format": "date-time" }
+  }
+}

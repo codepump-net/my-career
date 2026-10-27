@@ -1,0 +1,21 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://example.local/schemas/agent-version-tuple.schema.json",
+  "title": "Agent Evaluation Version Tuple",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["agent", "instructions_hash", "context_hash", "skills_hash", "model", "tools_hash", "orchestration_hash", "adapter", "environment", "policy_hash", "eval_set_hash"],
+  "properties": {
+    "agent": { "type": "string", "minLength": 1 },
+    "instructions_hash": { "type": "string", "minLength": 1 },
+    "context_hash": { "type": "string", "minLength": 1 },
+    "skills_hash": { "type": "string", "minLength": 1 },
+    "model": { "type": "string", "minLength": 1 },
+    "tools_hash": { "type": "string", "minLength": 1 },
+    "orchestration_hash": { "type": "string", "minLength": 1 },
+    "adapter": { "type": "string", "minLength": 1 },
+    "environment": { "type": "string", "minLength": 1 },
+    "policy_hash": { "type": "string", "minLength": 1 },
+    "eval_set_hash": { "type": "string", "minLength": 1 }
+  }
+}

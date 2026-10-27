@@ -230,6 +230,12 @@ html.is-exporting {
     font-size: 14px;
 }
 
+.doc-target {
+    margin-top: 5px;
+    font-size: 13px;
+    font-weight: 600;
+}
+
 .doc-contact {
     display: flex;
     flex-wrap: wrap;
@@ -315,7 +321,7 @@ html.is-exporting {
 
 .doc-point-main::before {
     color: var(--accent);
-    content: "— ";
+    content: "• ";
 }
 
 /* 성과 아래 붙는 세부 항목 */
@@ -366,10 +372,37 @@ html.is-exporting {
     font-weight: 600;
 }
 
+.doc-list--featured li {
+    padding: 8px 6px;
+}
+
+.doc-heading--compact {
+    margin-top: 14px;
+}
+
+.doc-list--compact {
+    margin-top: 6px;
+}
+
+.doc-list--compact li {
+    padding: 4px 0;
+}
+
+.doc-list-accent {
+    color: var(--accent);
+    font-weight: 700;
+}
+
+.doc-list-emphasis {
+    color: var(--ink);
+    font-weight: 700;
+}
+
 /* 요약처럼 통 문단으로 들어가는 본문 */
 .doc-text {
     margin-top: 14px;
     color: var(--ink-muted);
+    white-space: pre-line;
 }
 
 /* ------------------------------------------------ 작성 안내 블록 */
@@ -428,6 +461,12 @@ html.is-exporting {
 
 .doc-cite b {
     color: var(--ink);
+}
+
+.doc-cite--compact {
+    margin-top: 6px;
+    font-size: 12px;
+    line-height: 1.5;
 }
 
 .doc-close {
@@ -544,9 +583,15 @@ html.is-exporting {
     .doc-pending,
     .doc-head,
     .doc-close,
+    .doc-experience-group,
     .doc-list li {
         break-inside: avoid;
         page-break-inside: avoid;
+    }
+
+    [data-doc-page-break] {
+        break-before: page;
+        page-break-before: always;
     }
 
     /* 절 제목과 회사 머리글이 페이지 맨 아래에 홀로 남는 것을 막는다. */

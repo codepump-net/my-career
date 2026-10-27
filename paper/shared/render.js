@@ -40,6 +40,38 @@
         return number < 10 ? '0' + number : String(number);
     }
 
+    function appendMarkedText(parent, value, accentTerms, emphasisTerms) {
+        var text = value || '';
+        var marks = [];
+
+        (accentTerms || []).forEach(function (term) {
+            if (term) marks.push({ term: term, className: 'doc-list-accent' });
+        });
+        (emphasisTerms || []).forEach(function (term) {
+            if (term) marks.push({ term: term, className: 'doc-list-emphasis' });
+        });
+
+        var cursor = 0;
+        while (cursor < text.length) {
+            var next = null;
+            marks.forEach(function (mark) {
+                var index = text.indexOf(mark.term, cursor);
+                if (index < 0) return;
+                if (!next || index < next.index || (index === next.index && mark.term.length > next.term.length)) {
+                    next = { index: index, term: mark.term, className: mark.className };
+                }
+            });
+
+            if (!next) {
+                parent.appendChild(document.createTextNode(text.slice(cursor)));
+                break;
+            }
+            if (next.index > cursor) parent.appendChild(document.createTextNode(text.slice(cursor, next.index)));
+            parent.appendChild(el('strong', next.className, next.term));
+            cursor = next.index + next.term.length;
+        }
+    }
+
     /* ------------------------------------------------------------ 머리 */
 
     function renderHead(parent, data, version, lang) {
@@ -55,6 +87,9 @@
             var tagline = pick(source.tagline, lang);
             if (tagline) head.appendChild(el('p', 'doc-tagline', tagline));
         }
+
+        var target = pick(source.target, lang);
+        if (target) head.appendChild(el('p', 'doc-target', target));
 
         var items = source.contact || [];
         if (items.length) {
@@ -77,8 +112,9 @@
         parent.appendChild(head);
     }
 
-    function renderHeading(parent, number, title, lang) {
-        var node = block(el('h2', 'doc-heading'));
+    function renderHeading(parent, number, title, lang, variant, pageBreak) {
+        var node = block(el('h2', 'doc-heading' + (variant ? ' doc-heading--' + variant : '')));
+        if (pageBreak) node.setAttribute('data-doc-page-break', '');
         var no = el('span', 'doc-heading-no', pad(number));
         no.setAttribute('aria-hidden', 'true');
         node.appendChild(no);
@@ -119,18 +155,19 @@
         resolveEntries(section, data[section.key || 'experience'] || []).forEach(function (item) {
             var entry = item.entry;
             var spec = item.spec;
+            var group = spec.keepTogether ? block(el('div', 'doc-experience-group')) : parent;
 
             // 회사 머리글은 뒤따르는 성과와 떨어지면 안 된다.
-            var head = block(el('div', 'doc-entry'), true);
+            var head = spec.keepTogether ? el('div', 'doc-entry') : block(el('div', 'doc-entry'), true);
             var row = el('div', 'doc-item-head');
             row.appendChild(el('p', 'doc-item-title', pick(entry.org, lang)));
             row.appendChild(el('p', 'doc-item-meta', pick(entry.period, lang)));
             head.appendChild(row);
             if (entry.role) head.appendChild(el('p', 'doc-item-role', pick(entry.role, lang)));
-            parent.appendChild(head);
+            group.appendChild(head);
 
             resolvePoints(entry, spec).forEach(function (point) {
-                var wrap = block(el('div', 'doc-point'));
+                var wrap = spec.keepTogether ? el('div', 'doc-point') : block(el('div', 'doc-point'));
                 wrap.appendChild(el('p', 'doc-point-main', pick(point.text, lang)));
 
                 var subs = point.sub || [];
@@ -139,8 +176,10 @@
                     subs.forEach(function (sub) { list.appendChild(el('li', null, pick(sub, lang))); });
                     wrap.appendChild(list);
                 }
-                parent.appendChild(wrap);
+                group.appendChild(wrap);
             });
+
+            if (spec.keepTogether) parent.appendChild(group);
         });
     }
 
@@ -150,10 +189,12 @@
         var items = section.items || data[section.key] || [];
         if (!items.length) return;
 
-        var list = block(el('ul', 'doc-list'));
+        var list = block(el('ul', 'doc-list' + (section.variant ? ' doc-list--' + section.variant : '')));
         items.forEach(function (item) {
             var li = el('li');
-            li.appendChild(el('span', 'doc-list-main', pick(item.text, lang)));
+            var main = el('span', 'doc-list-main');
+            appendMarkedText(main, pick(item.text, lang), pick(item.accent, lang), pick(item.emphasis, lang));
+            li.appendChild(main);
             if (item.meta) li.appendChild(el('span', 'doc-list-meta', pick(item.meta, lang)));
             list.appendChild(li);
         });
@@ -164,7 +205,7 @@
      * (데이터에 HTML 을 넣지 않기 위해서다). */
     function renderCite(parent, section, data, lang) {
         (section.items || data[section.key] || []).forEach(function (item) {
-            var node = block(el('p', 'doc-cite'));
+            var node = block(el('p', 'doc-cite' + (section.variant ? ' doc-cite--' + section.variant : '')));
             var before = pick(item.before, lang);
             var after = pick(item.after, lang);
 
@@ -251,7 +292,7 @@
                 if (!render) return;
 
                 // 번호는 제목이 있는 절에만 매긴다(맺음말 등은 건너뛴다).
-                if (section.title) renderHeading(body, ++number, section.title, lang);
+                if (section.title) renderHeading(body, ++number, section.title, lang, section.variant, section.pageBreak);
                 render(body, section, data || {}, lang);
             });
         }

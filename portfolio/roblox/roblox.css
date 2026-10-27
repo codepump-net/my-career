@@ -1,0 +1,6 @@
+/* Roblox UGC 단독 이미지는 원래 비율을 유지하며 중앙에 배치한다. */
+[data-slide="ugc-roblox"] .project-ugc-gallery {
+    grid-template-columns: minmax(0, 1fr);
+    width: 75%;
+    margin-inline: auto;
+}
