@@ -43,34 +43,34 @@ window.DOC_DATA = {
     platforms: [
         {
             text: {
-                ko: '[ROBLOX] Tower Flood Race: 누적 방문 11,448,820회, 즐겨찾기 527,638개',
-                en: '[ROBLOX] Tower Flood Race: 11,448,820 visits and 527,638 favorites'
+                ko: '[ROBLOX] Tower Flood Race: 누적 방문 1,144.9만 회, 즐겨찾기 52.8만 개',
+                en: '[ROBLOX] Tower Flood Race: 11.4M visits and 527.6K favorites'
             },
             accent: { ko: ['[ROBLOX]'], en: ['[ROBLOX]'] },
             emphasis: {
-                ko: ['누적 방문 11,448,820회', '즐겨찾기 527,638개'],
-                en: ['11,448,820 visits', '527,638 favorites']
+                ko: ['누적 방문 1,144.9만 회', '즐겨찾기 52.8만 개'],
+                en: ['11.4M visits', '527.6K favorites']
             },
             meta: { ko: '2026.10.27 기준', en: 'As of 2026.10.27' }
         },
         {
             text: {
-                ko: '[ROBLOX] FREE UGC RNG: 누적 방문 381,002회, 즐겨찾기 6,196개',
-                en: '[ROBLOX] FREE UGC RNG: 381,002 visits and 6,196 favorites'
+                ko: '[ROBLOX] FREE UGC RNG: 누적 방문 38.1만 회, 즐겨찾기 6.2천 개',
+                en: '[ROBLOX] FREE UGC RNG: 381.0K visits and 6.2K favorites'
             },
             accent: { ko: ['[ROBLOX]'], en: ['[ROBLOX]'] },
-            emphasis: { ko: ['누적 방문 381,002회', '즐겨찾기 6,196개'], en: ['381,002 visits', '6,196 favorites'] },
+            emphasis: { ko: ['누적 방문 38.1만 회', '즐겨찾기 6.2천 개'], en: ['381.0K visits', '6.2K favorites'] },
             meta: { ko: '2026.10.27 기준', en: 'As of 2026.10.27' }
         },
         {
             text: {
-                ko: '[ROBLOX] 커뮤니티 7곳 운영, 가입 수 합계 216,860건(그룹 간 중복 포함)',
-                en: '[ROBLOX] Operated seven communities with 216,860 memberships in total (including overlap between groups)'
+                ko: '[ROBLOX] 커뮤니티 7곳 운영, 가입 수 합계 21.7만 건(그룹 간 중복 포함)',
+                en: '[ROBLOX] Operated seven communities with 216.9K memberships in total (including overlap between groups)'
             },
             accent: { ko: ['[ROBLOX]'], en: ['[ROBLOX]'] },
             emphasis: {
-                ko: ['커뮤니티 7곳', '216,860건'],
-                en: ['seven communities', '216,860 memberships']
+                ko: ['커뮤니티 7곳', '21.7만 건'],
+                en: ['seven communities', '216.9K memberships']
             },
             meta: { ko: '2026.10.27 기준', en: 'As of 2026.10.27' }
         },
@@ -85,13 +85,13 @@ window.DOC_DATA = {
         },
         {
             text: {
-                ko: '[ZEPETO] Get Train: 누적 방문 250만·최고 주간 활성 사용자 60만, JR동일본 브랜드 월드 제작 및 JRE WALLET 앱 연동',
-                en: '[ZEPETO] Get Train: 2.5M visits and 600K peak weekly active users; produced a JR East branded world integrated with the JRE WALLET app'
+                ko: '[ZEPETO] Get Train: 누적 방문 250.0만·최고 주간 활성 사용자 60.0만, JR동일본 브랜드 월드 제작 및 JRE WALLET 앱 연동',
+                en: '[ZEPETO] Get Train: 2.5M visits and 600.0K peak weekly active users; produced a JR East branded world integrated with the JRE WALLET app'
             },
             accent: { ko: ['[ZEPETO]'], en: ['[ZEPETO]'] },
             emphasis: {
-                ko: ['누적 방문 250만', '최고 주간 활성 사용자 60만', 'JRE WALLET 앱 연동'],
-                en: ['2.5M visits', '600K peak weekly active users', 'JRE WALLET app']
+                ko: ['누적 방문 250.0만', '최고 주간 활성 사용자 60.0만', 'JRE WALLET 앱 연동'],
+                en: ['2.5M visits', '600.0K peak weekly active users', 'JRE WALLET app']
             },
             meta: '2025'
         },

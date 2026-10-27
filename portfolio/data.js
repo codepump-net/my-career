@@ -1,9 +1,6 @@
 /* 포트폴리오 덱에서 공통으로 쓰는 문서 제목과 접근성 라벨만 둔다. */
 window.DECK_I18N = {
     ko: {
-        roblox_profile: '로블록스 강사 평가용',
-        roblox_appendix_one: '보조 사례 · 01 / 02',
-        roblox_appendix_two: '보조 사례 · 02 / 02',
         ui_page_title: '포트폴리오 | Hyunseok Oh',
         ui_deck_label: '포트폴리오 슬라이드',
 
@@ -49,9 +46,6 @@ window.DECK_I18N = {
         appendix_ph_copy: "학력·강의 증빙 / 논문 원문과 저자 기여 / 대표 프로젝트 이미지·영상과 역할 / 강의계획 및 연구계획.\n기존 이력의 사실만 반영했습니다. 방문 수 등 미검증 지표, 미확정 연구비, 학생 지도 실적은 추가하지 않았습니다.",
     },
     en: {
-        roblox_profile: 'Roblox Instructor Evaluation',
-        roblox_appendix_one: 'SUPPLEMENT · 01 / 02',
-        roblox_appendix_two: 'SUPPLEMENT · 02 / 02',
         ui_page_title: 'Portfolio | Hyunseok Oh',
         ui_deck_label: 'Portfolio slides',
 
